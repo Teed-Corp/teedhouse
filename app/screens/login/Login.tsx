@@ -1,4 +1,4 @@
-import { signIn, signUp } from "@app/libs/auth/FirebaseAuth";
+import { signInWithEmail, signUpWithEmail } from "@app/libs/auth/SupabaseAuth";
 import React, { useState } from "react";
 import {
   Button,
@@ -31,8 +31,14 @@ const Login = () => {
           secureTextEntry
         />
         <>
-          <Button title="Login" onPress={() => signIn(email, password)} />
-          <Button title="Register" onPress={() => signUp(email, password)} />
+          <Button
+            title="Login"
+            onPress={() => signInWithEmail(email, password)}
+          />
+          <Button
+            title="Register"
+            onPress={() => signUpWithEmail(email, password)}
+          />
         </>
       </KeyboardAvoidingView>
     </View>

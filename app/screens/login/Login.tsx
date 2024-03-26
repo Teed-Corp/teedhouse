@@ -25,7 +25,10 @@ const LoginPage = () => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollViewContainer}
+        >
           <AuthCard
             email={email}
             setEmail={setEmail}

@@ -9,9 +9,11 @@
     "web": "expo start --web",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "migrate": "prisma migrate dev && npx tsx ./app/lib/ProfileTrigger.ts"
   },
   "dependencies": {
+    "@prisma/client": "5.10.2",
     "@react-native-async-storage/async-storage": "1.21.0",
     "@supabase/supabase-js": "^2.39.7",
     "@types/react": "~18.2.45",
@@ -29,10 +31,14 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
     "eslint-config-universe": "^12.0.0",
     "husky": "^9.0.11",
-    "prettier": "^3.2.5"
+    "postgres": "^3.4.4",
+    "prettier": "^3.2.5",
+    "prisma": "^5.10.2",
+    "tsx": "^4.7.1"
   },
   "private": true
 }

@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model profile {
+  id        String   @id @default(uuid()) @db.Uuid
+  full_name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  family    family[]
+}
+
+model family {
+  id                 String               @id @default(uuid()) @db.Uuid
+  name               String
+  members            profile[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  custom_family_task custom_family_task[]
+}
+
+model task {
+  id        String   @id @default(uuid()) @db.Uuid
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model custom_family_task {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  family    family   @relation(fields: [familyId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  familyId  String   @db.Uuid
+}

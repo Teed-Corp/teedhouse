@@ -1,21 +1,13 @@
+import { Button, KeyboardAvoidingView, View } from "react-native";
+import CustomTextField from "@app/components/CustomTextField";
 import AppButton from "@app/components/AppButton";
 import { signInWithEmail, signUpWithEmail } from "@app/libs/auth/SupabaseAuth";
-import React, { useState } from "react";
-import {
-  Button,
-  KeyboardAvoidingView,
-  StyleSheet,
-  TextInput,
-  View,
-} from "react-native";
-import CustomTextField from "@app/components/CustomTextField";
+import React from "react";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+const AuthCard = () => {
   return (
-    <View style={styles.container}>
+    // TODO
+    <View>
       <KeyboardAvoidingView behavior="padding" style={{ width: "80%" }}>
         <CustomTextField
           value={email}
@@ -42,18 +34,3 @@ const Login = () => {
     </View>
   );
 };
-
-export default Login;
-
-const styles = StyleSheet.create({
-  container: {
-    height: "80%",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  input: {
-    height: 40,
-    margin: 12,
-  },
-});

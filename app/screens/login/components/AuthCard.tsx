@@ -1,6 +1,6 @@
 import AppButton from "@app/components/AppButton";
 import CustomTextField from "@app/components/CustomTextField";
-import theme from "@app/utils/theme";
+import theme from "@app/theme/theme";
 import React, { Dispatch } from "react";
 import {
   KeyboardAvoidingView,

@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky",
-    "migrate": "prisma migrate dev && npx tsx app/libs/ProfileTrigger.ts"
+    "migrate": "prisma migrate dev && npx tsx app/libs/supabase/ProfileTrigger.ts"
   },
   "dependencies": {
     "@prisma/client": "5.10.2",

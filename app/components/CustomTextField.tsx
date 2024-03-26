@@ -1,4 +1,4 @@
-import theme from "@app/utils/theme";
+import theme from "@app/theme/theme";
 import React, { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 

@@ -1,4 +1,4 @@
-import colors from "@app/utils/theme";
+import colors from "@app/theme/theme";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";

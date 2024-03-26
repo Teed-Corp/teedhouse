@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "profile" ALTER COLUMN "updatedAt" SET DEFAULT CURRENT_TIMESTAMP;

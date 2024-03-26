@@ -1,27 +1,41 @@
-import colors from "@app/utils/theme";
-import React from "react";
+import theme from "@app/utils/theme";
+import React, { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
 const CustomTextField = ({
   value,
   onChangeEvent,
-  placeHolderValue,
-  ...props
+  placeHolderValue = "",
+  secureTextEntry = false,
 }: {
   value: string;
   onChangeEvent: (value: string) => void;
   placeHolderValue: string;
-  props?: any;
+  secureTextEntry?: boolean;
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   return (
     <View>
       <TextInput
-        style={styles.input}
+        style={[
+          styles.input,
+          { borderColor: isFocused ? theme.gradientColor : theme.borderColor },
+        ]}
         value={value}
         placeholder={placeHolderValue}
         onChangeText={onChangeEvent}
-        autoCapitalize="none"
-        {...props}
+        secureTextEntry={secureTextEntry}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
     </View>
   );
@@ -33,9 +47,8 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 15,
     height: 56,
-    borderColor: colors.borderColor,
     borderWidth: 0.5,
-    borderRadius: 20,
+    borderRadius: theme.defaultRadius,
     paddingLeft: 25,
     width: "100%",
     marginBottom: 20,

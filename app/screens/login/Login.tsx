@@ -1,59 +1,57 @@
-import AppButton from "@app/components/AppButton";
 import { signInWithEmail, signUpWithEmail } from "@app/libs/auth/SupabaseAuth";
+import AuthCard from "@app/screens/login/components/AuthCard";
 import React, { useState } from "react";
-import {
-  Button,
-  KeyboardAvoidingView,
-  StyleSheet,
-  TextInput,
-  View,
-} from "react-native";
-import CustomTextField from "@app/components/CustomTextField";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-const Login = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
+
+  const onConfirm = async () => {
+    if (isLogin) {
+      await signInWithEmail(email, password);
+    } else {
+      if (password !== confirmPassword) {
+        alert("Les mots de passe ne correspondent pas.");
+      } else {
+        await signUpWithEmail(email, password);
+      }
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <KeyboardAvoidingView behavior="padding" style={{ width: "80%" }}>
-        <CustomTextField
-          value={email}
-          placeHolderValue="Email"
-          onChangeEvent={setEmail}
-        />
-        <CustomTextField
-          value={password}
-          placeHolderValue="Password"
-          onChangeEvent={setPassword}
-          secureTextEntry
-        />
-        <>
-          <AppButton
-            title="Login"
-            onPressEvent={() => signInWithEmail(email, password)}
+    <SafeAreaView>
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+          <AuthCard
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            onConfirm={onConfirm}
           />
-          <Button
-            title="Register"
-            onPress={() => signUpWithEmail(email, password)}
-          />
-        </>
-      </KeyboardAvoidingView>
-    </View>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 
-export default Login;
-
 const styles = StyleSheet.create({
   container: {
-    height: "80%",
     width: "100%",
-    alignItems: "center",
+    height: "100%",
     justifyContent: "center",
   },
-  input: {
-    height: 40,
-    margin: 12,
+  scrollViewContainer: {
+    flexGrow: 1,
   },
 });
+
+export default LoginPage;

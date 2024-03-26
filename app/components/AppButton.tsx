@@ -1,14 +1,14 @@
 import colors from "@app/utils/theme";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const AppButton = ({ title, onPressEvent }) => {
   return (
     <View>
       <TouchableOpacity onPress={onPressEvent} style={styles.button}>
         <LinearGradient
-          colors={colors.gradiant}
+          colors={[colors.primary, colors.gradientColor]}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 1 }}
           style={styles.gradient}

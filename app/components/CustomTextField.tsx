@@ -1,17 +1,27 @@
 import theme from "@app/theme/theme";
 import React, { useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import {
+  KeyboardTypeOptions,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  View,
+} from "react-native";
 
 const CustomTextField = ({
   value,
   onChangeEvent,
   placeHolderValue = "",
   secureTextEntry = false,
+  keyboardType = "default",
+  autoCapitalize = "sentences",
 }: {
   value: string;
   onChangeEvent: (value: string) => void;
   placeHolderValue: string;
   secureTextEntry?: boolean;
+  keyboardType?: KeyboardTypeOptions;
+  autoCapitalize?: TextInputProps["autoCapitalize"];
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -34,6 +44,8 @@ const CustomTextField = ({
         placeholder={placeHolderValue}
         onChangeText={onChangeEvent}
         secureTextEntry={secureTextEntry}
+        keyboardType={keyboardType}
+        autoCapitalize={autoCapitalize}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />

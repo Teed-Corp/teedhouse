@@ -43,6 +43,8 @@ const AuthCard = ({
             value={email}
             placeHolderValue="Email"
             onChangeEvent={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
           <CustomTextField
             value={password}

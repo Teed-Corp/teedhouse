@@ -32,83 +32,81 @@ const AuthCard = ({
   onConfirm: () => void;
 }) => {
   return (
-    <View style={styles.pageContainer}>
+    <KeyboardAvoidingView behavior={"height"} style={styles.pageContainer}>
       <View style={styles.mainContainer}>
         <Text style={styles.titleStyle}>TeedHouse</Text>
         <Text style={styles.subTextStyle}>
           {isLogin ? "Connectez vous" : "Rejoignez nous"}
         </Text>
-        <KeyboardAvoidingView behavior="padding" style={{ width: "80%" }}>
+        <CustomTextField
+          value={email}
+          placeHolderValue="Email"
+          onChangeEvent={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <CustomTextField
+          value={password}
+          placeHolderValue="Mot de passe"
+          onChangeEvent={setPassword}
+          secureTextEntry
+        />
+        {!isLogin ? (
           <CustomTextField
-            value={email}
-            placeHolderValue="Email"
-            onChangeEvent={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <CustomTextField
-            value={password}
-            placeHolderValue="Mot de passe"
-            onChangeEvent={setPassword}
+            value={confirmPassword}
+            placeHolderValue="Confirmer le mot de passe"
+            onChangeEvent={setConfirmPassword}
             secureTextEntry
           />
-          {!isLogin ? (
-            <CustomTextField
-              value={confirmPassword}
-              placeHolderValue="Confirmer le mot de passe"
-              onChangeEvent={setConfirmPassword}
-              secureTextEntry
-            />
-          ) : null}
-          <AppButton
-            title={isLogin ? "Se Connecter" : "S'inscrire"}
-            onPressEvent={onConfirm}
-          />
-          {isLogin ? (
-            <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
-          ) : null}
-        </KeyboardAvoidingView>
+        ) : null}
+        <AppButton
+          title={isLogin ? "Se Connecter" : "S'inscrire"}
+          onPressEvent={onConfirm}
+        />
+        {isLogin ? (
+          <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
+        ) : null}
       </View>
-      <Text style={styles.goToOtherPageLabelStyle}>
-        {isLogin ? "Vous n'avez pas de compte ?" : "Vous avez déjà un compte ?"}
-      </Text>
       <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
+        <Text style={styles.goToOtherPageLabelStyle}>
+          {isLogin
+            ? "Vous n'avez pas de compte ?"
+            : "Vous avez déjà un compte ?"}
+        </Text>
         <Text style={styles.goToOtherPageCtaStyle}>
           {isLogin ? "Rejoignez nous" : "Se connecter"}
         </Text>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   pageContainer: {
-    height: "100%",
-    width: "100%",
-    alignItems: "center",
+    flex: 1,
     justifyContent: "center",
-    paddingVertical: 20,
+    alignItems: "center",
   },
   mainContainer: {
     width: "80%",
-    alignItems: "center",
-    justifyContent: "center",
     borderRadius: 40,
     borderWidth: 1,
     borderColor: "black",
     paddingVertical: 15,
+    paddingHorizontal: 20,
+    marginTop: 20,
   },
 
   titleStyle: {
     fontSize: 30,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 15,
     textAlign: "center",
   },
 
   subTextStyle: {
     fontSize: 20,
-    marginBottom: 20,
+    marginBottom: 35,
     textAlign: "center",
   },
   forgotPassword: {
@@ -117,7 +115,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   goToOtherPageLabelStyle: {
-    color: theme.primary,
     marginBottom: 5,
     marginTop: 10,
     textAlign: "center",
@@ -126,6 +123,8 @@ const styles = StyleSheet.create({
   goToOtherPageCtaStyle: {
     color: theme.gradientColor,
     fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
   },
 });
 

@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import * as Yup from "yup";
+import { Formik } from "formik";
 
 const AuthCard = ({
   email,
@@ -31,52 +33,122 @@ const AuthCard = ({
   setConfirmPassword: Dispatch<string>;
   onConfirm: () => void;
 }) => {
+  const validationSchemaSignUp = Yup.object().shape({
+    email: Yup.string().email("Email invalide").required("Un email est requis"),
+    password: Yup.string()
+      .min(6, "Le mot de passe doit contenir au moins 6 caractères")
+      .required("Un mot de passe est requis"),
+    confirmPassword: Yup.string()
+      .oneOf(
+        [Yup.ref("password"), null],
+        "Les mots de passes ne correspondent pas",
+      )
+      .required("Veuillez confirmer votre mot de passe"),
+  });
+
+  const validationSchemaSignIn = Yup.object().shape({
+    email: Yup.string().email("Email invalide").required("Un email est requis"),
+    password: Yup.string()
+      .min(6, "Le mot de passe doit contenir au moins 6 caractères")
+      .required("Un mot de passe est requis"),
+  });
+
   return (
     <KeyboardAvoidingView behavior={"height"} style={styles.pageContainer}>
-      <View style={styles.mainContainer}>
-        <Text style={styles.titleStyle}>TeedHouse</Text>
-        <Text style={styles.subTextStyle}>
-          {isLogin ? "Connectez vous" : "Rejoignez nous"}
-        </Text>
-        <CustomTextField
-          value={email}
-          placeHolderValue="Email"
-          onChangeEvent={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <CustomTextField
-          value={password}
-          placeHolderValue="Mot de passe"
-          onChangeEvent={setPassword}
-          secureTextEntry
-        />
-        {!isLogin ? (
-          <CustomTextField
-            value={confirmPassword}
-            placeHolderValue="Confirmer le mot de passe"
-            onChangeEvent={setConfirmPassword}
-            secureTextEntry
-          />
-        ) : null}
-        <AppButton
-          title={isLogin ? "Se Connecter" : "S'inscrire"}
-          onPressEvent={onConfirm}
-        />
-        {isLogin ? (
-          <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
-        ) : null}
-      </View>
-      <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
-        <Text style={styles.goToOtherPageLabelStyle}>
-          {isLogin
-            ? "Vous n'avez pas de compte ?"
-            : "Vous avez déjà un compte ?"}
-        </Text>
-        <Text style={styles.goToOtherPageCtaStyle}>
-          {isLogin ? "Rejoignez nous" : "Se connecter"}
-        </Text>
-      </TouchableOpacity>
+      <Formik
+        initialValues={{
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+        }}
+        validationSchema={
+          isLogin ? validationSchemaSignIn : validationSchemaSignUp
+        }
+        onSubmit={(values) => {
+          setEmail(values.email);
+          setPassword(values.password);
+          setConfirmPassword(values.confirmPassword);
+          onConfirm();
+        }}
+      >
+        {({
+          values,
+          resetForm,
+          touched,
+          handleChange,
+          handleSubmit,
+          errors,
+        }) => (
+          <>
+            <View style={styles.mainContainer}>
+              <Text style={styles.titleStyle}>TeedHouse</Text>
+              <Text style={styles.subTextStyle}>
+                {isLogin ? "Connectez vous" : "Rejoignez nous"}
+              </Text>
+              <View style={styles.separator}>
+                <CustomTextField
+                  value={values.email}
+                  placeHolderValue="Email"
+                  onChangeEvent={handleChange("email")}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+                {errors.email && touched.email && (
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                )}
+              </View>
+              <View style={styles.separator}>
+                <CustomTextField
+                  value={values.password}
+                  placeHolderValue="Mot de passe"
+                  onChangeEvent={handleChange("password")}
+                  secureTextEntry
+                />
+                {errors.password && touched.password && (
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                )}
+              </View>
+              {!isLogin ? (
+                <View style={styles.separator}>
+                  <CustomTextField
+                    value={values.confirmPassword}
+                    placeHolderValue="Confirmer le mot de passe"
+                    onChangeEvent={handleChange("confirmPassword")}
+                    secureTextEntry
+                  />
+                  {errors.confirmPassword && touched.confirmPassword && (
+                    <Text style={styles.errorText}>
+                      {errors.confirmPassword}
+                    </Text>
+                  )}
+                </View>
+              ) : null}
+              <AppButton
+                title={isLogin ? "Se Connecter" : "S'inscrire"}
+                onPressEvent={handleSubmit}
+              />
+              {isLogin ? (
+                <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
+              ) : null}
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                setIsLogin(!isLogin);
+                resetForm();
+              }}
+            >
+              <Text style={styles.goToOtherPageLabelStyle}>
+                {isLogin
+                  ? "Vous n'avez pas de compte ?"
+                  : "Vous avez déjà un compte ?"}
+              </Text>
+              <Text style={styles.goToOtherPageCtaStyle}>
+                {isLogin ? "Rejoignez nous" : "Se connecter"}
+              </Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </Formik>
     </KeyboardAvoidingView>
   );
 };
@@ -124,6 +196,16 @@ const styles = StyleSheet.create({
     color: theme.gradientColor,
     fontWeight: "bold",
     textAlign: "center",
+    marginBottom: 20,
+  },
+
+  errorText: {
+    color: "red",
+    marginTop: 5,
+    marginLeft: 5,
+  },
+
+  separator: {
     marginBottom: 20,
   },
 });

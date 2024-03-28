@@ -12,10 +12,17 @@ const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   const onConfirm = async () => {
-    if (isLogin) {
-      await loginWithEmail(email, password);
-    } else {
-      await registerWithEmail(email, password, confirmPassword);
+    try {
+      console.log(email, password, confirmPassword, isLogin);
+      if (isLogin) {
+        await loginWithEmail(email, password);
+      } else {
+        await registerWithEmail(email, password, confirmPassword);
+        console.log("register");
+      }
+    } catch (e) {
+      console.log("error");
+      console.log(e);
     }
   };
 

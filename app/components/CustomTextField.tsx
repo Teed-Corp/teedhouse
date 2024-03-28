@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TextInput,
   TextInputProps,
-  View,
 } from "react-native";
 
 const CustomTextField = ({
@@ -34,22 +33,20 @@ const CustomTextField = ({
   };
 
   return (
-    <View>
-      <TextInput
-        style={[
-          styles.input,
-          { borderColor: isFocused ? theme.gradientColor : theme.borderColor },
-        ]}
-        value={value}
-        placeholder={placeHolderValue}
-        onChangeText={onChangeEvent}
-        secureTextEntry={secureTextEntry}
-        keyboardType={keyboardType}
-        autoCapitalize={autoCapitalize}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-      />
-    </View>
+    <TextInput
+      style={[
+        styles.input,
+        { borderColor: isFocused ? theme.gradientColor : theme.borderColor },
+      ]}
+      value={value}
+      placeholder={placeHolderValue}
+      onChangeText={onChangeEvent}
+      secureTextEntry={secureTextEntry}
+      keyboardType={keyboardType}
+      autoCapitalize={autoCapitalize}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    />
   );
 };
 
@@ -63,6 +60,5 @@ const styles = StyleSheet.create({
     borderRadius: theme.defaultRadius,
     paddingLeft: 25,
     width: "100%",
-    marginBottom: 20,
   },
 });

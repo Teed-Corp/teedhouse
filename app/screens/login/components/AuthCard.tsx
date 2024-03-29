@@ -102,6 +102,7 @@ const AuthCard = ({
                   value={values.password}
                   placeHolderValue="Mot de passe"
                   onChangeEvent={handleChange("password")}
+                  isPassword={true}
                   secureTextEntry
                 />
                 {errors.password && touched.password && (
@@ -114,6 +115,7 @@ const AuthCard = ({
                     value={values.confirmPassword}
                     placeHolderValue="Confirmer le mot de passe"
                     onChangeEvent={handleChange("confirmPassword")}
+                    isPassword={true}
                     secureTextEntry
                   />
                   {errors.confirmPassword && touched.confirmPassword && (

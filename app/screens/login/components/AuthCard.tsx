@@ -64,10 +64,7 @@ const AuthCard = ({
         validationSchema={
           isLogin ? validationSchemaSignIn : validationSchemaSignUp
         }
-        onSubmit={(values) => {
-          setEmail(values.email);
-          setPassword(values.password);
-          setConfirmPassword(values.confirmPassword);
+        onSubmit={() => {
           onConfirm();
         }}
       >
@@ -89,7 +86,10 @@ const AuthCard = ({
                 <CustomTextField
                   value={values.email}
                   placeHolderValue="Email"
-                  onChangeEvent={handleChange("email")}
+                  onChangeEvent={(value) => {
+                    handleChange("email")(value);
+                    setEmail(value);
+                  }}
                   keyboardType="email-address"
                   autoCapitalize="none"
                 />
@@ -101,7 +101,10 @@ const AuthCard = ({
                 <CustomTextField
                   value={values.password}
                   placeHolderValue="Mot de passe"
-                  onChangeEvent={handleChange("password")}
+                  onChangeEvent={(value) => {
+                    handleChange("password")(value);
+                    setPassword(value);
+                  }}
                   secureTextEntry
                 />
                 {errors.password && touched.password && (
@@ -113,7 +116,10 @@ const AuthCard = ({
                   <CustomTextField
                     value={values.confirmPassword}
                     placeHolderValue="Confirmer le mot de passe"
-                    onChangeEvent={handleChange("confirmPassword")}
+                    onChangeEvent={(value) => {
+                      handleChange("confirmPassword")(value);
+                      setConfirmPassword(value);
+                    }}
                     secureTextEntry
                   />
                   {errors.confirmPassword && touched.confirmPassword && (

@@ -105,6 +105,7 @@ const AuthCard = ({
                     handleChange("password")(value);
                     setPassword(value);
                   }}
+                  isPassword={true}
                   secureTextEntry
                 />
                 {errors.password && touched.password && (
@@ -120,6 +121,7 @@ const AuthCard = ({
                       handleChange("confirmPassword")(value);
                       setConfirmPassword(value);
                     }}
+                    isPassword={true}
                     secureTextEntry
                   />
                   {errors.confirmPassword && touched.confirmPassword && (

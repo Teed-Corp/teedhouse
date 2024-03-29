@@ -1,8 +1,8 @@
-import useAuth from "@app/hooks/Auth";
-import AuthCard from "@app/screens/login/components/AuthCard";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import useAuth from "@app/hooks/Auth";
+import AuthCard from "@app/screens/login/components/AuthCard";
 
 const LoginPage = () => {
   const { loginWithEmail, registerWithEmail } = useAuth();
@@ -13,17 +13,18 @@ const LoginPage = () => {
 
   const onConfirm = async () => {
     try {
-      console.log(email, password, confirmPassword, isLogin);
       if (isLogin) {
-        await loginWithEmail(email, password);
+        await loginWithEmail(email, password, handleError);
       } else {
-        await registerWithEmail(email, password, confirmPassword);
-        console.log("register");
+        await registerWithEmail(email, password, confirmPassword, handleError);
       }
     } catch (e) {
-      console.log("error");
       console.log(e);
     }
+  };
+
+  const handleError = (error: { message: any }) => {
+    alert(error.message);
   };
 
   return (

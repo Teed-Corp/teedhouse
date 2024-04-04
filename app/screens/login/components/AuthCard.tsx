@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useNavigation } from "@react-navigation/native";
 
 const AuthCard = ({
   email,
@@ -47,8 +46,6 @@ const AuthCard = ({
       .required("Veuillez confirmer votre mot de passe"),
   });
 
-  const navigation: any = useNavigation();
-
   const validationSchemaSignIn = Yup.object().shape({
     email: Yup.string().email("Email invalide").required("Un email est requis"),
     password: Yup.string()
@@ -69,7 +66,6 @@ const AuthCard = ({
         }
         onSubmit={() => {
           onConfirm();
-          navigation.navigate("ChooseFamilyPage");
         }}
       >
         {({

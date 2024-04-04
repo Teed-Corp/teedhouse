@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import useAuth from "@app/hooks/Auth";
 import AuthCard from "@app/screens/login/components/AuthCard";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginPage = () => {
-  const { loginWithEmail, registerWithEmail } = useAuth();
+  const { loginWithEmail, registerWithEmail, isAuthenticated } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

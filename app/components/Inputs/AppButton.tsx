@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "100%",
-    height: 56, // conserve la même hauteur
+    height: 56,
     overflow: "hidden",
   },
   text: {

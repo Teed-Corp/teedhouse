@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "react-native";
 import { Button } from "react-native-elements";
 
-const ChooseFamilyPage = () => {
+const ChooseGroupPage = () => {
   const navigation: any = useNavigation();
 
   const handlePress = () => {
@@ -16,4 +16,4 @@ const ChooseFamilyPage = () => {
   );
 };
 
-export default ChooseFamilyPage;
+export default ChooseGroupPage;

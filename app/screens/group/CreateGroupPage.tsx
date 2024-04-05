@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Divider from "@app/components/Divider";
 import CustomTextField from "@app/components/Inputs/CustomTextField";
 import AppButton from "@app/components/Inputs/AppButton";
-import SelectableList from "@app/components/Inputs/SelectableList";
+import CustomDropdown from "@app/components/Inputs/CustomDropdown";
 
 const CreateGroupPage = () => {
   const [groupName, setGroupName] = useState("");
@@ -29,9 +29,16 @@ const CreateGroupPage = () => {
           value={groupName}
           onChangeEvent={setGroupName}
           placeHolderValue={"Nom du groupe"}
+          displayTopPlaceHolder={true}
         />
         <Divider height={24} />
-        <SelectableList />
+        <CustomDropdown
+          data={["1", "2", "3"]}
+          onSelect={setHomeType}
+          placeHolder={"Type de logement"}
+          displayTopPlaceHolder={true}
+          value={homeType}
+        />
         <Divider height={20} />
         <AppButton title={"Continuer"} onPressEvent={() => {}} />
       </View>

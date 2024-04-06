@@ -18,7 +18,7 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="CreateGroupPage"
+          initialRouteName="LoginPage"
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="LoginPage" component={LoginPage} />

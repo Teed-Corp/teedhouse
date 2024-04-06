@@ -7,7 +7,7 @@ import CreateGroupPage from "@app/screens/group/CreateGroupPage";
 
 export type RootStackParamList = {
   LoginPage: undefined;
-  ChooseFamilyPage: undefined;
+  ChooseGroupPage: undefined;
   CreateGroupPage: undefined;
 };
 
@@ -22,7 +22,7 @@ export default function App() {
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="LoginPage" component={LoginPage} />
-          <Stack.Screen name="ChooseFamilyPage" component={ChooseGroupPage} />
+          <Stack.Screen name="ChooseGroupPage" component={ChooseGroupPage} />
           <Stack.Screen name="CreateGroupPage" component={CreateGroupPage} />
         </Stack.Navigator>
       </NavigationContainer>

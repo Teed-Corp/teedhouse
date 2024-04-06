@@ -5,7 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const AppButton = ({ title, onPressEvent }) => {
   return (
-    <View>
+    <View style={styles.container}>
       <TouchableOpacity onPress={onPressEvent} style={styles.button}>
         <LinearGradient
           colors={[colors.primary, colors.gradientColor]}
@@ -23,13 +23,18 @@ const AppButton = ({ title, onPressEvent }) => {
 export default AppButton;
 
 const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+  },
   gradient: {
-    flex: 1,
+    width: "100%",
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
+    height: 56,
   },
   button: {
-    borderRadius: 25,
+    width: "100%",
     height: 56,
     overflow: "hidden",
   },

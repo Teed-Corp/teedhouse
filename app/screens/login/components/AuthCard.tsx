@@ -1,5 +1,5 @@
-import AppButton from "@app/components/AppButton";
-import CustomTextField from "@app/components/CustomTextField";
+import AppButton from "@app/components/Inputs/AppButton";
+import CustomTextField from "@app/components/Inputs/CustomTextField";
 import theme from "@app/theme/theme";
 import React, { Dispatch } from "react";
 import {

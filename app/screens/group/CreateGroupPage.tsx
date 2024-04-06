@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import HeaderIcon from "@app/components/Content/HeaderIcon";
 import HeaderTitle from "@app/components/Content/HeaderTitle";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,35 +12,51 @@ const CreateGroupPage = () => {
   const [groupName, setGroupName] = useState("");
   const [homeType, setHomeType] = useState(null);
 
+  const data: any = [
+    { label: "Maison", value: "Maison" },
+    { label: "Appartement", value: "Appartement" },
+    { label: "Villa", value: "Villa" },
+  ];
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <HeaderIcon icon="users" />
-        <Divider height={24} />
-        <HeaderTitle value={"Créer\n un groupe"} />
-        <Divider height={20} />
-        <Text style={styles.text}>
-          {
-            "Pour créer votre groupe,\nVeuillez remplir les informations ci-dessous"
-          }
-        </Text>
-        <Divider height={24} />
-        <CustomTextField
-          value={groupName}
-          onChangeEvent={setGroupName}
-          placeHolderValue={"Nom du groupe"}
-          displayTopPlaceHolder={true}
-        />
-        <Divider height={24} />
-        <CustomDropdown
-          data={["1", "2", "3"]}
-          onSelect={setHomeType}
-          placeHolder={"Type de logement"}
-          displayTopPlaceHolder={true}
-          value={homeType}
-        />
-        <Divider height={20} />
-        <AppButton title={"Continuer"} onPressEvent={() => {}} />
+    <SafeAreaView>
+      <View style={styles.container}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.content}
+        >
+          <HeaderIcon icon="users" />
+          <Divider height={24} />
+          <HeaderTitle value={"Créer\n un groupe"} />
+          <Divider height={20} />
+          <Text style={styles.text}>
+            {
+              "Pour créer votre groupe,\nVeuillez remplir les informations ci-dessous"
+            }
+          </Text>
+          <Divider height={24} />
+          <CustomTextField
+            value={groupName}
+            onChangeEvent={setGroupName}
+            placeHolderValue={"Nom du groupe"}
+            displayTopPlaceHolder={true}
+          />
+          <Divider height={24} />
+          <CustomDropdown
+            data={data}
+            onSelect={setHomeType}
+            placeHolder={"Type de logement"}
+            displayTopPlaceHolder={true}
+            value={homeType}
+          />
+          <Divider height={20} />
+          <AppButton
+            title={"Continuer"}
+            onPressEvent={() => {
+              console.log(homeType);
+            }}
+          />
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -48,16 +64,21 @@ const CreateGroupPage = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: "100%",
+    height: "100%",
     paddingHorizontal: 20,
-    justifyContent: "center",
   },
   content: {
+    justifyContent: "center",
     alignItems: "center",
+    flexGrow: 1,
   },
   text: {
     fontSize: 14,
     textAlign: "center",
+  },
+  dropdown: {
+    zIndex: 1, // Ajout de zIndex pour le CustomDropdown
   },
 });
 

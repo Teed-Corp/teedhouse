@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { Dispatch, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import theme from "@app/theme/theme";
 import Divider from "@app/components/Divider";
-import { Icon } from "react-native-elements";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const CustomDropdown = ({
   data,
@@ -11,13 +11,13 @@ const CustomDropdown = ({
   displayTopPlaceHolder = false,
   value,
 }: {
-  data: string[];
-  onSelect: (item: string) => void;
+  data: [{ label: string; value: string }];
+  onSelect: Dispatch<any>;
   placeHolder: string;
   displayTopPlaceHolder?: boolean;
   value?: string;
 }) => {
-  const handlePress = () => {};
+  const [open, setOpen] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -27,20 +27,22 @@ const CustomDropdown = ({
           <Divider height={12} />
         </>
       )}
-      <TouchableOpacity onPress={handlePress}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.placeholder}>
-            {value === null ? placeHolder : value}
-          </Text>
-          <Icon
-            name={"caret-down"}
-            type="font-awesome"
-            color={"#AAAAAA"}
-            size={30}
-            style={styles.icon}
-          />
-        </View>
-      </TouchableOpacity>
+      <DropDownPicker
+        items={data}
+        open={open}
+        setOpen={setOpen}
+        setValue={onSelect}
+        value={value}
+        placeholder={placeHolder}
+        placeholderStyle={
+          value === null ? styles.placeholder : styles.valueStyle
+        }
+        style={styles.inputContainer}
+        textStyle={styles.valueStyle}
+        dropDownContainerStyle={styles.dropdown}
+        disableBorderRadius={false}
+        listItemContainerStyle={styles.listItemContainer}
+      />
     </View>
   );
 };
@@ -48,6 +50,7 @@ const CustomDropdown = ({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+    zIndex: 1,
   },
   inputContainer: {
     flexDirection: "row",
@@ -58,11 +61,15 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 56,
     backgroundColor: "white",
-    justifyContent: "space-between",
   },
   placeholder: {
     fontSize: 15,
     color: "#929292",
+    textAlign: "left",
+  },
+  valueStyle: {
+    fontSize: 15,
+    color: "black",
     textAlign: "left",
   },
   topPlaceHolder: {
@@ -70,6 +77,15 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 15,
+  },
+  dropdown: {
+    borderWidth: 0.5,
+    borderRadius: theme.defaultRadius,
+    borderColor: "#AAAAAA",
+    marginTop: 10,
+  },
+  listItemContainer: {
+    height: 50,
   },
 });
 

@@ -2,7 +2,7 @@ import GroupButton from "@app/screens/choose_family/components/GroupButton";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 
-const ChooseFamilyPage = () => {
+const ChooseGroupPage = () => {
   const navigation: any = useNavigation();
 
   const handlePressCreateGroup = () => {
@@ -29,4 +29,4 @@ const ChooseFamilyPage = () => {
   );
 };
 
-export default ChooseFamilyPage;
+export default ChooseGroupPage;

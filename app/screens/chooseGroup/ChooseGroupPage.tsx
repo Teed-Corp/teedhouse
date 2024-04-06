@@ -1,4 +1,4 @@
-import GroupButton from "@app/screens/choose_family/components/GroupButton";
+import GroupButton from "@app/screens/chooseGroup/components/GroupButton";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 

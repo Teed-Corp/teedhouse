@@ -7,10 +7,10 @@ const ChooseGroupPage = () => {
   const navigation: any = useNavigation();
 
   const handlePressCreateGroup = () => {
-    navigation.navigate(OnBoarding.CreateGroup);
+    navigation.navigate(OnBoarding.CreateGroupPage);
   };
   const handlePressJoinGroup = () => {
-    navigation.navigate(OnBoarding.JoinGroup);
+    navigation.navigate(OnBoarding.JoinGroupPage);
   };
 
   return (

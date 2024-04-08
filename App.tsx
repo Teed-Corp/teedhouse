@@ -21,19 +21,22 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={OnBoarding.Login}
+          initialRouteName={OnBoarding.LoginPage}
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name={OnBoarding.Login} component={LoginPage} />
+          <Stack.Screen name={OnBoarding.LoginPage} component={LoginPage} />
           <Stack.Screen
-            name={OnBoarding.ChooseGroup}
+            name={OnBoarding.ChooseGroupPage}
             component={ChooseGroupPage}
           />
           <Stack.Screen
-            name={OnBoarding.CreateGroup}
+            name={OnBoarding.CreateGroupPage}
             component={CreateGroupPage}
           />
-          <Stack.Screen name={OnBoarding.JoinGroup} component={JoinGroupPage} />
+          <Stack.Screen
+            name={OnBoarding.JoinGroupPage}
+            component={JoinGroupPage}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

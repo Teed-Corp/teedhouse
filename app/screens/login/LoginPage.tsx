@@ -17,7 +17,7 @@ const LoginPage = ({ navigation }) => {
       const { error } = await loginWithEmail(email, password);
 
       if (!error) {
-        navigation.replace(OnBoarding.ChooseGroup);
+        navigation.replace(OnBoarding.ChooseGroupPage);
       } else {
         console.log(error);
         alert(error.message);
@@ -30,7 +30,7 @@ const LoginPage = ({ navigation }) => {
       );
 
       if (!error) {
-        navigation.replace(OnBoarding.ChooseGroup);
+        navigation.replace(OnBoarding.ChooseGroupPage);
       } else {
         console.log(error);
         alert(error.message);

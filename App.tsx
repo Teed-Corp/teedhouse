@@ -1,3 +1,4 @@
+import { OnBoarding } from "@app/navigation/routes";
 import ChooseGroupPage from "@app/screens/chooseGroup/ChooseGroupPage";
 import CreateGroupPage from "@app/screens/group/CreateGroupPage";
 import JoinGroupPage from "@app/screens/group/JoinGroupPage";
@@ -5,7 +6,6 @@ import LoginPage from "@app/screens/login/LoginPage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { OnBoarding } from "@app/navigation/routes";
 
 export type RootStackParamList = {
   LoginPage: undefined;

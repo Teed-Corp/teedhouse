@@ -6,6 +6,14 @@ const theme = {
   bgColor: "#F2F3FA",
   borderColor: "#929292",
   defaultRadius: 20,
+  styles: {
+    errorText: {
+      color: "red",
+      marginTop: 5,
+      marginLeft: 4,
+      width: "100%",
+    },
+  },
 };
 
 export default theme;

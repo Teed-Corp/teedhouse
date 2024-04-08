@@ -1,6 +1,8 @@
+import ErrorText from "@app/components/Content/ErrorText";
 import AppButton from "@app/components/Inputs/AppButton";
 import CustomTextField from "@app/components/Inputs/CustomTextField";
 import theme from "@app/theme/theme";
+import { Formik } from "formik";
 import React, { Dispatch } from "react";
 import {
   KeyboardAvoidingView,
@@ -10,7 +12,6 @@ import {
   View,
 } from "react-native";
 import * as Yup from "yup";
-import { Formik } from "formik";
 
 const AuthCard = ({
   email,
@@ -54,12 +55,12 @@ const AuthCard = ({
   });
 
   return (
-    <KeyboardAvoidingView behavior={"height"} style={styles.pageContainer}>
+    <KeyboardAvoidingView behavior="height" style={styles.pageContainer}>
       <Formik
         initialValues={{
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword,
+          email,
+          password,
+          confirmPassword,
         }}
         validationSchema={
           isLogin ? validationSchemaSignIn : validationSchemaSignUp
@@ -94,7 +95,7 @@ const AuthCard = ({
                   autoCapitalize="none"
                 />
                 {errors.email && touched.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
+                  <ErrorText error={errors.email} />
                 )}
               </View>
               <View style={styles.separator}>
@@ -105,11 +106,11 @@ const AuthCard = ({
                     handleChange("password")(value);
                     setPassword(value);
                   }}
-                  isPassword={true}
+                  isPassword
                   secureTextEntry
                 />
                 {errors.password && touched.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
+                  <ErrorText error={errors.password} />
                 )}
               </View>
               {!isLogin ? (
@@ -121,13 +122,11 @@ const AuthCard = ({
                       handleChange("confirmPassword")(value);
                       setConfirmPassword(value);
                     }}
-                    isPassword={true}
+                    isPassword
                     secureTextEntry
                   />
                   {errors.confirmPassword && touched.confirmPassword && (
-                    <Text style={styles.errorText}>
-                      {errors.confirmPassword}
-                    </Text>
+                    <ErrorText error={errors.confirmPassword} />
                   )}
                 </View>
               ) : null}
@@ -205,12 +204,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
-  },
-
-  errorText: {
-    color: "red",
-    marginTop: 5,
-    marginLeft: 5,
   },
 
   separator: {

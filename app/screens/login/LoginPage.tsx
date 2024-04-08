@@ -18,6 +18,7 @@ const LoginPage = () => {
       if (!error) {
         alert("Login successful");
       } else {
+        console.log(error);
         alert(error.message);
       }
     } else {
@@ -30,6 +31,7 @@ const LoginPage = () => {
       if (!error) {
         alert("Registration successful");
       } else {
+        console.log(error);
         alert(error.message);
       }
     }

@@ -14,8 +14,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
+import useFamily from "@app/hooks/Family";
 
 const JoinGroupPage = () => {
+  const { joinFamily } = useFamily();
   const [groupCode, setGroupCode] = useState("");
 
   const validationSchema = Yup.object().shape({
@@ -24,15 +26,17 @@ const JoinGroupPage = () => {
       .min(6, "Le code doit contenir au moins 6 caractères"),
   });
 
+  const handleJoinFamily = async () => {
+    await joinFamily(groupCode);
+  };
+
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="height">
         <Formik
           initialValues={{ groupCode }}
           validationSchema={validationSchema}
-          onSubmit={() => {
-            console.log("ok");
-          }}
+          onSubmit={handleJoinFamily}
         >
           {({ values, touched, handleChange, handleSubmit, errors }) => (
             <View style={styles.container}>
@@ -56,6 +60,7 @@ const JoinGroupPage = () => {
                   }}
                   placeHolderValue="Code du groupe"
                   displayTopPlaceHolder
+                  autoCapitalize="characters"
                 />
                 {errors.groupCode && touched.groupCode && (
                   <View style={styles.errorContainer}>

@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
 import HeaderIcon from "@app/components/Content/HeaderIcon";
 import HeaderTitle from "@app/components/Content/HeaderTitle";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Divider from "@app/components/Divider";
-import CustomTextField from "@app/components/Inputs/CustomTextField";
 import AppButton from "@app/components/Inputs/AppButton";
 import CustomDropdown from "@app/components/Inputs/CustomDropdown";
+import CustomTextField from "@app/components/Inputs/CustomTextField";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import useFamily from "@app/hooks/Family";
 
 const CreateGroupPage = () => {
+  const { createFamily } = useFamily();
   const [groupName, setGroupName] = useState("");
   const [homeType, setHomeType] = useState(null);
 
@@ -17,6 +19,10 @@ const CreateGroupPage = () => {
     { label: "Appartement", value: "Appartement" },
     { label: "Villa", value: "Villa" },
   ];
+
+  const handleCreateFamily = async () => {
+    await createFamily(groupName);
+  };
 
   return (
     <SafeAreaView>
@@ -50,12 +56,7 @@ const CreateGroupPage = () => {
             value={homeType}
           />
           <Divider height={20} />
-          <AppButton
-            title={"Continuer"}
-            onPressEvent={() => {
-              console.log(homeType);
-            }}
-          />
+          <AppButton title="Continuer" onPressEvent={handleCreateFamily} />
         </ScrollView>
       </View>
     </SafeAreaView>

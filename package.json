@@ -10,10 +10,10 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky",
-    "migrate": "prisma migrate dev && npx tsx app/libs/supabase/ProfileTrigger.ts"
+    "migrate": "prisma migrate dev && ts-node ./app/libs/supabase/ProfileTrigger.ts"
   },
   "dependencies": {
-    "@prisma/client": "5.10.2",
+    "@prisma/client": "^5.12.1",
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
@@ -42,8 +42,8 @@
     "husky": "^9.0.11",
     "postgres": "^3.4.4",
     "prettier": "^3.2.5",
-    "prisma": "^5.10.2",
-    "tsx": "^4.7.1"
+    "prisma": "^5.12.1",
+    "ts-node": "^10.9.2"
   },
   "private": true
 }

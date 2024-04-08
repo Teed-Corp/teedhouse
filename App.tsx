@@ -5,6 +5,7 @@ import LoginPage from "@app/screens/login/LoginPage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { OnBoarding } from "@app/navigation/routes";
 
 export type RootStackParamList = {
   LoginPage: undefined;
@@ -20,13 +21,19 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="JoinGroupPage"
+          initialRouteName={OnBoarding.Login}
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name="LoginPage" component={LoginPage} />
-          <Stack.Screen name="ChooseGroupPage" component={ChooseGroupPage} />
-          <Stack.Screen name="CreateGroupPage" component={CreateGroupPage} />
-          <Stack.Screen name="JoinGroupPage" component={JoinGroupPage} />
+          <Stack.Screen name={OnBoarding.Login} component={LoginPage} />
+          <Stack.Screen
+            name={OnBoarding.ChooseGroup}
+            component={ChooseGroupPage}
+          />
+          <Stack.Screen
+            name={OnBoarding.CreateGroup}
+            component={CreateGroupPage}
+          />
+          <Stack.Screen name={OnBoarding.JoinGroup} component={JoinGroupPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

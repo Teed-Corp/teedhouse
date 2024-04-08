@@ -1,7 +1,7 @@
-import React, { Dispatch, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import theme from "@app/theme/theme";
 import Divider from "@app/components/Divider";
+import theme from "@app/theme/theme";
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 const CustomDropdown = ({
@@ -11,8 +11,8 @@ const CustomDropdown = ({
   displayTopPlaceHolder = false,
   value,
 }: {
-  data: [{ label: string; value: string }];
-  onSelect: Dispatch<any>;
+  data: any[];
+  onSelect: any;
   placeHolder: string;
   displayTopPlaceHolder?: boolean;
   value?: string;

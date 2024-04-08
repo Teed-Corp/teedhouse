@@ -3,8 +3,9 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import useAuth from "@app/hooks/Auth";
 import AuthCard from "@app/screens/login/components/AuthCard";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { OnBoarding } from "@app/navigation/routes";
 
-const LoginPage = () => {
+const LoginPage = ({ navigation }) => {
   const { loginWithEmail, registerWithEmail, isAuthenticated } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,19 +13,29 @@ const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   const onConfirm = async () => {
-    try {
-      if (isLogin) {
-        await loginWithEmail(email, password, handleError);
-      } else {
-        await registerWithEmail(email, password, confirmPassword, handleError);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    if (isLogin) {
+      const { error } = await loginWithEmail(email, password);
 
-  const handleError = (error: { message: any }) => {
-    alert(error.message);
+      if (!error) {
+        navigation.replace(OnBoarding.ChooseGroupPage);
+      } else {
+        console.log(error);
+        alert(error.message);
+      }
+    } else {
+      const { error } = await registerWithEmail(
+        email,
+        password,
+        confirmPassword,
+      );
+
+      if (!error) {
+        navigation.replace(OnBoarding.ChooseGroupPage);
+      } else {
+        console.log(error);
+        alert(error.message);
+      }
+    }
   };
 
   return (

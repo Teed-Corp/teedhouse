@@ -3,7 +3,7 @@ CREATE TABLE "profile" (
     "id" UUID NOT NULL,
     "full_name" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "profile_pkey" PRIMARY KEY ("id")
 );
@@ -12,6 +12,7 @@ CREATE TABLE "profile" (
 CREATE TABLE "family" (
     "id" UUID NOT NULL,
     "name" TEXT NOT NULL,
+    "code" VARCHAR(6) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -44,6 +45,9 @@ CREATE TABLE "_familyToprofile" (
     "A" UUID NOT NULL,
     "B" UUID NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "family_code_key" ON "family"("code");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_familyToprofile_AB_unique" ON "_familyToprofile"("A", "B");

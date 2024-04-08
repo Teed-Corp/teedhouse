@@ -1,15 +1,16 @@
 import GroupButton from "@app/screens/chooseGroup/components/GroupButton";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
+import { OnBoarding } from "@app/navigation/routes";
 
 const ChooseGroupPage = () => {
   const navigation: any = useNavigation();
 
   const handlePressCreateGroup = () => {
-    navigation.navigate("LoginPage");
+    navigation.navigate(OnBoarding.CreateGroupPage);
   };
   const handlePressJoinGroup = () => {
-    navigation.navigate("LoginPage");
+    navigation.navigate(OnBoarding.JoinGroupPage);
   };
 
   return (

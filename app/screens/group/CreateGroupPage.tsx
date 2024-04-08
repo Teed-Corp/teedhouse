@@ -1,15 +1,19 @@
 import ErrorText from "@app/components/Content/ErrorText";
+import React, { useState } from "react";
 import HeaderIcon from "@app/components/Content/HeaderIcon";
 import HeaderTitle from "@app/components/Content/HeaderTitle";
 import Divider from "@app/components/Divider";
 import AppButton from "@app/components/Inputs/AppButton";
 import CustomDropdown from "@app/components/Inputs/CustomDropdown";
 import CustomTextField from "@app/components/Inputs/CustomTextField";
-import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import useFamily from "@app/hooks/Family";
 
 const CreateGroupPage = () => {
+  const { createFamily } = useFamily();
+  const [groupName, setGroupName] = useState("");
   const [homeType, setHomeType] = useState(null);
   const [groupName, setGroupName] = useState(null);
   const [displayError, setDisplayError] = useState(false);
@@ -25,6 +29,7 @@ const CreateGroupPage = () => {
     if (groupName !== null && homeType !== null) {
       console.log("Group name: ", groupName);
       console.log("Home type: ", homeType);
+      await createFamily(groupName);
     }
   };
 
@@ -73,7 +78,6 @@ const CreateGroupPage = () => {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       />
-    </SafeAreaView>
   );
 };
 

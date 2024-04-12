@@ -3,11 +3,11 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const GroupButton = ({ onPressEvent, isJoinGroup, title }) => {
+const FamilyButton = ({ onPressEvent, isJoinFamily, title }) => {
   return (
     <TouchableOpacity style={styles.cardShadow} onPress={onPressEvent}>
       <View style={[styles.cardContainer]}>
-        {!isJoinGroup ? (
+        {!isJoinFamily ? (
           <LinearGradient
             colors={[colors.primary, colors.gradientColor]}
             start={{ x: 0, y: 0.5 }}
@@ -18,7 +18,7 @@ const GroupButton = ({ onPressEvent, isJoinGroup, title }) => {
           </LinearGradient>
         ) : (
           <View style={styles.content}>
-            <Text style={styles.joinGroup}>{title}</Text>
+            <Text style={styles.joinFamily}>{title}</Text>
           </View>
         )}
       </View>
@@ -26,7 +26,7 @@ const GroupButton = ({ onPressEvent, isJoinGroup, title }) => {
   );
 };
 
-export default GroupButton;
+export default FamilyButton;
 
 const styles = StyleSheet.create({
   content: {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white",
   },
-  joinGroup: {
+  joinFamily: {
     fontSize: 20,
     color: colors.primary,
   },

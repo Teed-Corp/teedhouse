@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { OnBoarding } from "@app/navigation/routes";
 
 const LoginPage = ({ navigation }) => {
-  const { loginWithEmail, registerWithEmail, isAuthenticated } = useAuth();
+  const { loginWithEmail, registerWithEmail } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,7 +17,7 @@ const LoginPage = ({ navigation }) => {
       const { error } = await loginWithEmail(email, password);
 
       if (!error) {
-        navigation.replace(OnBoarding.ChooseGroupPage);
+        navigation.replace(OnBoarding.ChooseFamilyPage);
       } else {
         console.log(error);
         alert(error.message);
@@ -30,7 +30,7 @@ const LoginPage = ({ navigation }) => {
       );
 
       if (!error) {
-        navigation.replace(OnBoarding.ChooseGroupPage);
+        navigation.replace(OnBoarding.ChooseFamilyPage);
       } else {
         console.log(error);
         alert(error.message);

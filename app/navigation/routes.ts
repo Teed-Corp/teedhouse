@@ -3,4 +3,5 @@ export enum OnBoarding {
   ChooseFamilyPage = "ChooseFamilyPage",
   JoinFamilyPage = "JoinFamilyPage",
   CreateFamilyPage = "CreateFamilyPage",
+  GetUserInformationPage = "GetUserInformationPage",
 }

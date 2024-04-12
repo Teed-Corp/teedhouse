@@ -12,6 +12,7 @@ import {
   View,
 } from "react-native";
 import * as Yup from "yup";
+import CustomLoader from "@app/components/CustomLoader";
 
 const AuthCard = ({
   email,
@@ -21,6 +22,7 @@ const AuthCard = ({
   isLogin,
   setIsLogin,
   onConfirm,
+  isLoading,
 }: {
   email: string;
   setEmail: Dispatch<string>;
@@ -29,6 +31,7 @@ const AuthCard = ({
   isLogin: boolean;
   setIsLogin: Dispatch<boolean>;
   onConfirm: () => void;
+  isLoading: boolean;
 }) => {
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Email invalide").required("Un email est requis"),
@@ -93,10 +96,14 @@ const AuthCard = ({
                   <ErrorText error={errors.password} />
                 )}
               </View>
-              <AppButton
-                title={isLogin ? "Se Connecter" : "S'inscrire"}
-                onPressEvent={handleSubmit}
-              />
+              {isLoading ? (
+                <CustomLoader />
+              ) : (
+                <AppButton
+                  title={isLogin ? "Se Connecter" : "S'inscrire"}
+                  onPressEvent={handleSubmit}
+                />
+              )}
               {isLogin ? (
                 <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
               ) : null}

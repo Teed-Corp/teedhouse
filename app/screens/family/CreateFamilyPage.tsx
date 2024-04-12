@@ -9,12 +9,14 @@ import useFamily from "@app/hooks/Family";
 import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import CustomLoader from "@app/components/CustomLoader";
 
 const CreateFamilyPage = () => {
   const { createFamily } = useFamily();
   const [homeType, setHomeType] = useState(null);
   const [familyName, setFamilyName] = useState(null);
   const [displayError, setDisplayError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const data = [
     { label: "Maison", value: "Maison" },
@@ -23,12 +25,14 @@ const CreateFamilyPage = () => {
   ];
 
   const onConfirm = async () => {
+    setIsLoading(true);
     setDisplayError(true);
     if (familyName !== null && homeType !== null) {
       console.log("Family name: ", familyName);
       console.log("Home type: ", homeType);
       await createFamily(familyName);
     }
+    setIsLoading(false);
   };
 
   const renderItem = () => (
@@ -64,7 +68,11 @@ const CreateFamilyPage = () => {
         <ErrorText error="Un type de logement est requis" />
       )}
       <Divider height={20} />
-      <AppButton title="Continuer" onPressEvent={onConfirm} />
+      {isLoading ? (
+        <CustomLoader />
+      ) : (
+        <AppButton title="Continuer" onPressEvent={onConfirm} />
+      )}
     </View>
   );
 

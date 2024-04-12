@@ -15,10 +15,12 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 import useFamily from "@app/hooks/Family";
+import CustomLoader from "@app/components/CustomLoader";
 
 const JoinFamilyPage = () => {
   const { joinFamily } = useFamily();
   const [familyCode, setFamilyCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const validationSchema = Yup.object().shape({
     familyCode: Yup.string()
@@ -27,7 +29,9 @@ const JoinFamilyPage = () => {
   });
 
   const handleJoinFamily = async () => {
+    setIsLoading(true);
     await joinFamily(familyCode);
+    setIsLoading(false);
   };
 
   return (
@@ -68,12 +72,11 @@ const JoinFamilyPage = () => {
                   </View>
                 )}
                 <Divider height={24} />
-                <AppButton
-                  title="Continuer"
-                  onPressEvent={() => {
-                    handleSubmit();
-                  }}
-                />
+                {isLoading ? (
+                  <CustomLoader />
+                ) : (
+                  <AppButton title="Continuer" onPressEvent={handleSubmit} />
+                )}
               </ScrollView>
             </View>
           )}

@@ -1,7 +1,8 @@
 import GroupButton from "@app/screens/chooseGroup/components/GroupButton";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { OnBoarding } from "@app/navigation/routes";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ChooseGroupPage = () => {
   const navigation: any = useNavigation();
@@ -14,20 +15,32 @@ const ChooseGroupPage = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", paddingHorizontal: 20 }}>
+    <SafeAreaView style={styles.container}>
       <GroupButton
         onPressEvent={handlePressCreateGroup}
         isJoinGroup={false}
         title="Créer un groupe"
       />
-      <View style={{ marginVertical: -100 }} />
+      <View />
+      <View style={styles.divider}></View>
       <GroupButton
         onPressEvent={handlePressJoinGroup}
         isJoinGroup
         title="Rejoindre un groupe"
       />
-    </View>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  divider: {
+    paddingVertical: "5%",
+  },
+});
 
 export default ChooseGroupPage;

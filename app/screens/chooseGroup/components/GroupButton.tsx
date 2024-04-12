@@ -1,66 +1,52 @@
 import colors from "@app/theme/theme";
-import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const GroupButton = ({ onPressEvent, isJoinGroup, title }) => {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        onPress={onPressEvent}
-        style={[styles.button, styles.shadowBox]}
-      >
+    <TouchableOpacity style={styles.cardShadow} onPress={onPressEvent}>
+      <View style={[styles.cardContainer]}>
         {!isJoinGroup ? (
           <LinearGradient
             colors={[colors.primary, colors.gradientColor]}
             start={{ x: 0, y: 0.5 }}
             end={{ x: 1, y: 1 }}
-            style={styles.gradient}
+            style={styles.content}
           >
             <Text style={styles.text}>{title}</Text>
           </LinearGradient>
         ) : (
-          <View style={[styles.gradient, styles.bg]}>
-            <Text style={[styles.text, !isJoinGroup ? null : styles.joinGroup]}>
-              {title}
-            </Text>
+          <View style={styles.content}>
+            <Text style={styles.joinGroup}>{title}</Text>
           </View>
         )}
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
 export default GroupButton;
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    flex: 1,
-    justifyContent: "center",
-  },
-  gradient: {
-    flex: 1,
+  content: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  button: {
-    borderRadius: 25,
-    height: 300,
-    overflow: "hidden",
+    flex: 1,
+    backgroundColor: colors.bgColor,
   },
   text: {
     fontSize: 20,
     color: "white",
   },
   joinGroup: {
+    fontSize: 20,
     color: colors.primary,
   },
-  bg: {
-    backgroundColor: colors.bgColor,
-  },
-  shadowBox: {
-    shadowColor: "black",
+
+  cardShadow: {
+    backgroundColor: "transparent",
+    shadowColor: "#000",
     shadowOffset: {
       width: 6,
       height: 6,
@@ -68,5 +54,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     shadowRadius: 4,
     elevation: 10,
+    height: "35%",
+  },
+  cardContainer: {
+    borderRadius: 25,
+    overflow: "hidden",
+    height: "100%",
   },
 });

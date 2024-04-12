@@ -20,8 +20,6 @@ const AuthCard = ({
   setPassword,
   isLogin,
   setIsLogin,
-  confirmPassword,
-  setConfirmPassword,
   onConfirm,
 }: {
   email: string;
@@ -30,24 +28,9 @@ const AuthCard = ({
   setPassword: Dispatch<string>;
   isLogin: boolean;
   setIsLogin: Dispatch<boolean>;
-  confirmPassword: string;
-  setConfirmPassword: Dispatch<string>;
   onConfirm: () => void;
 }) => {
-  const validationSchemaSignUp = Yup.object().shape({
-    email: Yup.string().email("Email invalide").required("Un email est requis"),
-    password: Yup.string()
-      .min(6, "Le mot de passe doit contenir au moins 6 caractères")
-      .required("Un mot de passe est requis"),
-    confirmPassword: Yup.string()
-      .oneOf(
-        [Yup.ref("password"), null],
-        "Les mots de passes ne correspondent pas",
-      )
-      .required("Veuillez confirmer votre mot de passe"),
-  });
-
-  const validationSchemaSignIn = Yup.object().shape({
+  const validationSchema = Yup.object().shape({
     email: Yup.string().email("Email invalide").required("Un email est requis"),
     password: Yup.string()
       .min(6, "Le mot de passe doit contenir au moins 6 caractères")
@@ -60,11 +43,8 @@ const AuthCard = ({
         initialValues={{
           email,
           password,
-          confirmPassword,
         }}
-        validationSchema={
-          isLogin ? validationSchemaSignIn : validationSchemaSignUp
-        }
+        validationSchema={validationSchema}
         onSubmit={() => {
           onConfirm();
         }}
@@ -113,23 +93,6 @@ const AuthCard = ({
                   <ErrorText error={errors.password} />
                 )}
               </View>
-              {!isLogin ? (
-                <View style={styles.separator}>
-                  <CustomTextField
-                    value={values.confirmPassword}
-                    placeHolderValue="Confirmer le mot de passe"
-                    onChangeEvent={(value) => {
-                      handleChange("confirmPassword")(value);
-                      setConfirmPassword(value);
-                    }}
-                    isPassword
-                    secureTextEntry
-                  />
-                  {errors.confirmPassword && touched.confirmPassword && (
-                    <ErrorText error={errors.confirmPassword} />
-                  )}
-                </View>
-              ) : null}
               <AppButton
                 title={isLogin ? "Se Connecter" : "S'inscrire"}
                 onPressEvent={handleSubmit}

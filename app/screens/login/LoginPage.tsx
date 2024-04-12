@@ -9,7 +9,6 @@ const LoginPage = ({ navigation }) => {
   const { loginWithEmail, registerWithEmail } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
 
   const onConfirm = async () => {
@@ -23,11 +22,7 @@ const LoginPage = ({ navigation }) => {
         alert(error.message);
       }
     } else {
-      const { error } = await registerWithEmail(
-        email,
-        password,
-        confirmPassword,
-      );
+      const { error } = await registerWithEmail(email, password);
 
       if (!error) {
         navigation.replace(OnBoarding.ChooseFamilyPage);
@@ -52,8 +47,6 @@ const LoginPage = ({ navigation }) => {
             setPassword={setPassword}
             isLogin={isLogin}
             setIsLogin={setIsLogin}
-            confirmPassword={confirmPassword}
-            setConfirmPassword={setConfirmPassword}
             onConfirm={onConfirm}
           />
         </ScrollView>

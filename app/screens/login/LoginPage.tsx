@@ -10,8 +10,10 @@ const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onConfirm = async () => {
+    setIsLoading(true);
     if (isLogin) {
       const { error } = await loginWithEmail(email, password);
 
@@ -31,6 +33,7 @@ const LoginPage = ({ navigation }) => {
         alert(error.message);
       }
     }
+    setIsLoading(false);
   };
 
   return (
@@ -48,6 +51,7 @@ const LoginPage = ({ navigation }) => {
             isLogin={isLogin}
             setIsLogin={setIsLogin}
             onConfirm={onConfirm}
+            isLoading={isLoading}
           />
         </ScrollView>
       </View>

@@ -16,25 +16,25 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 import useFamily from "@app/hooks/Family";
 
-const JoinGroupPage = () => {
+const JoinFamilyPage = () => {
   const { joinFamily } = useFamily();
-  const [groupCode, setGroupCode] = useState("");
+  const [familyCode, setFamilyCode] = useState("");
 
   const validationSchema = Yup.object().shape({
-    groupCode: Yup.string()
+    familyCode: Yup.string()
       .required("Un code est requis")
       .min(6, "Le code doit contenir au moins 6 caractères"),
   });
 
   const handleJoinFamily = async () => {
-    await joinFamily(groupCode);
+    await joinFamily(familyCode);
   };
 
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="height">
         <Formik
-          initialValues={{ groupCode }}
+          initialValues={{ familyCode }}
           validationSchema={validationSchema}
           onSubmit={handleJoinFamily}
         >
@@ -46,25 +46,25 @@ const JoinGroupPage = () => {
               >
                 <HeaderIcon icon="users" />
                 <Divider height={24} />
-                <HeaderTitle value={"Rejoindre\n un groupe"} />
+                <HeaderTitle value={"Rejoindre\n une famille"} />
                 <Divider height={20} />
                 <Text style={styles.text}>
-                  Veuillez entrer le code de votre groupe
+                  Veuillez entrer le code de votre famille
                 </Text>
                 <Divider height={20} />
                 <CustomTextField
-                  value={values.groupCode}
+                  value={values.familyCode}
                   onChangeEvent={(value) => {
-                    handleChange("groupCode")(value);
-                    setGroupCode(value);
+                    handleChange("familyCode")(value);
+                    setFamilyCode(value);
                   }}
-                  placeHolderValue="Code du groupe"
+                  placeHolderValue="Code de la famille"
                   displayTopPlaceHolder
                   autoCapitalize="characters"
                 />
-                {errors.groupCode && touched.groupCode && (
+                {errors.familyCode && touched.familyCode && (
                   <View style={styles.errorContainer}>
-                    <Text style={styles.errorText}>{errors.groupCode}</Text>
+                    <Text style={styles.errorText}>{errors.familyCode}</Text>
                   </View>
                 )}
                 <Divider height={24} />
@@ -110,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default JoinGroupPage;
+export default JoinFamilyPage;

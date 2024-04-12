@@ -10,10 +10,10 @@ import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const CreateGroupPage = () => {
+const CreateFamilyPage = () => {
   const { createFamily } = useFamily();
   const [homeType, setHomeType] = useState(null);
-  const [groupName, setGroupName] = useState(null);
+  const [familyName, setFamilyName] = useState(null);
   const [displayError, setDisplayError] = useState(false);
 
   const data = [
@@ -24,10 +24,10 @@ const CreateGroupPage = () => {
 
   const onConfirm = async () => {
     setDisplayError(true);
-    if (groupName !== null && homeType !== null) {
-      console.log("Group name: ", groupName);
+    if (familyName !== null && homeType !== null) {
+      console.log("Family name: ", familyName);
       console.log("Home type: ", homeType);
-      await createFamily(groupName);
+      await createFamily(familyName);
     }
   };
 
@@ -35,22 +35,22 @@ const CreateGroupPage = () => {
     <View style={styles.content}>
       <HeaderIcon icon="users" />
       <Divider height={24} />
-      <HeaderTitle value={"Créer\n un groupe"} />
+      <HeaderTitle value={"Créer\n une famille"} />
       <Divider height={20} />
       <Text style={styles.text}>
         {
-          "Pour créer votre groupe,\nVeuillez remplir les informations ci-dessous"
+          "Pour créer votre famille,\nVeuillez remplir les informations ci-dessous"
         }
       </Text>
       <Divider height={24} />
       <CustomTextField
-        value={groupName}
-        onChangeEvent={setGroupName}
-        placeHolderValue="Nom du groupe"
+        value={familyName}
+        onChangeEvent={setFamilyName}
+        placeHolderValue="Nom de la famille"
         displayTopPlaceHolder
       />
-      {(groupName === null || groupName === "") && displayError && (
-        <ErrorText error="Un nom de groupe est requis" />
+      {(familyName === null || familyName === "") && displayError && (
+        <ErrorText error="Un nom est requis" />
       )}
       <Divider height={24} />
       <CustomDropdown
@@ -101,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateGroupPage;
+export default CreateFamilyPage;

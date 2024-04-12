@@ -1,32 +1,32 @@
-import GroupButton from "@app/screens/chooseGroup/components/GroupButton";
+import FamilyButton from "@app/screens/family/components/FamilyButton";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import { OnBoarding } from "@app/navigation/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const ChooseGroupPage = () => {
+const ChooseFamilyPage = () => {
   const navigation: any = useNavigation();
 
-  const handlePressCreateGroup = () => {
-    navigation.navigate(OnBoarding.CreateGroupPage);
+  const handlePressCreateFamily = () => {
+    navigation.navigate(OnBoarding.CreateFamilyPage);
   };
-  const handlePressJoinGroup = () => {
-    navigation.navigate(OnBoarding.JoinGroupPage);
+  const handlePressJoinFamily = () => {
+    navigation.navigate(OnBoarding.JoinFamilyPage);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <GroupButton
-        onPressEvent={handlePressCreateGroup}
-        isJoinGroup={false}
-        title="Créer un groupe"
+      <FamilyButton
+        onPressEvent={handlePressCreateFamily}
+        isJoinFamily={false}
+        title="Créer une famille"
       />
       <View />
       <View style={styles.divider}></View>
-      <GroupButton
-        onPressEvent={handlePressJoinGroup}
-        isJoinGroup
-        title="Rejoindre un groupe"
+      <FamilyButton
+        onPressEvent={handlePressJoinFamily}
+        isJoinFamily
+        title="Rejoindre une famille"
       />
     </SafeAreaView>
   );
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChooseGroupPage;
+export default ChooseFamilyPage;

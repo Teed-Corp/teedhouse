@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { supabase } from "../libs/supabase/Supabase";
-import { AuthInvalidCredentialsError } from "@supabase/supabase-js";
 
 const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,25 +31,10 @@ const useAuth = () => {
     return { error };
   };
 
-  const registerWithEmail = async (
-    email: string,
-    password: string,
-    confirmPassword: string,
-  ) => {
-    if (password !== confirmPassword) {
-      return {
-        error: new AuthInvalidCredentialsError("Passwords do not match"),
-      };
-    }
-
+  const registerWithEmail = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: {
-          full_name: "John Doe",
-        },
-      },
     });
 
     if (data) {

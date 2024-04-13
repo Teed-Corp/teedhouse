@@ -1,8 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import useAuth from "@app/hooks/Auth";
+import { supabase } from "@app/libs/supabase/Supabase";
+import { uuid } from "@supabase/supabase-js/dist/main/lib/helpers";
 
 const useFamily = () => {
-  const prisma = new PrismaClient();
   const auth = useAuth();
 
   const generateUniqueCode = async () => {
@@ -17,63 +17,43 @@ const useFamily = () => {
         );
       }
       isUnique =
-        (await prisma.family.findUnique({
-          where: {
-            code,
-          },
-        })) === null;
+        (await supabase.from("family").select("*").eq("code", code)).data
+          .length === 0;
     }
 
     return code;
   };
   const createFamily = async (name: string) => {
-    try {
-      return await prisma.family.create({
-        data: {
-          name,
-          code: await generateUniqueCode(),
-        },
-      });
-    } catch (error) {
-      throw new Error(error);
-    }
+    const { data, error } = await supabase.from("family").insert({
+      id: uuid(),
+      name,
+      code: await generateUniqueCode(),
+      updatedAt: new Date().toISOString(),
+    });
+
+    return { data, error };
   };
 
   const joinFamily = async (code: string) => {
     const session = await auth.getSession();
+    console.log(session);
+    if (!session) return { error: "Vous devez être connecté" };
 
-    if (!session) {
-      throw new Error("User not logged in");
-    }
+    const { data: family, error: familyError } = await supabase
+      .from("family")
+      .select("*")
+      .eq("code", code);
 
-    const user = await prisma.profile.findUnique({
-      where: {
-        id: session.user.id,
-      },
+    if (familyError) return { familyError };
+
+    if (family.length === 0) return { error: "Code invalide" };
+
+    const { data, error } = await supabase.from("_familyToprofile").insert({
+      A: family[0].id,
+      B: session.user.id,
     });
 
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    const family = await prisma.family.findUnique({
-      where: {
-        code,
-      },
-    });
-
-    if (!family) {
-      throw new Error("Family not found");
-    }
-
-    return prisma.profile.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        family: family as any,
-      },
-    });
+    return { data, error };
   };
 
   return {

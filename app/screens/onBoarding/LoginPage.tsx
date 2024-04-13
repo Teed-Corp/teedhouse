@@ -1,38 +1,39 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import useAuth from "@app/hooks/Auth";
-import AuthCard from "@app/screens/login/components/AuthCard";
+import AuthCard from "@app/screens/onBoarding/components/AuthCard";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { OnBoarding } from "@app/navigation/routes";
 
-const LoginPage = () => {
-  const { loginWithEmail, registerWithEmail, isAuthenticated } = useAuth();
+const LoginPage = ({ navigation }) => {
+  const { loginWithEmail, registerWithEmail } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onConfirm = async () => {
+    setIsLoading(true);
     if (isLogin) {
       const { error } = await loginWithEmail(email, password);
 
       if (!error) {
-        alert("Login successful");
+        navigation.replace(OnBoarding.ChooseFamilyPage);
       } else {
+        console.log(error);
         alert(error.message);
       }
     } else {
-      const { error } = await registerWithEmail(
-        email,
-        password,
-        confirmPassword,
-      );
+      const { error } = await registerWithEmail(email, password);
 
       if (!error) {
-        alert("Registration successful");
+        navigation.replace(OnBoarding.ChooseFamilyPage);
       } else {
+        console.log(error);
         alert(error.message);
       }
     }
+    setIsLoading(false);
   };
 
   return (
@@ -49,9 +50,8 @@ const LoginPage = () => {
             setPassword={setPassword}
             isLogin={isLogin}
             setIsLogin={setIsLogin}
-            confirmPassword={confirmPassword}
-            setConfirmPassword={setConfirmPassword}
             onConfirm={onConfirm}
+            isLoading={isLoading}
           />
         </ScrollView>
       </View>

@@ -1,6 +1,8 @@
+import ErrorText from "@app/components/Content/ErrorText";
 import AppButton from "@app/components/Inputs/AppButton";
 import CustomTextField from "@app/components/Inputs/CustomTextField";
 import theme from "@app/theme/theme";
+import { Formik } from "formik";
 import React, { Dispatch } from "react";
 import {
   KeyboardAvoidingView,
@@ -10,7 +12,7 @@ import {
   View,
 } from "react-native";
 import * as Yup from "yup";
-import { Formik } from "formik";
+import CustomLoader from "@app/components/CustomLoader";
 
 const AuthCard = ({
   email,
@@ -19,9 +21,8 @@ const AuthCard = ({
   setPassword,
   isLogin,
   setIsLogin,
-  confirmPassword,
-  setConfirmPassword,
   onConfirm,
+  isLoading,
 }: {
   email: string;
   setEmail: Dispatch<string>;
@@ -29,24 +30,10 @@ const AuthCard = ({
   setPassword: Dispatch<string>;
   isLogin: boolean;
   setIsLogin: Dispatch<boolean>;
-  confirmPassword: string;
-  setConfirmPassword: Dispatch<string>;
   onConfirm: () => void;
+  isLoading: boolean;
 }) => {
-  const validationSchemaSignUp = Yup.object().shape({
-    email: Yup.string().email("Email invalide").required("Un email est requis"),
-    password: Yup.string()
-      .min(6, "Le mot de passe doit contenir au moins 6 caractères")
-      .required("Un mot de passe est requis"),
-    confirmPassword: Yup.string()
-      .oneOf(
-        [Yup.ref("password"), null],
-        "Les mots de passes ne correspondent pas",
-      )
-      .required("Veuillez confirmer votre mot de passe"),
-  });
-
-  const validationSchemaSignIn = Yup.object().shape({
+  const validationSchema = Yup.object().shape({
     email: Yup.string().email("Email invalide").required("Un email est requis"),
     password: Yup.string()
       .min(6, "Le mot de passe doit contenir au moins 6 caractères")
@@ -54,16 +41,13 @@ const AuthCard = ({
   });
 
   return (
-    <KeyboardAvoidingView behavior={"height"} style={styles.pageContainer}>
+    <KeyboardAvoidingView behavior="height" style={styles.pageContainer}>
       <Formik
         initialValues={{
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword,
+          email,
+          password,
         }}
-        validationSchema={
-          isLogin ? validationSchemaSignIn : validationSchemaSignUp
-        }
+        validationSchema={validationSchema}
         onSubmit={() => {
           onConfirm();
         }}
@@ -94,7 +78,7 @@ const AuthCard = ({
                   autoCapitalize="none"
                 />
                 {errors.email && touched.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
+                  <ErrorText error={errors.email} />
                 )}
               </View>
               <View style={styles.separator}>
@@ -105,36 +89,21 @@ const AuthCard = ({
                     handleChange("password")(value);
                     setPassword(value);
                   }}
-                  isPassword={true}
+                  isPassword
                   secureTextEntry
                 />
                 {errors.password && touched.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
+                  <ErrorText error={errors.password} />
                 )}
               </View>
-              {!isLogin ? (
-                <View style={styles.separator}>
-                  <CustomTextField
-                    value={values.confirmPassword}
-                    placeHolderValue="Confirmer le mot de passe"
-                    onChangeEvent={(value) => {
-                      handleChange("confirmPassword")(value);
-                      setConfirmPassword(value);
-                    }}
-                    isPassword={true}
-                    secureTextEntry
-                  />
-                  {errors.confirmPassword && touched.confirmPassword && (
-                    <Text style={styles.errorText}>
-                      {errors.confirmPassword}
-                    </Text>
-                  )}
-                </View>
-              ) : null}
-              <AppButton
-                title={isLogin ? "Se Connecter" : "S'inscrire"}
-                onPressEvent={handleSubmit}
-              />
+              {isLoading ? (
+                <CustomLoader />
+              ) : (
+                <AppButton
+                  title={isLogin ? "Se Connecter" : "S'inscrire"}
+                  onPressEvent={handleSubmit}
+                />
+              )}
               {isLogin ? (
                 <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
               ) : null}
@@ -175,6 +144,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 20,
     marginTop: 20,
+    backgroundColor: "white",
   },
 
   titleStyle: {
@@ -205,12 +175,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
-  },
-
-  errorText: {
-    color: "red",
-    marginTop: 5,
-    marginLeft: 5,
   },
 
   separator: {

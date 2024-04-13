@@ -1,3 +1,4 @@
+import AccountPage from "@app/screens/account/AccountPage";
 import { OnBoarding } from "@app/navigation/routes";
 import ChooseFamilyPage from "@app/screens/family/ChooseFamilyPage";
 import CreateFamilyPage from "@app/screens/family/CreateFamilyPage";
@@ -13,6 +14,7 @@ export type RootStackParamList = {
   ChooseFamilyPage: undefined;
   CreateFamilyPage: undefined;
   JoinFamilyPage: undefined;
+  AccountPage: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -43,6 +45,7 @@ export default function App() {
               name={OnBoarding.JoinFamilyPage}
               component={JoinFamilyPage}
             />
+            <Stack.Screen name="AccountPage" component={AccountPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

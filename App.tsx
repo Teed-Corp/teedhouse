@@ -1,3 +1,4 @@
+import AccountPage from "@app/screens/account/AccountPage";
 import ChooseGroupPage from "@app/screens/chooseGroup/ChooseGroupPage";
 import CreateGroupPage from "@app/screens/group/CreateGroupPage";
 import JoinGroupPage from "@app/screens/group/JoinGroupPage";
@@ -11,6 +12,7 @@ export type RootStackParamList = {
   ChooseGroupPage: undefined;
   CreateGroupPage: undefined;
   JoinGroupPage: undefined;
+  AccountPage: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -27,6 +29,7 @@ export default function App() {
           <Stack.Screen name="ChooseGroupPage" component={ChooseGroupPage} />
           <Stack.Screen name="CreateGroupPage" component={CreateGroupPage} />
           <Stack.Screen name="JoinGroupPage" component={JoinGroupPage} />
+          <Stack.Screen name="AccountPage" component={AccountPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

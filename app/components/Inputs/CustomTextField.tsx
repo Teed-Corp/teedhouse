@@ -21,6 +21,7 @@ const CustomTextField = ({
   keyboardType = "default",
   autoCapitalize = "sentences",
   displayTopPlaceHolder = false,
+  editable = true,
 }: {
   value: string;
   onChangeEvent: (value: string) => void;
@@ -30,6 +31,7 @@ const CustomTextField = ({
   keyboardType?: KeyboardTypeOptions;
   autoCapitalize?: TextInputProps["autoCapitalize"];
   displayTopPlaceHolder?: boolean;
+  editable?: boolean;
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -70,6 +72,7 @@ const CustomTextField = ({
           keyboardType={keyboardType}
           autoCapitalize={autoCapitalize}
           onFocus={handleFocus}
+          editable={editable}
           onBlur={handleBlur}
         />
         {isPassword && (

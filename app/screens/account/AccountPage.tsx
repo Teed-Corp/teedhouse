@@ -1,116 +1,74 @@
-import { supabase } from "@app/libs/supabase/supabase";
-import { Session } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
-import { Button, Input } from "react-native-elements";
+import AccountCard from "@app/screens/account/components/AccountCard";
+import ImagePickerPopUp from "@app/screens/account/components/ImagePickerPopUp";
+import theme from "@app/theme/theme";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import {
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-export default function AccountPage({ session }: { session: Session }) {
-  const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState("");
-  const [website, setWebsite] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
+export default function AccountPage() {
+  const [image, setSelectedImage] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
-  useEffect(() => {
-    if (session) getProfile();
-  }, [session]);
-
-  async function getProfile() {
-    try {
-      setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
-
-      const { data, error, status } = await supabase
-        .from("profiles")
-        .select(`username, website, avatar_url`)
-        .eq("id", session?.user.id)
-        .single();
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (data) {
-        setUsername(data.username);
-        setWebsite(data.website);
-        setAvatarUrl(data.avatar_url);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert(error.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function updateProfile({
-    username,
-    website,
-    avatar_url,
-  }: {
-    username: string;
-    website: string;
-    avatar_url: string;
-  }) {
-    try {
-      setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
-
-      const updates = {
-        id: session?.user.id,
-        username,
-        website,
-        avatar_url,
-        updated_at: new Date(),
-      };
-
-      const { error } = await supabase.from("profiles").upsert(updates);
-
-      if (error) {
-        throw error;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert(error.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
+  const handleImageSelected = (image: any) => {
+    setSelectedImage(image);
+  };
+  const userTest = {
+    userSurname: "Doe",
+    userName: "John",
+    dof: "01/01/2000",
+    email: "test@test.com",
+    stats: "1200",
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input label="Email" value={session?.user?.email} disabled />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Username"
-          value={username || ""}
-          onChangeText={(text) => setUsername(text)}
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.scrollViewContainer}
+    >
+      <KeyboardAvoidingView behavior="height">
+        <View style={styles.container}>
+          <Text style={styles.title}> Ton Profil</Text>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source={
+                image
+                  ? { uri: image }
+                  : require("../../../assets/defaultProfile.jpg")
+              }
+            />
+            <TouchableOpacity
+              style={styles.cameraIconContainer}
+              onPress={() => {
+                setShowPopup(true);
+              }}
+            >
+              <Ionicons name="camera" size={20} color="white" />
+            </TouchableOpacity>
+          </View>
+          <AccountCard
+            userSurname={userTest.userSurname}
+            userName={userTest.userName}
+            dof={userTest.dof}
+            email={userTest.email}
+            stats={userTest.stats}
+          />
+        </View>
+        <ImagePickerPopUp
+          showPopup={showPopup}
+          setShowPopup={setShowPopup}
+          onImageSelected={handleImageSelected}
         />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Website"
-          value={website || ""}
-          onChangeText={(text) => setWebsite(text)}
-        />
-      </View>
-
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title={loading ? "Loading ..." : "Update"}
-          onPress={() =>
-            updateProfile({ username, website, avatar_url: avatarUrl })
-          }
-          disabled={loading}
-        />
-      </View>
-
-      <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
-      </View>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
@@ -118,13 +76,38 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 40,
     padding: 12,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
+  image: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 75,
   },
-  mt20: {
-    marginTop: 20,
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  cameraIconContainer: {
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+    backgroundColor: theme.primary,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageContainer: {
+    width: 150,
+    height: 150,
+    overflow: "hidden",
+    position: "relative",
+  },
+  scrollViewContainer: {
+    flexGrow: 1,
   },
 });

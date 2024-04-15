@@ -21,10 +21,10 @@ export default function AccountPage() {
     setSelectedImage(image);
   };
   const userTest = {
-    userSurname: "Doe",
-    userName: "John",
-    dof: "01/01/2000",
-    email: "test@test.com",
+    userSurname: "",
+    userName: "",
+    dof: "",
+    email: "",
     stats: "1200",
   };
 

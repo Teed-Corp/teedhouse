@@ -31,7 +31,7 @@ export default function App() {
       <SafeAreaProvider>
         <NavigationContainer theme={navTheme}>
           <Stack.Navigator
-            initialRouteName={OnBoarding.ChooseFamilyPage}
+            initialRouteName={OnBoarding.LoginPage}
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name={OnBoarding.LoginPage} component={LoginPage} />

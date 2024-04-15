@@ -1,8 +1,10 @@
 import HeaderIcon from "@app/components/Content/HeaderIcon";
 import HeaderTitle from "@app/components/Content/HeaderTitle";
+import CustomLoader from "@app/components/CustomLoader";
 import Divider from "@app/components/Divider";
 import AppButton from "@app/components/Inputs/AppButton";
 import CustomTextField from "@app/components/Inputs/CustomTextField";
+import useFamily from "@app/hooks/Family";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import {
@@ -14,8 +16,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
-import useFamily from "@app/hooks/Family";
-import CustomLoader from "@app/components/CustomLoader";
 
 const JoinFamilyPage = () => {
   const { joinFamily } = useFamily();
@@ -64,7 +64,6 @@ const JoinFamilyPage = () => {
                   }}
                   placeHolderValue="Code de la famille"
                   displayTopPlaceHolder
-                  autoCapitalize="characters"
                 />
                 {errors.familyCode && touched.familyCode && (
                   <View style={styles.errorContainer}>

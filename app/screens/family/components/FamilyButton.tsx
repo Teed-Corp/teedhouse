@@ -1,7 +1,7 @@
 import colors from "@app/theme/theme";
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 
 const FamilyButton = ({ onPressEvent, isJoinFamily, title }) => {
   return (
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   },
 
   cardShadow: {
+    borderRadius: 25,
     backgroundColor: "transparent",
     shadowColor: "#000",
     shadowOffset: {

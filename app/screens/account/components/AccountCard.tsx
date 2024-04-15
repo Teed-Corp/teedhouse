@@ -1,9 +1,11 @@
+import ErrorText from "@app/components/Content/ErrorText";
 import Divider from "@app/components/Divider";
 import AppButton from "@app/components/Inputs/AppButton";
+import CustomDatePicker from "@app/components/Inputs/CustomDatePicker";
 import CustomTextField from "@app/components/Inputs/CustomTextField";
 import { Formik } from "formik";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import * as Yup from "yup";
 
 export default function AccountCard({
@@ -20,7 +22,10 @@ export default function AccountCard({
   stats: string;
 }) {
   const validationSchema = Yup.object().shape({
+    userSurname: Yup.string().required("Un nom est requis"),
+    userName: Yup.string().required("Un prénom est requis"),
     email: Yup.string().email("Email invalide").required("Un email est requis"),
+    dof: Yup.string().required("Une date de naissance est requise"),
   });
 
   return (
@@ -45,7 +50,7 @@ export default function AccountCard({
               displayTopPlaceHolder
             />
             {errors.userSurname && touched.userSurname && (
-              <Text>{errors.userSurname}</Text>
+              <ErrorText error={errors.userSurname} />
             )}
             <Divider height={10} />
             <CustomTextField
@@ -55,16 +60,15 @@ export default function AccountCard({
               displayTopPlaceHolder
             />
             {errors.userName && touched.userName && (
-              <Text>{errors.userName}</Text>
+              <ErrorText error={errors.userName} />
             )}
             <Divider height={10} />
-            <CustomTextField
-              value={values.dof}
-              onChangeEvent={handleChange("dof")}
-              placeHolderValue="Date de naissance"
+            <CustomDatePicker
+              placeHolder="Date de naissance"
               displayTopPlaceHolder
+              handleChange={handleChange("dof")}
             />
-            {errors.dof && touched.dof && <Text>{errors.dof}</Text>}
+            {errors.dof && touched.dof && <ErrorText error={errors.dof} />}
             <Divider height={10} />
             <CustomTextField
               value={values.email}
@@ -72,7 +76,9 @@ export default function AccountCard({
               placeHolderValue="Email"
               displayTopPlaceHolder
             />
-            {errors.email && touched.email && <Text>{errors.email}</Text>}
+            {errors.email && touched.email && (
+              <ErrorText error={errors.email} />
+            )}
             <Divider height={10} />
             <CustomTextField
               value={values.stats}
@@ -81,7 +87,9 @@ export default function AccountCard({
               placeHolderValue="Stats"
               displayTopPlaceHolder
             />
-            {errors.stats && touched.stats && <Text>{errors.stats}</Text>}
+            {errors.stats && touched.stats && (
+              <ErrorText error={errors.stats} />
+            )}
             <Divider height={50} />
             <AppButton title="Enregistrer" onPressEvent={handleSubmit} />
           </View>

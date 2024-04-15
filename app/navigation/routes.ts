@@ -5,3 +5,7 @@ export enum OnBoarding {
   CreateFamilyPage = "CreateFamilyPage",
   GetUserInformationPage = "GetUserInformationPage",
 }
+
+export enum Home {
+  AccountPage = "AccountPage",
+}

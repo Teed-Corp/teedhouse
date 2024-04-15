@@ -1,19 +1,21 @@
+import { Home, OnBoarding } from "@app/navigation/routes";
 import AccountPage from "@app/screens/account/AccountPage";
-import { OnBoarding } from "@app/navigation/routes";
 import ChooseFamilyPage from "@app/screens/family/ChooseFamilyPage";
 import CreateFamilyPage from "@app/screens/family/CreateFamilyPage";
 import JoinFamilyPage from "@app/screens/family/JoinFamilyPage";
+import GetUserInformationPage from "@app/screens/onBoarding/GetUserInformationPage";
+import LoginPage from "@app/screens/onBoarding/LoginPage";
+import { ThemeProvider, useTheme } from "@app/theme/ThemeProvider";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { ThemeProvider, useTheme } from "@app/theme/ThemeProvider";
-import LoginPage from "@app/screens/onBoarding/LoginPage";
 
 export type RootStackParamList = {
   LoginPage: undefined;
   ChooseFamilyPage: undefined;
   CreateFamilyPage: undefined;
   JoinFamilyPage: undefined;
+  GetUserInformationPage: undefined;
   AccountPage: undefined;
 };
 
@@ -45,7 +47,11 @@ export default function App() {
               name={OnBoarding.JoinFamilyPage}
               component={JoinFamilyPage}
             />
-            <Stack.Screen name="AccountPage" component={AccountPage} />
+            <Stack.Screen
+              name={OnBoarding.GetUserInformationPage}
+              component={GetUserInformationPage}
+            />
+            <Stack.Screen name={Home.AccountPage} component={AccountPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

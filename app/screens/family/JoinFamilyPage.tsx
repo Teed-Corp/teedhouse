@@ -64,6 +64,7 @@ const JoinFamilyPage = () => {
                   }}
                   placeHolderValue="Code de la famille"
                   displayTopPlaceHolder
+                  autoCapitalize="characters"
                 />
                 {errors.familyCode && touched.familyCode && (
                   <View style={styles.errorContainer}>

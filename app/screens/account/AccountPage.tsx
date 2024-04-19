@@ -5,13 +5,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import {
   Image,
-  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AccountPage() {
   const [image, setSelectedImage] = useState(null);
@@ -29,11 +29,11 @@ export default function AccountPage() {
   };
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.scrollViewContainer}
-    >
-      <KeyboardAvoidingView behavior="height">
+    <SafeAreaView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollViewContainer}
+      >
         <View style={styles.container}>
           <Text style={styles.title}> Ton Profil</Text>
           <View style={styles.imageContainer}>
@@ -67,8 +67,8 @@ export default function AccountPage() {
           setShowPopup={setShowPopup}
           onImageSelected={handleImageSelected}
         />
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

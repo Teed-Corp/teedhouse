@@ -12,4 +12,5 @@ export enum Task {
 
 export enum Home {
   AccountPage = "AccountPage",
+  FamilyStatsPage = "FamilyStatsPage",
 }

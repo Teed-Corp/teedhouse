@@ -1,4 +1,4 @@
-import { Home, OnBoarding } from "@app/navigation/routes";
+import { Home, OnBoarding, Task } from "@app/navigation/routes";
 import AccountPage from "@app/screens/account/AccountPage";
 import ChooseFamilyPage from "@app/screens/family/ChooseFamilyPage";
 import CreateFamilyPage from "@app/screens/family/CreateFamilyPage";
@@ -9,6 +9,7 @@ import { ThemeProvider, useTheme } from "@app/theme/ThemeProvider";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import TaskPage from "@app/screens/task/TaskPage";
 
 export type RootStackParamList = {
   LoginPage: undefined;
@@ -17,6 +18,7 @@ export type RootStackParamList = {
   JoinFamilyPage: undefined;
   GetUserInformationPage: undefined;
   AccountPage: undefined;
+  TaskPage: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -52,6 +54,7 @@ export default function App() {
               component={GetUserInformationPage}
             />
             <Stack.Screen name={Home.AccountPage} component={AccountPage} />
+            <Stack.Screen name={Task.TaskPage} component={TaskPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

@@ -6,6 +6,10 @@ export enum OnBoarding {
   GetUserInformationPage = "GetUserInformationPage",
 }
 
+export enum Task {
+  TaskPage = "TaskPage",
+}
+
 export enum Home {
   AccountPage = "AccountPage",
 }

@@ -5,6 +5,7 @@ import CreateFamilyPage from "@app/screens/family/CreateFamilyPage";
 import JoinFamilyPage from "@app/screens/family/JoinFamilyPage";
 import GetUserInformationPage from "@app/screens/onBoarding/GetUserInformationPage";
 import LoginPage from "@app/screens/onBoarding/LoginPage";
+import FamilyStatsPage from "@app/screens/stats/FamilyStatsPage";
 import { ThemeProvider, useTheme } from "@app/theme/ThemeProvider";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -17,6 +18,7 @@ export type RootStackParamList = {
   JoinFamilyPage: undefined;
   GetUserInformationPage: undefined;
   AccountPage: undefined;
+  FamilyStatsPage: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -52,6 +54,10 @@ export default function App() {
               component={GetUserInformationPage}
             />
             <Stack.Screen name={Home.AccountPage} component={AccountPage} />
+            <Stack.Screen
+              name={Home.FamilyStatsPage}
+              component={FamilyStatsPage}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

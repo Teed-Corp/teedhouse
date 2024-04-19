@@ -8,4 +8,5 @@ export enum OnBoarding {
 
 export enum Home {
   AccountPage = "AccountPage",
+  FamilyStatsPage = "FamilyStatsPage",
 }

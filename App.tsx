@@ -11,6 +11,7 @@ import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TaskPage from "@app/screens/task/TaskPage";
+import HomePage from "@app/screens/home/HomePage";
 
 export type RootStackParamList = {
   LoginPage: undefined;
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   AccountPage: undefined;
   TaskPage: undefined;
   FamilyStatsPage: undefined;
+  HomePage: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -61,6 +63,7 @@ export default function App() {
               component={FamilyStatsPage}
             />
             <Stack.Screen name={Task.TaskPage} component={TaskPage} />
+            <Stack.Screen name={Home.HomePage} component={HomePage} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

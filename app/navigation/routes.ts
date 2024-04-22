@@ -11,6 +11,7 @@ export enum Task {
 }
 
 export enum Home {
+  AddTaskPage = "AddTaskPage",
   AccountPage = "AccountPage",
   FamilyStatsPage = "FamilyStatsPage",
   HomePage = "HomePage",

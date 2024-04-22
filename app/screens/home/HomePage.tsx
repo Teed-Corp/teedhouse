@@ -1,15 +1,33 @@
-import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import HomePageHeader from "@app/screens/home/components/HomePageHeader";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import Divider from "@app/components/Divider";
+import { Task } from "@app/navigation/routes";
+import HomePageHeader from "@app/screens/home/components/HomePageHeader";
 import HomePageMenuItem from "@app/screens/home/components/HomePageMenuItem";
+import HomePageStatsHeader from "@app/screens/home/components/HomePageStatsHeader";
 import TaskItemComponent from "@app/screens/task/components/TaskItemComponent";
 import theme from "@app/theme/theme";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
-import HomePageStatsHeader from "@app/screens/home/components/HomePageStatsHeader";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomePage = () => {
+  const navigation: any = useNavigation();
+
+  const handlePressMyTasks = () => {
+    navigation.navigate(Task.MyTaskPage, {
+      title: "Mes tâches",
+      taskList: otherTasks,
+    });
+  };
+
+  const handlePressOtherTasks = () => {
+    navigation.navigate(Task.MyTaskPage, {
+      title: "Autres tâches",
+      taskList: otherTasks,
+    });
+  };
+
   const user = {
     name: "John Doe",
     profilePicture: "https://picsum.photos/200",
@@ -58,27 +76,20 @@ const HomePage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HomePageHeader user={user} />
+      <HomePageHeader user={user} navigation={navigation} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Divider height={20} />
         <HomePageStatsHeader familyProgess={0.5} personalProgress={0.23} />
         <Divider height={24} />
-        <HomePageMenuItem
-          name={"Mes tâches"}
-          onPress={() => {
-            console.log("Mes tâches");
-          }}
-        />
+        <HomePageMenuItem name="Mes tâches" onPress={handlePressMyTasks} />
         <Divider height={12} />
         {myTasks.map((task) => {
           return <TaskItemComponent item={task} />;
         })}
         <Divider height={24} />
         <HomePageMenuItem
-          name={"Autres tâches"}
-          onPress={() => {
-            console.log("Autres tâches");
-          }}
+          name="Autres tâches"
+          onPress={handlePressOtherTasks}
         />
         <Divider height={12} />
         {otherTasks.map((task) => {

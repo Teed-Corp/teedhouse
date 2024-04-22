@@ -1,8 +1,13 @@
+import ErrorText from "@app/components/Content/ErrorText";
 import HeaderIcon from "@app/components/Content/HeaderIcon";
 import HeaderTitle from "@app/components/Content/HeaderTitle";
+import CustomLoader from "@app/components/CustomLoader";
 import Divider from "@app/components/Divider";
 import AppButton from "@app/components/Inputs/AppButton";
+import CustomDatePicker from "@app/components/Inputs/CustomDatePicker";
 import CustomTextField from "@app/components/Inputs/CustomTextField";
+import { OnBoarding } from "@app/navigation/routes";
+import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import {
@@ -14,9 +19,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
-import CustomLoader from "@app/components/CustomLoader";
-import ErrorText from "@app/components/Content/ErrorText";
-import CustomDatePicker from "@app/components/Inputs/CustomDatePicker";
 
 const GetUserInformationPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,8 +29,11 @@ const GetUserInformationPage = () => {
     dateOfBirth: Yup.string().required("Une date de naissance est requise"),
   });
 
+  const navigation: any = useNavigation();
+
   const handlePushUserInformation = async () => {
     setIsLoading(true);
+    navigation.replace(OnBoarding.ChooseFamilyPage);
     setIsLoading(false);
   };
 
@@ -52,7 +57,7 @@ const GetUserInformationPage = () => {
               >
                 <HeaderIcon icon="user" />
                 <Divider height={24} />
-                <HeaderTitle value={"Votre compte"} />
+                <HeaderTitle value="Votre compte" />
                 <Divider height={20} />
                 <Text style={styles.text}>
                   Veuillez entrer vos informations
@@ -81,7 +86,7 @@ const GetUserInformationPage = () => {
                 )}
                 <Divider height={24} />
                 <CustomDatePicker
-                  placeHolder={"Date de naissance"}
+                  placeHolder="Date de naissance"
                   displayTopPlaceHolder
                   handleChange={handleChange("dateOfBirth")}
                 />

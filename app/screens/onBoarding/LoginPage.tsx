@@ -1,9 +1,9 @@
+import useAuth from "@app/hooks/Auth";
+import { OnBoarding } from "@app/navigation/routes";
+import AuthCard from "@app/screens/onBoarding/components/AuthCard";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import useAuth from "@app/hooks/Auth";
-import AuthCard from "@app/screens/onBoarding/components/AuthCard";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { OnBoarding } from "@app/navigation/routes";
 
 const LoginPage = ({ navigation }) => {
   const { loginWithEmail, registerWithEmail } = useAuth();
@@ -18,7 +18,7 @@ const LoginPage = ({ navigation }) => {
       const { error } = await loginWithEmail(email, password);
 
       if (!error) {
-        navigation.replace(OnBoarding.ChooseFamilyPage);
+        navigation.replace(OnBoarding.GetUserInformationPage);
       } else {
         console.log(error);
         alert(error.message);
@@ -27,7 +27,7 @@ const LoginPage = ({ navigation }) => {
       const { error } = await registerWithEmail(email, password);
 
       if (!error) {
-        navigation.replace(OnBoarding.ChooseFamilyPage);
+        navigation.replace(OnBoarding.GetUserInformationPage);
       } else {
         console.log(error);
         alert(error.message);

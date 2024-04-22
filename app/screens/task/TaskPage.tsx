@@ -1,97 +1,18 @@
+import Divider from "@app/components/Divider";
 import TaskItemComponent from "@app/screens/task/components/TaskItemComponent";
 import TitleComponent from "@app/screens/task/components/TitleComponent";
+import { RouteProp } from "@react-navigation/native";
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function TaskPage({
-  title,
-  taskList,
-}: {
-  title: string;
-  taskList: any[];
-}) {
-  title = "Mes Tâches";
-  //title = "Autres Tâches"
-
-  taskList = [
-    {
-      taskName: "Task 1",
-      name: "Item 1",
-      score: 80,
-      type: "car",
-    },
-    {
-      taskName: "Task 2",
-      name: "Item 2",
-      score: 65,
-      type: "menage",
-    },
-    {
-      taskName: "Task 3",
-      name: "Item 3",
-      score: 90,
-      type: "shopping",
-    },
-    {
-      taskName: "Task 1",
-      name: "Item 1",
-      score: 80,
-      type: "car",
-    },
-    {
-      taskName: "Task 2",
-      name: "Item 2",
-      score: 65,
-      type: "menage",
-    },
-    {
-      taskName: "Task 3",
-      name: "Item 3",
-      score: 90,
-      type: "shopping",
-    },
-    {
-      taskName: "Task 1",
-      name: "Item 1",
-      score: 80,
-      type: "car",
-    },
-    {
-      taskName: "Task 2",
-      name: "Item 2",
-      score: 65,
-      type: "menage",
-    },
-    {
-      taskName: "Task 3",
-      name: "Item 3",
-      score: 90,
-      type: "shopping",
-    },
-    {
-      taskName: "Task 1",
-      name: "Item 1",
-      score: 80,
-      type: "car",
-    },
-    {
-      taskName: "test 2",
-      name: "Item 2",
-      score: 65,
-      type: "menage",
-    },
-    {
-      taskName: "Task 3",
-      name: "Item 3",
-      score: 90,
-      type: "shopping",
-    },
-  ];
+export default function TaskPage({ route }: { route: RouteProp<any> }) {
+  const { title, taskList } = route.params;
 
   return (
     <SafeAreaView>
       <View style={styles.container}>
+        <Divider height={35} />
         <View style={{ alignItems: "center", paddingBottom: 20 }}>
           <TitleComponent title={title} />
         </View>

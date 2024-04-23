@@ -26,7 +26,7 @@ const HomePageHeader = ({ user, navigation }) => {
         </View>
       </View>
       <TouchableOpacity onPress={handlePressStats}>
-        <HeaderIcon icon="bar-chart" size={24} />
+        <HeaderIcon icon="trophy" size={24} />
       </TouchableOpacity>
     </View>
   );

@@ -1,4 +1,5 @@
 import CustomIconButton from "@app/components/Inputs/CustomIconButton";
+import useAuth from "@app/hooks/Auth";
 import { Home, OnBoarding, Settings, Task } from "@app/navigation/routes";
 import AccountPage from "@app/screens/account/AccountPage";
 import ChooseFamilyPage from "@app/screens/family/ChooseFamilyPage";
@@ -13,30 +14,19 @@ import TaskPage from "@app/screens/task/TaskPage";
 import { ThemeProvider, useTheme } from "@app/theme/ThemeProvider";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-export type RootStackParamList = {
-  LoginPage: undefined;
-  ChooseFamilyPage: undefined;
-  CreateFamilyPage: undefined;
-  JoinFamilyPage: undefined;
-  GetUserInformationPage: undefined;
-  AccountPage: undefined;
-  MyTaskPage: undefined;
-  OtherTaskPage: undefined;
-  FamilyStatsPage: undefined;
-  HomePage: undefined;
-  SettingsPage: undefined;
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<OnBoarding & Task & Home & Settings>();
 
 export default function App() {
+  const { getSession } = useAuth();
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>();
   const bgColor = useTheme();
   const navTheme = DefaultTheme;
   navTheme.colors.background = bgColor;
+
   const baseHeader = ({ navigation }) => ({
     headerShown: true,
     title: "",
@@ -74,48 +64,65 @@ export default function App() {
     ),
   });
 
+  useEffect(() => {
+    const checkIfUserIsLoggedIn = async () => {
+      const session = await getSession();
+      setIsUserLoggedIn(session !== null);
+    };
+
+    checkIfUserIsLoggedIn().catch(console.error);
+  }, []);
+
   return (
     <ThemeProvider>
       <SafeAreaProvider>
         <NavigationContainer theme={navTheme}>
-          <Stack.Navigator
-            initialRouteName={OnBoarding.LoginPage}
-            screenOptions={baseHeader}
-          >
-            <Stack.Screen name={OnBoarding.LoginPage} component={LoginPage} />
-            <Stack.Screen
-              name={OnBoarding.ChooseFamilyPage}
-              component={ChooseFamilyPage}
-            />
-            <Stack.Screen
-              name={OnBoarding.CreateFamilyPage}
-              component={CreateFamilyPage}
-            />
-            <Stack.Screen
-              name={OnBoarding.JoinFamilyPage}
-              component={JoinFamilyPage}
-            />
-            <Stack.Screen
-              name={OnBoarding.GetUserInformationPage}
-              component={GetUserInformationPage}
-            />
-            <Stack.Screen
-              name={Home.AccountPage}
-              component={AccountPage}
-              options={seeSettingsButtonHeaderOptions}
-            />
-            <Stack.Screen
-              name={Home.FamilyStatsPage}
-              component={FamilyStatsPage}
-            />
-            <Stack.Screen name={Task.MyTaskPage} component={TaskPage} />
-            <Stack.Screen name={Task.OtherTaskPage} component={TaskPage} />
-            <Stack.Screen name={Home.HomePage} component={HomePage} />
-            <Stack.Screen
-              name={Settings.SettingsPage}
-              component={SettingsPage}
-            />
-          </Stack.Navigator>
+          {isUserLoggedIn ? (
+            <Stack.Navigator
+              initialRouteName={Home.HomePage}
+              screenOptions={baseHeader}
+            >
+              <Stack.Screen name={Home.HomePage} component={HomePage} />
+              <Stack.Screen name={Task.MyTaskPage} component={TaskPage} />
+              <Stack.Screen name={Task.OtherTaskPage} component={TaskPage} />
+              <Stack.Screen
+                name={Home.FamilyStatsPage}
+                component={FamilyStatsPage}
+              />
+              <Stack.Screen
+                name={Home.AccountPage}
+                component={AccountPage}
+                options={seeSettingsButtonHeaderOptions}
+              />
+              <Stack.Screen
+                name={Settings.SettingsPage}
+                component={SettingsPage}
+              />
+            </Stack.Navigator>
+          ) : (
+            <Stack.Navigator
+              initialRouteName={OnBoarding.LoginPage}
+              screenOptions={baseHeader}
+            >
+              <Stack.Screen name={OnBoarding.LoginPage} component={LoginPage} />
+              <Stack.Screen
+                name={OnBoarding.ChooseFamilyPage}
+                component={ChooseFamilyPage}
+              />
+              <Stack.Screen
+                name={OnBoarding.CreateFamilyPage}
+                component={CreateFamilyPage}
+              />
+              <Stack.Screen
+                name={OnBoarding.JoinFamilyPage}
+                component={JoinFamilyPage}
+              />
+              <Stack.Screen
+                name={OnBoarding.GetUserInformationPage}
+                component={GetUserInformationPage}
+              />
+            </Stack.Navigator>
+          )}
         </NavigationContainer>
       </SafeAreaProvider>
     </ThemeProvider>

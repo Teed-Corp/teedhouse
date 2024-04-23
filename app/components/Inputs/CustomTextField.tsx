@@ -1,3 +1,4 @@
+import Divider from "@app/components/Divider";
 import theme from "@app/theme/theme";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
@@ -10,7 +11,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Divider from "@app/components/Divider";
 
 const CustomTextField = ({
   value,
@@ -23,13 +23,14 @@ const CustomTextField = ({
   displayTopPlaceHolder = false,
   editable = true,
 }: {
-  value: string;
-  onChangeEvent: (value: string) => void;
+  value: any;
+  onChangeEvent: (value: any) => void;
   placeHolderValue: string;
   isPassword?: boolean;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions;
   autoCapitalize?: TextInputProps["autoCapitalize"];
+
   displayTopPlaceHolder?: boolean;
   editable?: boolean;
 }) => {
@@ -66,7 +67,7 @@ const CustomTextField = ({
           ]}
           value={value}
           placeholder={placeHolderValue}
-          placeholderTextColor={"#929292"}
+          placeholderTextColor="#929292"
           onChangeText={onChangeEvent}
           secureTextEntry={secureTextEntry && !showPassword}
           keyboardType={keyboardType}

@@ -1,9 +1,11 @@
+import ErrorText from "@app/components/Content/ErrorText";
+import Divider from "@app/components/Divider";
 import CustomDropdown from "@app/components/Inputs/CustomDropdown";
 import theme from "@app/theme/theme";
 import React, { useState } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 
-export default function CustomRepeat() {
+export default function CustomRepeat({ onSelectDays, isDisplayError }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
@@ -34,14 +36,24 @@ export default function CustomRepeat() {
         />
       </View>
       {isEnabled && (
-        <CustomDropdown
-          onSelect={setSelectedDays}
-          displayTopPlaceHolder
-          placeHolder="Jours à répéter"
-          zindex={1}
-          data={daysOfWeek}
-          values={selectedDays}
-        />
+        <View>
+          <CustomDropdown
+            onSelect={(values: any) => {
+              setSelectedDays(values);
+              onSelectDays(values);
+            }}
+            displayTopPlaceHolder
+            placeHolder="Jours à répéter"
+            zindex={1}
+            data={daysOfWeek}
+            values={selectedDays}
+            multiSelect
+          />
+          {selectedDays.length === 0 && isDisplayError && isEnabled && (
+            <ErrorText error="Veuillez sélectionner au moins un jour." />
+          )}
+          <Divider height={20} />
+        </View>
       )}
     </View>
   );

@@ -52,6 +52,7 @@ const CustomDropdown = ({
         listItemContainerStyle={styles.listItemContainer}
         multiple={multiSelect}
         multipleText={values ? `${values.length} jours sont sélectionnés` : ""}
+        scrollViewProps={{ scrollEnabled: true }}
       />
     </View>
   );

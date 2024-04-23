@@ -1,3 +1,4 @@
+import PieceComponent from "@app/components/Content/PieceComponent";
 import Divider from "@app/components/Divider";
 import theme from "@app/theme/theme";
 import { LinearGradient } from "expo-linear-gradient";
@@ -37,6 +38,13 @@ const HomePageStatsHeader = ({ familyProgess, personalProgress }) => {
           color="white"
         />
       </View>
+      <Divider height={10} />
+      <View style={styles.scoreContainer}>
+        <Text style={styles.scoreText}>Mon score : </Text>
+        <Text style={styles.scoreNumber}>100</Text>
+        <Divider width={8} />
+        <PieceComponent />
+      </View>
     </LinearGradient>
   );
 };
@@ -72,6 +80,24 @@ const styles = StyleSheet.create({
   progressBarContainer: {
     width: "100%",
     height: 10,
+  },
+  scoreContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    backgroundColor: "rgba(232, 237, 233, 0.1)",
+    padding: 10,
+  },
+  scoreText: {
+    color: "white",
+    fontSize: 16,
+  },
+  scoreNumber: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 

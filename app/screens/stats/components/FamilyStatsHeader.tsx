@@ -1,3 +1,4 @@
+import PieceComponent from "@app/components/Content/PieceComponent";
 import Divider from "@app/components/Divider";
 import theme from "@app/theme/theme";
 import { LinearGradient } from "expo-linear-gradient";
@@ -30,6 +31,8 @@ const FamilyStatsHeader = ({ totalScore, progess }) => {
       <View style={styles.totalScoreContainer}>
         <Text style={styles.scoreText}>Score total : </Text>
         <Text style={styles.scoreNumber}>{totalScore}</Text>
+        <Divider width={8} />
+        <PieceComponent />
       </View>
     </LinearGradient>
   );

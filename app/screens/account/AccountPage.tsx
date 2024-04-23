@@ -20,6 +20,7 @@ export default function AccountPage() {
   const handleImageSelected = (image: any) => {
     setSelectedImage(image);
   };
+
   const userTest = {
     userSurname: "",
     userName: "",
@@ -74,7 +75,7 @@ export default function AccountPage() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 20,
     padding: 12,
     justifyContent: "center",
     alignItems: "center",

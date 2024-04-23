@@ -1,22 +1,18 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 
 const GoBackButton = ({ navigation }) => {
-  return (
+  return navigation.canGoBack() ? (
     <TouchableOpacity
+      style={styles.container}
       onPress={() => {
-        if (navigation.canGoBack()) navigation.goBack();
+        navigation.goBack();
       }}
     >
-      <View style={styles.container}>
-        <Icon
-          name="chevron-left"
-          type="font-awesome-5"
-          color="black"
-          size={24}
-        />
-      </View>
+      <Icon name="chevron-left" type="font-awesome-5" color="black" size={24} />
     </TouchableOpacity>
+  ) : (
+    <></>
   );
 };
 

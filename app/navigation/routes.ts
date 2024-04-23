@@ -16,3 +16,7 @@ export enum Home {
   FamilyStatsPage = "FamilyStatsPage",
   HomePage = "HomePage",
 }
+
+export enum Settings {
+  SettingsPage = "SettingsPage",
+}

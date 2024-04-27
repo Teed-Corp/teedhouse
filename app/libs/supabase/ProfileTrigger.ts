@@ -14,7 +14,7 @@ const main = async () => {
       create or replace function public.handle_new_user()
           returns trigger as $$
       begin
-          insert into public.profile (id, full_name, createdAt, updatedAt)
+          insert into public.profile (id, full_name, "createdAt", "updatedAt")
           values (new.id, new.raw_user_meta_data->>'full_name', now(), now());
           return new;
       end;

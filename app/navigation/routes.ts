@@ -7,7 +7,8 @@ export enum OnBoarding {
 }
 
 export enum Task {
-  TaskPage = "TaskPage",
+  MyTaskPage = "MyTaskPage",
+  OtherTaskPage = "OtherTaskPage",
 }
 
 export enum Home {
@@ -16,4 +17,8 @@ export enum Home {
   AccountPage = "AccountPage",
   FamilyStatsPage = "FamilyStatsPage",
   HomePage = "HomePage",
+}
+
+export enum Settings {
+  SettingsPage = "SettingsPage",
 }

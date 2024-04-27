@@ -52,6 +52,7 @@ const useFamily = () => {
       A: family[0].id,
       B: session.user.id,
     });
+    console.log(error);
 
     return { data, error };
   };

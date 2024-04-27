@@ -1,17 +1,22 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import ProfilePicture from "@app/components/Content/ProfilePicture";
 import HeaderIcon from "@app/components/Content/HeaderIcon";
+import ProfilePicture from "@app/components/Content/ProfilePicture";
 import Divider from "@app/components/Divider";
+import { Home } from "@app/navigation/routes";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const HomePageHeader = ({ user }) => {
+const HomePageHeader = ({ user, navigation }) => {
+  const handlePressStats = () => {
+    navigation.navigate(Home.FamilyStatsPage);
+  };
+
+  const handlePressProfile = () => {
+    navigation.navigate(Home.AccountPage);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.leftPart}>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("Open profile");
-          }}
-        >
+        <TouchableOpacity onPress={handlePressProfile}>
           <ProfilePicture uri={user.profilePicture} imageStyle={styles.image} />
         </TouchableOpacity>
         <Divider width={16} />
@@ -20,12 +25,8 @@ const HomePageHeader = ({ user }) => {
           <Text style={styles.nameLabel}>{user.name}</Text>
         </View>
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          console.log("Open stats");
-        }}
-      >
-        <HeaderIcon icon={"bar-chart"} size={24} />
+      <TouchableOpacity onPress={handlePressStats}>
+        <HeaderIcon icon="trophy" size={24} />
       </TouchableOpacity>
     </View>
   );

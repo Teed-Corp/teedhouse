@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "profile" (
     "id" UUID NOT NULL,
-    "full_name" TEXT NOT NULL,
+    "full_name" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

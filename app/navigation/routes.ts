@@ -6,19 +6,11 @@ export enum OnBoarding {
   GetUserInformationPage = "GetUserInformationPage",
 }
 
-export enum Task {
-  MyTaskPage = "MyTaskPage",
-  OtherTaskPage = "OtherTaskPage",
-}
-
-export enum Home {
-  InformationTaskPage = "InformationTaskPage",
-  AddTaskPage = "AddTaskPage",
-  AccountPage = "AccountPage",
-  FamilyStatsPage = "FamilyStatsPage",
+export enum Root {
+  MyTaskPage = "Mes tâches",
+  OtherTaskPage = "Autres tâches",
+  AccountPage = "Ton Profil",
+  FamilyStatsPage = "Statistiques de la famille",
   HomePage = "HomePage",
-}
-
-export enum Settings {
-  SettingsPage = "SettingsPage",
+  SettingsPage = "Paramètres",
 }

@@ -1,6 +1,6 @@
+import AuthCard from "@app/components/onBoarding/AuthCard";
 import useAuth from "@app/hooks/Auth";
 import { OnBoarding } from "@app/navigation/routes";
-import AuthCard from "@app/screens/onBoarding/components/AuthCard";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

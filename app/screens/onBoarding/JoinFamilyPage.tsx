@@ -1,12 +1,11 @@
-import ErrorText from "@app/components/common/Content/ErrorText";
 import HeaderIcon from "@app/components/common/Content/HeaderIcon";
 import HeaderTitle from "@app/components/common/Content/HeaderTitle";
 import CustomLoader from "@app/components/common/CustomLoader";
 import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
-import CustomDatePicker from "@app/components/common/Inputs/CustomDatePicker";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
-import { OnBoarding } from "@app/navigation/routes";
+import useFamily from "@app/hooks/Family";
+import { Root } from "@app/navigation/routes";
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import React, { useState } from "react";
@@ -20,34 +19,34 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 
-const GetUserInformationPage = () => {
+const JoinFamilyPage = () => {
+  const { joinFamily } = useFamily();
+  const [familyCode, setFamilyCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Un nom est requis"),
-    surname: Yup.string().required("Un prénom est requis"),
-    dateOfBirth: Yup.string().required("Une date de naissance est requise"),
-  });
-
   const navigation: any = useNavigation();
 
-  const handlePushUserInformation = async () => {
+  const validationSchema = Yup.object().shape({
+    familyCode: Yup.string()
+      .required("Un code est requis")
+      .min(6, "Le code doit contenir au moins 6 caractères"),
+  });
+
+  const handleJoinFamily = async () => {
     setIsLoading(true);
-    navigation.replace(OnBoarding.ChooseFamilyPage);
+    const { data, error } = await joinFamily(familyCode);
     setIsLoading(false);
+    if (!error) {
+      navigation.replace(Root.HomePage);
+    } else alert(error);
   };
 
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="height">
         <Formik
-          initialValues={{
-            name: "",
-            surname: "",
-            dateOfBirth: "",
-          }}
+          initialValues={{ familyCode }}
           validationSchema={validationSchema}
-          onSubmit={handlePushUserInformation}
+          onSubmit={handleJoinFamily}
         >
           {({ values, touched, handleChange, handleSubmit, errors }) => (
             <View style={styles.container}>
@@ -55,43 +54,28 @@ const GetUserInformationPage = () => {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.content}
               >
-                <HeaderIcon icon="user" />
+                <HeaderIcon icon="users" />
                 <Divider height={24} />
-                <HeaderTitle value="Votre compte" />
+                <HeaderTitle value={"Rejoindre\n une famille"} />
                 <Divider height={20} />
                 <Text style={styles.text}>
-                  Veuillez entrer vos informations
+                  Veuillez entrer le code de votre famille
                 </Text>
                 <Divider height={20} />
                 <CustomTextField
-                  value={values.name}
-                  onChangeEvent={handleChange("name")}
-                  placeHolderValue="Nom"
+                  value={values.familyCode}
+                  onChangeEvent={(value) => {
+                    handleChange("familyCode")(value);
+                    setFamilyCode(value);
+                  }}
+                  placeHolderValue="Code de la famille"
                   displayTopPlaceHolder
                   autoCapitalize="characters"
                 />
-                {errors.name && touched.name && (
-                  <ErrorText error={errors.name} />
-                )}
-                <Divider height={24} />
-                <CustomTextField
-                  value={values.surname}
-                  onChangeEvent={handleChange("surname")}
-                  placeHolderValue="Prénom"
-                  displayTopPlaceHolder
-                  autoCapitalize="characters"
-                />
-                {errors.surname && touched.surname && (
-                  <ErrorText error={errors.surname} />
-                )}
-                <Divider height={24} />
-                <CustomDatePicker
-                  placeHolder="Date de naissance"
-                  displayTopPlaceHolder
-                  handleChange={handleChange("dateOfBirth")}
-                />
-                {errors.dateOfBirth && touched.dateOfBirth && (
-                  <ErrorText error={errors.dateOfBirth} />
+                {errors.familyCode && touched.familyCode && (
+                  <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>{errors.familyCode}</Text>
+                  </View>
                 )}
                 <Divider height={24} />
                 {isLoading ? (
@@ -135,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GetUserInformationPage;
+export default JoinFamilyPage;

@@ -78,6 +78,7 @@ const CreateFamilyPage = () => {
           placeHolder="Type de logement"
           displayTopPlaceHolder
           value={homeType}
+          zindex={1}
         />
         {homeType === null && displayError && (
           <ErrorText error="Un type de logement est requis" />

@@ -5,7 +5,9 @@ import AccountPage from "@app/screens/account/AccountPage";
 import ChooseFamilyPage from "@app/screens/family/ChooseFamilyPage";
 import CreateFamilyPage from "@app/screens/family/CreateFamilyPage";
 import JoinFamilyPage from "@app/screens/family/JoinFamilyPage";
+import AddTaskPage from "@app/screens/home/AddTaskPage";
 import HomePage from "@app/screens/home/HomePage";
+import InformationTaskPage from "@app/screens/home/InformationTaskPage";
 import GetUserInformationPage from "@app/screens/onBoarding/GetUserInformationPage";
 import LoginPage from "@app/screens/onBoarding/LoginPage";
 import SettingsPage from "@app/screens/settings/SettingsPage";
@@ -17,6 +19,21 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+
+export type RootStackParamList = {
+  LoginPage: undefined;
+  ChooseFamilyPage: undefined;
+  CreateFamilyPage: undefined;
+  JoinFamilyPage: undefined;
+  GetUserInformationPage: undefined;
+  AccountPage: undefined;
+  TaskPage: undefined;
+  FamilyStatsPage: undefined;
+  HomePage: undefined;
+  AddTaskPage: undefined;
+  InformationTaskPage: undefined;
+};
+
 
 const Stack = createNativeStackNavigator<OnBoarding & Task & Home & Settings>();
 
@@ -85,6 +102,11 @@ export default function App() {
               <Stack.Screen name={Home.HomePage} component={HomePage} />
               <Stack.Screen name={Task.MyTaskPage} component={TaskPage} />
               <Stack.Screen name={Task.OtherTaskPage} component={TaskPage} />
+                <Stack.Screen name={Home.AddTaskPage} component={AddTaskPage} />
+            <Stack.Screen
+              name={Home.InformationTaskPage}
+              component={InformationTaskPage}
+            />
               <Stack.Screen
                 name={Home.FamilyStatsPage}
                 component={FamilyStatsPage}

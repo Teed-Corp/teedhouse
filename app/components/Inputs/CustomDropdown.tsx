@@ -10,17 +10,23 @@ const CustomDropdown = ({
   placeHolder,
   displayTopPlaceHolder = false,
   value,
+  values,
+  zindex,
+  multiSelect = false,
 }: {
   data: any[];
   onSelect: any;
   placeHolder: string;
   displayTopPlaceHolder?: boolean;
   value?: string;
+  values?: any[];
+  zindex: number;
+  multiSelect?: any;
 }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { zIndex: zindex }]}>
       {displayTopPlaceHolder && (
         <>
           <Text style={styles.topPlaceHolder}>{placeHolder}</Text>
@@ -32,16 +38,21 @@ const CustomDropdown = ({
         open={open}
         setOpen={setOpen}
         setValue={onSelect}
-        value={value}
+        value={multiSelect ? values : value}
         placeholder={placeHolder}
         placeholderStyle={
-          value === null ? styles.placeholder : styles.valueStyle
+          value === null || values === null
+            ? styles.placeholder
+            : styles.valueStyle
         }
         style={styles.inputContainer}
         textStyle={styles.valueStyle}
         dropDownContainerStyle={styles.dropdown}
         disableBorderRadius={false}
         listItemContainerStyle={styles.listItemContainer}
+        multiple={multiSelect}
+        multipleText={values ? `${values.length} jours sont sélectionnés` : ""}
+        scrollViewProps={{ scrollEnabled: true }}
       />
     </View>
   );
@@ -50,7 +61,6 @@ const CustomDropdown = ({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    zIndex: 1,
   },
   inputContainer: {
     flexDirection: "row",

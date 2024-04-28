@@ -43,4 +43,4 @@ const main = async () => {
   process.exit();
 };
 
-main().then(console.log).catch(console.error);
+main().catch(console.error);

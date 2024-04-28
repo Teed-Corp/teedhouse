@@ -1,5 +1,5 @@
 import Divider from "@app/components/common/Divider";
-import theme from "@app/theme/theme";
+import Theme from "@app/theme/Theme";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 0.5,
-    borderRadius: theme.defaultRadius,
+    borderRadius: Theme.defaultRadius,
     paddingLeft: 25,
     width: "100%",
     height: 56,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     borderWidth: 0.5,
-    borderRadius: theme.defaultRadius,
+    borderRadius: Theme.defaultRadius,
     borderColor: "#AAAAAA",
     marginTop: 10,
   },

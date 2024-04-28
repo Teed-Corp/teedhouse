@@ -1,38 +1,21 @@
-import useAuth from "@app/hooks/Auth";
-import OnBoardingNavigation from "@app/navigation/OnBoardingNavigation";
-import RootNavigation from "@app/navigation/RootNavigation";
-import { OnBoarding, Root } from "@app/navigation/routes";
-import { ThemeProvider, useTheme } from "@app/theme/ThemeProvider";
-import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useEffect, useState } from "react";
+import AuthProvider from "@app/context/AuthContext";
+import FamilyProvider from "@app/context/FamilyContext";
+import { ThemeProvider } from "@app/context/ThemeContext";
+import NavigationProvider from "@app/navigation/NavigationProvider";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-const Stack = createNativeStackNavigator<OnBoarding & Root & Root & Root>();
-
-export default function App() {
-  const { getSession } = useAuth();
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>();
-  const bgColor = useTheme();
-  const navTheme = DefaultTheme;
-  navTheme.colors.background = bgColor;
-
-  useEffect(() => {
-    const checkIfUserIsLoggedIn = async () => {
-      const session = await getSession();
-      setIsUserLoggedIn(session !== null);
-    };
-
-    checkIfUserIsLoggedIn().catch(console.error);
-  }, []);
-
+const App = () => {
   return (
-    <ThemeProvider>
-      <SafeAreaProvider>
-        <NavigationContainer theme={navTheme}>
-          {isUserLoggedIn ? <RootNavigation /> : <OnBoardingNavigation />}
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </ThemeProvider>
+    <AuthProvider>
+      <FamilyProvider>
+        <ThemeProvider>
+          <SafeAreaProvider>
+            <NavigationProvider />
+          </SafeAreaProvider>
+        </ThemeProvider>
+      </FamilyProvider>
+    </AuthProvider>
   );
-}
+};
+
+export default App;

@@ -1,6 +1,6 @@
 import Divider from "@app/components/common/Divider";
 import PopUpButton from "@app/components/root/account/PopUpButton";
-import theme from "@app/theme/theme";
+import Theme from "@app/theme/Theme";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 15,
     textAlign: "center",
-    color: theme.primary,
+    color: Theme.primary,
   },
 });

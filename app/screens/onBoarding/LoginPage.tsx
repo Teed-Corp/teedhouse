@@ -1,5 +1,6 @@
 import AuthCard from "@app/components/onBoarding/AuthCard";
-import useAuth from "@app/hooks/Auth";
+import { useAuth } from "@app/context/AuthContext";
+import { useFamily } from "@app/context/FamilyContext";
 import { OnBoarding } from "@app/navigation/routes";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -7,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginPage = ({ navigation }) => {
   const { loginWithEmail, registerWithEmail } = useAuth();
+  const { isJoinedFamily } = useFamily();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
@@ -17,19 +19,17 @@ const LoginPage = ({ navigation }) => {
     if (isLogin) {
       const { error } = await loginWithEmail(email, password);
 
-      if (!error) {
+      if (!error && !isJoinedFamily) {
         navigation.replace(OnBoarding.GetUserInformationPage);
       } else {
-        console.log(error);
         alert(error.message);
       }
     } else {
       const { error } = await registerWithEmail(email, password);
 
-      if (!error) {
+      if (!error && !isJoinedFamily) {
         navigation.replace(OnBoarding.GetUserInformationPage);
       } else {
-        console.log(error);
         alert(error.message);
       }
     }

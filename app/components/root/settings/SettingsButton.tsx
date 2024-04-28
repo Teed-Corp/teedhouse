@@ -7,7 +7,6 @@ const SettingsButton = () => {
   const navigation: any = useNavigation();
 
   const handleSettings = () => {
-    console.log("Settings");
     navigation.navigate(Root.SettingsPage);
   };
 

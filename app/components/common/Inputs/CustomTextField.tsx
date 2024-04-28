@@ -1,5 +1,5 @@
 import Divider from "@app/components/common/Divider";
-import theme from "@app/theme/theme";
+import Theme from "@app/theme/Theme";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
@@ -61,7 +61,7 @@ const CustomTextField = ({
           style={[
             styles.input,
             {
-              borderColor: isFocused ? theme.gradientColor : theme.borderColor,
+              borderColor: isFocused ? Theme.gradientColor : Theme.borderColor,
             },
           ]}
           value={value}
@@ -83,7 +83,7 @@ const CustomTextField = ({
             <Ionicons
               name={showPassword ? "eye-off" : "eye"}
               size={24}
-              color={theme.primary}
+              color={Theme.primary}
             />
           </TouchableOpacity>
         )}
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 0.5,
-    borderRadius: theme.defaultRadius,
+    borderRadius: Theme.defaultRadius,
     paddingLeft: 25,
     width: "100%",
     backgroundColor: "white",

@@ -1,5 +1,5 @@
 import Divider from "@app/components/common/Divider";
-import theme from "@app/theme/theme";
+import Theme from "@app/theme/Theme";
 import React, { useState } from "react";
 import {
   Modal,
@@ -63,7 +63,7 @@ const CustomDatePicker = ({
                   <Icon
                     name="close"
                     type="ionicon"
-                    color={theme.primary}
+                    color={Theme.primary}
                     size={30}
                   />
                 </TouchableOpacity>
@@ -75,9 +75,9 @@ const CustomDatePicker = ({
                   selected={date}
                   options={{
                     textDefaultColor: "black",
-                    textHeaderColor: theme.primary,
-                    textSecondaryColor: theme.primary,
-                    mainColor: theme.primary,
+                    textHeaderColor: Theme.primary,
+                    textSecondaryColor: Theme.primary,
+                    mainColor: Theme.primary,
                   }}
                 />
               </View>
@@ -90,7 +90,7 @@ const CustomDatePicker = ({
         <Icon
           name="calendar"
           type="font-awesome"
-          color={theme.primary}
+          color={Theme.primary}
           size={24}
         />
       </TouchableOpacity>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     borderWidth: 0.5,
-    borderRadius: theme.defaultRadius,
+    borderRadius: Theme.defaultRadius,
     paddingHorizontal: 25,
     height: 56,
     backgroundColor: "white",

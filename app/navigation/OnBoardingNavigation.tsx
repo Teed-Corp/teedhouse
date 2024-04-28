@@ -10,7 +10,12 @@ const Stack = createNativeStackNavigator();
 
 const OnBoardingNavigation = () => {
   return (
-    <Stack.Navigator initialRouteName={OnBoarding.LoginPage}>
+    <Stack.Navigator
+      initialRouteName={OnBoarding.LoginPage}
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen name={OnBoarding.LoginPage} component={LoginPage} />
       <Stack.Screen
         name={OnBoarding.ChooseFamilyPage}

@@ -1,4 +1,4 @@
-const theme = {
+const Theme = {
   primary: "#2C366E",
   secondary: "#FFFFFF",
   gradientColor: "#3B4DA9",
@@ -16,4 +16,4 @@ const theme = {
   },
 };
 
-export default theme;
+export default Theme;

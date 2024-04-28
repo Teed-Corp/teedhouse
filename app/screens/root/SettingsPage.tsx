@@ -1,12 +1,15 @@
 import HeaderTitle from "@app/components/common/Content/HeaderTitle";
 import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
+import { useAuth } from "@app/context/AuthContext";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SettingsPage = () => {
-  const handleDisconnect = () => {
-    console.log("Disconnect");
+  const { logout } = useAuth();
+
+  const handleDisconnect = async () => {
+    await logout();
   };
 
   return (

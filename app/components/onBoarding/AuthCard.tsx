@@ -2,7 +2,7 @@ import ErrorText from "@app/components/common/Content/ErrorText";
 import CustomLoader from "@app/components/common/CustomLoader";
 import AppButton from "@app/components/common/Inputs/AppButton";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
-import theme from "@app/theme/theme";
+import Theme from "@app/theme/Theme";
 import { Formik } from "formik";
 import React, { Dispatch } from "react";
 import {
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   forgotPassword: {
-    color: theme.gradientColor,
+    color: Theme.gradientColor,
     marginVertical: 20,
     textAlign: "center",
   },
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
 
   goToOtherPageCtaStyle: {
-    color: theme.gradientColor,
+    color: Theme.gradientColor,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,

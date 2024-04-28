@@ -1,6 +1,6 @@
+import Theme from "@app/theme/Theme";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import theme from "@app/theme/theme";
 
 export default function TitleComponent({ title }: { title: string }) {
   const textLength = title.length;
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: theme.gradientColor,
+    backgroundColor: Theme.gradientColor,
     borderRadius: 50,
     paddingHorizontal: 20,
     paddingVertical: 15,

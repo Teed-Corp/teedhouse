@@ -4,8 +4,7 @@ import CustomLoader from "@app/components/common/CustomLoader";
 import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
-import useFamily from "@app/hooks/Family";
-import { Root } from "@app/navigation/routes";
+import { useFamily } from "@app/context/FamilyContext";
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import React, { useState } from "react";
@@ -33,11 +32,9 @@ const JoinFamilyPage = () => {
 
   const handleJoinFamily = async () => {
     setIsLoading(true);
-    const { data, error } = await joinFamily(familyCode);
+    const { error } = await joinFamily(familyCode);
     setIsLoading(false);
-    if (!error) {
-      navigation.replace(Root.HomePage);
-    } else alert(error);
+    if (error) alert(error);
   };
 
   return (

@@ -6,8 +6,7 @@ import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
 import CustomDropdown from "@app/components/common/Inputs/CustomDropdown";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
-import useFamily from "@app/hooks/Family";
-import { Root } from "@app/navigation/routes";
+import { useFamily } from "@app/context/FamilyContext";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
@@ -38,13 +37,8 @@ const CreateFamilyPage = () => {
     setIsLoading(true);
     setDisplayError(true);
     if (familyName !== null && homeType !== null) {
-      console.log("Family name: ", familyName);
-      console.log("Home type: ", homeType);
-      const { data, error } = await createFamily(familyName);
-      if (!error) {
-        setIsLoading(false);
-        navigation.replace(Root.HomePage);
-      } else alert(error);
+      const { error } = await createFamily(familyName);
+      if (error) alert(error);
     }
     setIsLoading(false);
   };

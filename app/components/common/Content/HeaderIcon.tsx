@@ -1,7 +1,7 @@
+import Theme from "@app/theme/Theme";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Icon } from "react-native-elements";
-import theme from "@app/theme/theme";
 
 const HeaderIcon = ({ icon, size }: { icon: string; size?: number }) => {
   return (
@@ -9,7 +9,7 @@ const HeaderIcon = ({ icon, size }: { icon: string; size?: number }) => {
       <Icon
         name={icon}
         type="font-awesome"
-        color={theme.third}
+        color={Theme.third}
         size={size ?? 40}
       />
     </View>

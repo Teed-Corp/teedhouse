@@ -4,7 +4,7 @@ import HomePageMenuItem from "@app/components/root/home/HomePageMenuItem";
 import HomePageStatsHeader from "@app/components/root/home/HomePageStatsHeader";
 import TaskItemComponent from "@app/components/root/task/TaskItemComponent";
 import { Root } from "@app/navigation/routes";
-import theme from "@app/theme/theme";
+import Theme from "@app/theme/Theme";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
@@ -84,7 +84,7 @@ const HomePage = () => {
         <HomePageMenuItem name="Mes tâches" onPress={handlePressMyTasks} />
         <Divider height={12} />
         {myTasks.map((task) => {
-          return <TaskItemComponent item={task} />;
+          return <TaskItemComponent key={task.taskName} item={task} />;
         })}
         <Divider height={24} />
         <HomePageMenuItem
@@ -93,7 +93,7 @@ const HomePage = () => {
         />
         <Divider height={12} />
         {otherTasks.map((task) => {
-          return <TaskItemComponent item={task} />;
+          return <TaskItemComponent key={task.name} item={task} />;
         })}
       </ScrollView>
       <TouchableOpacity
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     right: 20,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: theme.primary,
+    backgroundColor: Theme.primary,
     width: 60,
     height: 60,
     borderRadius: 30,

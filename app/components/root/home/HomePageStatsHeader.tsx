@@ -1,6 +1,6 @@
 import PieceComponent from "@app/components/common/Content/PieceComponent";
 import Divider from "@app/components/common/Divider";
-import theme from "@app/theme/theme";
+import Theme from "@app/theme/Theme";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -13,7 +13,7 @@ const HomePageStatsHeader = ({ familyProgess, personalProgress }) => {
   return (
     <LinearGradient
       style={styles.container}
-      colors={[theme.primary, theme.gradientColor]}
+      colors={[Theme.primary, Theme.gradientColor]}
       start={{ x: 0, y: 0.5 }}
       end={{ x: 1, y: 1 }}
     >

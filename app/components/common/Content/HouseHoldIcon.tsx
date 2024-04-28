@@ -1,7 +1,7 @@
+import Theme from "@app/theme/Theme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import theme from "@app/theme/theme";
 
 export default function HouseHoldIcon() {
   return (
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     padding: 5,
-    color: theme.third,
+    color: Theme.third,
     alignItems: "center",
     justifyContent: "center",
   },

@@ -1,6 +1,6 @@
 import AccountCard from "@app/components/root/account/AccountCard";
 import ImagePickerPopUp from "@app/components/root/account/ImagePickerPopUp";
-import theme from "@app/theme/theme";
+import Theme from "@app/theme/Theme";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import {
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 10,
     right: 10,
-    backgroundColor: theme.primary,
+    backgroundColor: Theme.primary,
     width: 30,
     height: 30,
     borderRadius: 15,

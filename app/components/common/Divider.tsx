@@ -11,10 +11,10 @@ const Divider = ({
   return (
     <View
       style={{
-        width: width,
-        height: height,
+        width,
+        height,
       }}
-    ></View>
+    />
   );
 };
 

@@ -7,7 +7,6 @@ import AppButton from "@app/components/common/Inputs/AppButton";
 import CustomDropdown from "@app/components/common/Inputs/CustomDropdown";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import { useFamily } from "@app/context/FamilyContext";
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   FlatList,
@@ -24,8 +23,6 @@ const CreateFamilyPage = () => {
   const [familyName, setFamilyName] = useState(null);
   const [displayError, setDisplayError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const navigation: any = useNavigation();
 
   const data = [
     { label: "Maison", value: "Maison" },

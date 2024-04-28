@@ -33,10 +33,6 @@ const HomePage = () => {
     });
   };
 
-  const user = {
-    name: "John Doe",
-    profilePicture: "https://picsum.photos/200",
-  };
   const myTasks = [
     {
       taskName: "Laver la voiture",

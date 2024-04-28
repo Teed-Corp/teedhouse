@@ -5,7 +5,6 @@ import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import { useFamily } from "@app/context/FamilyContext";
-import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import {
@@ -22,7 +21,6 @@ const JoinFamilyPage = () => {
   const { joinFamily } = useFamily();
   const [familyCode, setFamilyCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigation: any = useNavigation();
 
   const validationSchema = Yup.object().shape({
     familyCode: Yup.string()

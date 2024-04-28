@@ -13,7 +13,7 @@ const HomePageMenuItem = ({
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <Text style={styles.label}>{name}</Text>
-        <Icon name={"chevron-right"} type={"font-awesome"} size={20} />
+        <Icon name="chevron-right" type="font-awesome" size={20} />
       </View>
     </TouchableOpacity>
   );

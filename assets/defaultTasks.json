@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Laver la voiture",
+    "points": 145
+  },
+  {
+    "name": "Faire les courses",
+    "points": 200
+  },
+  {
+    "name": "Faire le ménage",
+    "points": 100
+  },
+  {
+    "name": "Sortir le chien",
+    "points": 145
+  },
+  {
+    "name": "Faire la vaisselle",
+    "points": 200
+  }
+]

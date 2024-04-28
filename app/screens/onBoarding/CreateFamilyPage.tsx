@@ -37,7 +37,7 @@ const CreateFamilyPage = () => {
     setIsLoading(true);
     setDisplayError(true);
     if (familyName !== null && homeType !== null) {
-      const { error } = await createFamily(familyName);
+      const { error } = await createFamily(familyName, true);
       if (error) alert(error);
     }
     setIsLoading(false);

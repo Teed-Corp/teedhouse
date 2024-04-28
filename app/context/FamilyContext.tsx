@@ -4,11 +4,16 @@ import { PostgrestError } from "@supabase/supabase-js";
 import { uuid } from "@supabase/supabase-js/dist/main/lib/helpers";
 import { createContext, ReactNode, useContext, useState } from "react";
 
+import defaultTask from "../../assets/defaultTasks.json";
+
 type FamilyContextType = {
   initFamilyContext: () => Promise<void>;
   isJoinedFamily: boolean;
   setIsJoinedFamily: (isJoinedFamily: boolean) => void;
-  createFamily: (name: string) => Promise<{ error: PostgrestError | string }>;
+  createFamily: (
+    name: string,
+    loadDefaultTask: boolean,
+  ) => Promise<{ error: PostgrestError | string }>;
   joinFamily: (code: string) => Promise<{ error: PostgrestError | string }>;
   getFamily: () => Promise<{ data: any; error: PostgrestError | string }>;
 };
@@ -77,15 +82,30 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
 
   const createFamily = async (
     name: string,
+    loadDefaultTask: boolean,
   ): Promise<{ error: PostgrestError | string }> => {
+    const familyId = uuid();
     const uniqueCode = await generateUniqueCode();
 
     const { error } = await supabase.from("family").insert({
-      id: uuid(),
+      id: familyId,
       name,
       code: uniqueCode,
       updatedAt: new Date().toISOString(),
     });
+
+    if (loadDefaultTask) {
+      for (const task of defaultTask) {
+        const { error } = await supabase.from("task").insert({
+          id: uuid(),
+          name: task.name,
+          points: task.points,
+          familyId,
+        });
+
+        if (error) return { error };
+      }
+    }
 
     if (error) return { error };
 

@@ -8,31 +8,42 @@ datasource db {
 }
 
 model profile {
-  id        String    @id @default(uuid()) @db.Uuid
-  lastname  String?
-  firstname String?
-  birthdate DateTime? @db.Date
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
-  family    family[]
+  id             String           @id @default(uuid()) @db.Uuid
+  lastname       String?
+  firstname      String?
+  birthdate      DateTime?        @db.Date
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now()) @updatedAt
+  family         family[]
+  completed_task completed_task[]
 }
 
 model family {
-  id                 String    @id @default(uuid()) @db.Uuid
-  name               String
-  code               String    @unique @db.VarChar(6)
-  members            profile[]
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @default(now()) @updatedAt
-  custom_family_task task[]
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String
+  code      String    @unique @db.VarChar(6)
+  members   profile[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  task      task[]
 }
 
 model task {
-  id        String   @id @default(uuid()) @db.Uuid
-  name      String
-  points    Int
-  family    family   @relation(fields: [familyId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  familyId  String   @db.Uuid
+  id             String           @id @default(uuid()) @db.Uuid
+  name           String
+  points         Int
+  family         family           @relation(fields: [familyId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now()) @updatedAt
+  familyId       String           @db.Uuid
+  completed_task completed_task[]
+}
+
+model completed_task {
+  id          String   @id @default(uuid()) @db.Uuid
+  task        task     @relation(fields: [taskId], references: [id])
+  profile     profile  @relation(fields: [profileId], references: [id])
+  completedAt DateTime @default(now())
+  taskId      String   @db.Uuid
+  profileId   String   @db.Uuid
 }

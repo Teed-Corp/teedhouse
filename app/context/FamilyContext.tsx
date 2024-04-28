@@ -1,5 +1,6 @@
 import { useAuth } from "@app/context/AuthContext";
 import { supabase } from "@app/libs/supabase/Supabase";
+import { completed_task, family, task } from "@prisma/client";
 import { PostgrestError } from "@supabase/supabase-js";
 import { uuid } from "@supabase/supabase-js/dist/main/lib/helpers";
 import { createContext, ReactNode, useContext, useState } from "react";
@@ -15,7 +16,22 @@ type FamilyContextType = {
     loadDefaultTask: boolean,
   ) => Promise<{ error: PostgrestError | string }>;
   joinFamily: (code: string) => Promise<{ error: PostgrestError | string }>;
-  getFamily: () => Promise<{ data: any; error: PostgrestError | string }>;
+  getFamily: () => Promise<{ data: family; error: PostgrestError | string }>;
+  getFamilyTasks: () => Promise<{
+    data: task[];
+    error: PostgrestError | string;
+  }>;
+  getCompletedTasks: () => Promise<{
+    data: completed_task[];
+    error: PostgrestError | string;
+  }>;
+  getUserCompletedTasks: () => Promise<{
+    data: completed_task[];
+    error: PostgrestError | string;
+  }>;
+  getTaskById: (
+    taskId: string,
+  ) => Promise<{ data: task; error: PostgrestError }>;
 };
 
 const FamilyContext = createContext<FamilyContextType | undefined>(undefined);
@@ -116,14 +132,73 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
     const session = await getSession();
     if (!session) return { data: null, error: "Session invalide" };
 
-    const { data, error } = await supabase
+    const familyToProfile = await supabase
       .from("_familyToprofile")
       .select("*")
       .eq("B", session.user.id);
 
-    if (!error) setIsJoinedFamily(data.length > 0);
+    const { data, error } = await supabase
+      .from("family")
+      .select("*")
+      .eq("id", familyToProfile.data[0].A)
+      .single();
 
-    return { data, error };
+    return { data: data as unknown as family, error };
+  };
+
+  const getFamilyTasks = async () => {
+    const family = await getFamily();
+
+    if (family.error) return { data: null, error: "Famille non trouvé" };
+
+    const { data, error } = await supabase
+      .from("task")
+      .select("*")
+      .eq("familyId", family.data.id);
+
+    return { data: data as task[], error };
+  };
+
+  const getCompletedTasks = async () => {
+    const family = await getFamily();
+
+    if (family.error) return { data: null, error: "Famille non trouvé" };
+
+    const tasks = await getFamilyTasks();
+
+    if (tasks.error) return { data: null, error: "Tâches non trouvé" };
+
+    const taskIds = tasks.data.map((task: task) => task.id);
+
+    const { data, error } = await supabase
+      .from("completed_task")
+      .select("*")
+      .in("taskId", taskIds);
+
+    return { data: data as completed_task[], error };
+  };
+
+  const getUserCompletedTasks = async () => {
+    const session = await getSession();
+
+    if (!session) return { data: null, error: "Session invalide" };
+
+    const { data, error } = await supabase
+      .from("completed_task")
+      .select("*")
+      .eq("profileId", session.user.id);
+
+    return { data: data as completed_task[], error };
+  };
+
+  const getTaskById = async (taskId: string) => {
+    const { data, error } = await supabase
+      .from("task")
+      .select("*")
+      .eq("id", taskId)
+      .single();
+
+    return { data: data as unknown as task, error };
   };
 
   return (
@@ -135,6 +210,10 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
         createFamily,
         joinFamily,
         getFamily,
+        getFamilyTasks,
+        getCompletedTasks,
+        getUserCompletedTasks,
+        getTaskById,
       }}
     >
       {children}

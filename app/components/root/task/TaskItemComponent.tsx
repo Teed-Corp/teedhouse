@@ -1,42 +1,53 @@
-import CarIcon from "@app/components/common/Content/CarIcon";
-import HouseHoldIcon from "@app/components/common/Content/HouseHoldIcon";
 import PieceComponent from "@app/components/common/Content/PieceComponent";
-import ShoppingIcon from "@app/components/common/Content/ShoppingIcon";
-import React from "react";
+import { useFamily } from "@app/context/FamilyContext";
+import { useProfile } from "@app/context/ProfileContext";
+import { completed_task, profile, task } from "@prisma/client";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-interface ListItem {
-  taskName: string;
-  name: string;
-  score: number;
-  type: string;
-}
+const TaskItemComponent = ({ item }: { item: completed_task }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [profile, setProfile] = useState<profile>(null);
+  const [task, setTask] = useState<task>(null);
+  const { getProfileById } = useProfile();
+  const { getTaskById } = useFamily();
 
-export default function TaskItemComponent({ item }: { item: ListItem }) {
+  useEffect(() => {
+    const fetch = async () => {
+      setProfile(await getProfileById(item.profileId));
+      setTask((await getTaskById(item.taskId)).data);
+      setIsLoading(false);
+    };
+
+    fetch().catch(console.error);
+  }, []);
+
+  if (isLoading) return null;
+
   return (
     <View style={styles.container}>
-      {item.type === "car" ? (
-        <CarIcon />
-      ) : item.type === "shopping" ? (
-        <ShoppingIcon />
-      ) : (
-        <HouseHoldIcon />
-      )}
+      {/*{item.type === "car" ? (*/}
+      {/*  <CarIcon />*/}
+      {/*) : item.type === "shopping" ? (*/}
+      {/*  <ShoppingIcon />*/}
+      {/*) : (*/}
+      {/*  <HouseHoldIcon />*/}
+      {/*)}*/}
       <View style={styles.detailsContainer}>
-        <Text style={styles.taskName}>{item.taskName}</Text>
-        <Text style={styles.name}>{item.name}</Text>
+        <Text style={styles.taskName}>{task.name}</Text>
+        <Text style={styles.name}>{profile.firstname}</Text>
       </View>
       <View style={styles.scoreContainer}>
         <View style={styles.piece}>
           <PieceComponent />
         </View>
         <View style={styles.scoreWrapper}>
-          <Text style={styles.score}>{item.score}</Text>
+          <Text style={styles.score}>{task.points}</Text>
         </View>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -86,3 +97,5 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 });
+
+export default TaskItemComponent;

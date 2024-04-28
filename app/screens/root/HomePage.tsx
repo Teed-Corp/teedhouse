@@ -3,10 +3,11 @@ import HomePageHeader from "@app/components/root/home/HomePageHeader";
 import HomePageMenuItem from "@app/components/root/home/HomePageMenuItem";
 import HomePageStatsHeader from "@app/components/root/home/HomePageStatsHeader";
 import TaskItemComponent from "@app/components/root/task/TaskItemComponent";
+import { useFamily } from "@app/context/FamilyContext";
 import { useProfile } from "@app/context/ProfileContext";
 import { Root } from "@app/navigation/routes";
 import Theme from "@app/theme/Theme";
-import { profile } from "@prisma/client";
+import { completed_task, profile } from "@prisma/client";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
@@ -16,8 +17,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const HomePage = () => {
   const navigation: any = useNavigation();
   const { getProfile } = useProfile();
+  const { getCompletedTasks, getUserCompletedTasks } = useFamily();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<profile>(null);
+  const [myTasks, setMyTasks] = useState<completed_task[]>([]);
+  const [otherTasks, setOtherTasks] = useState<completed_task[]>([]);
 
   const handlePressMyTasks = () => {
     navigation.navigate(Root.MyTaskPage, {
@@ -27,61 +31,21 @@ const HomePage = () => {
   };
 
   const handlePressOtherTasks = () => {
-    navigation.navigate(Root.MyTaskPage, {
+    navigation.navigate(Root.OtherTaskPage, {
       title: "Autres tâches",
       taskList: otherTasks,
     });
   };
 
-  const myTasks = [
-    {
-      taskName: "Laver la voiture",
-      name: "Antho",
-      score: 145,
-      type: "car",
-    },
-    {
-      taskName: "Faire les courses",
-      name: "Antho",
-      score: 200,
-      type: "shopping",
-    },
-    {
-      taskName: "Faire le ménage",
-      name: "Antho",
-      score: 100,
-      type: "household",
-    },
-  ];
-
-  const otherTasks = [
-    {
-      taskName: "Sortir le chien",
-      name: "Lucas",
-      score: 145,
-      type: "dog",
-    },
-    {
-      taskName: "Faire la vaisselle",
-      name: "Logan",
-      score: 200,
-      type: "dish",
-    },
-    {
-      taskName: "Faire le lit",
-      name: "Mathis",
-      score: 100,
-      type: "bed",
-    },
-  ];
-
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetch = async () => {
       setProfile(await getProfile());
+      setMyTasks((await getUserCompletedTasks()).data);
+      setOtherTasks((await getCompletedTasks()).data);
       setIsLoading(false);
     };
 
-    fetchProfile().catch(console.error);
+    fetch().catch(console.error);
   }, []);
 
   if (isLoading) return null;
@@ -95,18 +59,20 @@ const HomePage = () => {
         <Divider height={24} />
         <HomePageMenuItem name="Mes tâches" onPress={handlePressMyTasks} />
         <Divider height={12} />
-        {myTasks.map((task) => {
-          return <TaskItemComponent key={task.taskName} item={task} />;
-        })}
+        {myTasks &&
+          myTasks.map((task) => {
+            return <TaskItemComponent key={task.id} item={task} />;
+          })}
         <Divider height={24} />
         <HomePageMenuItem
           name="Autres tâches"
           onPress={handlePressOtherTasks}
         />
         <Divider height={12} />
-        {otherTasks.map((task) => {
-          return <TaskItemComponent key={task.name} item={task} />;
-        })}
+        {otherTasks &&
+          otherTasks.map((task) => {
+            return <TaskItemComponent key={task.id} item={task} />;
+          })}
       </ScrollView>
       <TouchableOpacity
         style={styles.fab}

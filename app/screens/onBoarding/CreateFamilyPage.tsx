@@ -4,17 +4,12 @@ import HeaderTitle from "@app/components/common/Content/HeaderTitle";
 import CustomLoader from "@app/components/common/CustomLoader";
 import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
-import CustomDropdown from "@app/components/common/Inputs/CustomDropdown";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import { useFamily } from "@app/context/FamilyContext";
+import Theme from "@app/theme/Theme";
 import React, { useState } from "react";
-import {
-  FlatList,
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, KeyboardAvoidingView, Text, View } from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const CreateFamilyPage = () => {
@@ -23,6 +18,7 @@ const CreateFamilyPage = () => {
   const [familyName, setFamilyName] = useState(null);
   const [displayError, setDisplayError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const data = [
     { label: "Maison", value: "Maison" },
@@ -42,12 +38,12 @@ const CreateFamilyPage = () => {
 
   const renderItem = () => (
     <KeyboardAvoidingView behavior="height">
-      <View style={styles.content}>
+      <View className="flex flex-grow justify-center items-center mb-3">
         <HeaderIcon icon="users" />
         <Divider height={24} />
         <HeaderTitle value={"Créer\n une famille"} />
         <Divider height={20} />
-        <Text style={styles.text}>
+        <Text className="text-sm text-center">
           {
             "Pour créer votre famille,\nVeuillez remplir les informations ci-dessous"
           }
@@ -63,14 +59,50 @@ const CreateFamilyPage = () => {
           <ErrorText error="Un nom est requis" />
         )}
         <Divider height={24} />
-        <CustomDropdown
-          data={data}
-          onSelect={setHomeType}
-          placeHolder="Type de logement"
-          displayTopPlaceHolder
-          value={homeType}
-          zindex={1}
-        />
+        <View className="w-full z-10">
+          <Text className="ml-1">Type de logement</Text>
+          <Divider height={12} />
+
+          <DropDownPicker
+            items={data}
+            open={open}
+            setOpen={setOpen}
+            setValue={setHomeType}
+            value={homeType}
+            placeholder="Type de logement"
+            placeholderStyle={{
+              fontSize: 15,
+              color: "#929292",
+              textAlign: "left",
+            }}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              borderWidth: 0.5,
+              borderRadius: Theme.defaultRadius,
+              paddingLeft: 25,
+              width: "100%",
+              height: 56,
+              backgroundColor: "white",
+            }}
+            textStyle={{
+              fontSize: 15,
+              color: "black",
+              textAlign: "left",
+            }}
+            dropDownContainerStyle={{
+              borderWidth: 0.5,
+              borderRadius: Theme.defaultRadius,
+              borderColor: "#AAAAAA",
+              marginTop: 10,
+            }}
+            disableBorderRadius={false}
+            listItemContainerStyle={{
+              height: 50,
+            }}
+            scrollViewProps={{ scrollEnabled: true }}
+          />
+        </View>
         {homeType === null && displayError && (
           <ErrorText error="Un type de logement est requis" />
         )}
@@ -85,36 +117,15 @@ const CreateFamilyPage = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="h-full w-full px-5">
       <FlatList
         data={[0]}
         renderItem={renderItem}
-        contentContainerStyle={styles.content}
+        className="flex flex-grow justify-center items-center mb-3"
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-    paddingHorizontal: 20,
-  },
-  content: {
-    flexGrow: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  text: {
-    fontSize: 14,
-    textAlign: "center",
-  },
-  dropdown: {
-    zIndex: 1,
-  },
-});
 
 export default CreateFamilyPage;

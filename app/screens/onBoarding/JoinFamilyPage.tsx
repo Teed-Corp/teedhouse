@@ -7,13 +7,7 @@ import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import { useFamily } from "@app/context/FamilyContext";
 import { Formik } from "formik";
 import React, { useState } from "react";
-import {
-  KeyboardAvoidingView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 
@@ -44,16 +38,16 @@ const JoinFamilyPage = () => {
           onSubmit={handleJoinFamily}
         >
           {({ values, touched, handleChange, handleSubmit, errors }) => (
-            <View style={styles.container}>
+            <View className="w-full h-full px-5">
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.content}
+                className="justify-center items-center flex-grow"
               >
                 <HeaderIcon icon="users" />
                 <Divider height={24} />
                 <HeaderTitle value={"Rejoindre\n une famille"} />
                 <Divider height={20} />
-                <Text style={styles.text}>
+                <Text className="text-sm text-center">
                   Veuillez entrer le code de votre famille
                 </Text>
                 <Divider height={20} />
@@ -68,8 +62,10 @@ const JoinFamilyPage = () => {
                   autoCapitalize="characters"
                 />
                 {errors.familyCode && touched.familyCode && (
-                  <View style={styles.errorContainer}>
-                    <Text style={styles.errorText}>{errors.familyCode}</Text>
+                  <View className="w-full justify-start items-start">
+                    <Text className="bg-red-500 ml-1 mt-1">
+                      {errors.familyCode}
+                    </Text>
                   </View>
                 )}
                 <Divider height={24} />
@@ -86,32 +82,5 @@ const JoinFamilyPage = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-    paddingHorizontal: 20,
-  },
-  content: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexGrow: 1,
-  },
-  text: {
-    fontSize: 14,
-    textAlign: "center",
-  },
-  errorContainer: {
-    width: "100%",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-  },
-  errorText: {
-    color: "red",
-    marginLeft: 4,
-    marginTop: 5,
-  },
-});
 
 export default JoinFamilyPage;

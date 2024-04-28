@@ -4,7 +4,6 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
   KeyboardTypeOptions,
-  StyleSheet,
   Text,
   TextInput,
   TextInputProps,
@@ -52,18 +51,17 @@ const CustomTextField = ({
     <View>
       {displayTopPlaceHolder && (
         <>
-          <Text style={styles.topPlaceHolder}>{placeHolderValue}</Text>
+          <Text className="ml-1">{placeHolderValue}</Text>
           <Divider height={12} />
         </>
       )}
-      <View style={styles.inputContainer}>
+      <View className="flex flex-row items-center border rounded-3xl pl-6 w-full h-12 bg-white">
         <TextInput
-          style={[
-            styles.input,
-            {
-              borderColor: isFocused ? Theme.gradientColor : Theme.borderColor,
-            },
-          ]}
+          className={
+            "text-sm flex-1 h-14 " + isFocused
+              ? "border-gradient"
+              : "border-[#929292]"
+          }
           value={value}
           placeholder={placeHolderValue}
           placeholderTextColor="#929292"
@@ -78,7 +76,7 @@ const CustomTextField = ({
         {isPassword && (
           <TouchableOpacity
             onPress={toggleShowPassword}
-            style={styles.iconContainer}
+            className="absolute right-3"
           >
             <Ionicons
               name={showPassword ? "eye-off" : "eye"}
@@ -93,27 +91,3 @@ const CustomTextField = ({
 };
 
 export default CustomTextField;
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 0.5,
-    borderRadius: Theme.defaultRadius,
-    paddingLeft: 25,
-    width: "100%",
-    backgroundColor: "white",
-  },
-  input: {
-    fontSize: 15,
-    flex: 1,
-    height: 56,
-  },
-  iconContainer: {
-    position: "absolute",
-    right: 10,
-  },
-  topPlaceHolder: {
-    marginLeft: 4,
-  },
-});

@@ -1,9 +1,9 @@
 import Divider from "@app/components/common/Divider";
 import Theme from "@app/theme/Theme";
+import { formatDate } from "@app/utils/DateUtils";
 import React, { useState } from "react";
 import {
   Modal,
-  StyleSheet,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -34,15 +34,15 @@ const CustomDatePicker = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View className="w-full">
       {displayTopPlaceHolder && (
         <>
-          <Text style={styles.topPlaceHolder}>{placeHolder}</Text>
+          <Text className="ml-1">{placeHolder}</Text>
           <Divider height={12} />
         </>
       )}
       <TouchableOpacity
-        style={styles.inputContainer}
+        className="w-full flex flex-row justify-between items-center border rounded-3xl px-6 h-14 bg-white"
         onPress={() => {
           setShowDatePicker(true);
         }}
@@ -56,10 +56,10 @@ const CustomDatePicker = ({
           }}
         >
           <TouchableWithoutFeedback onPress={() => setShowDatePicker(false)}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
+            <View className="flex-1 justify-center items-center">
+              <View className="m-5 bg-white rounded-3xl w-[90%] p-9 items-center shadow-[#00000040]">
                 <TouchableOpacity
-                  style={styles.closeIcon}
+                  className="absolute top-3 right-3"
                   onPress={() => setShowDatePicker(false)}
                 >
                   <Icon
@@ -86,7 +86,11 @@ const CustomDatePicker = ({
             </View>
           </TouchableWithoutFeedback>
         </Modal>
-        <Text style={date === "" ? styles.placeholder : styles.valueStyle}>
+        <Text
+          className={
+            "text-sm text-left " + date === "" ? "text-[#929292]" : "text-black"
+          }
+        >
           {date === "" ? placeHolder : formatDate(date)}
         </Text>
         <Icon
@@ -100,72 +104,4 @@ const CustomDatePicker = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-  },
-  inputContainer: {
-    width: "100%",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexDirection: "row",
-    borderWidth: 0.5,
-    borderRadius: Theme.defaultRadius,
-    paddingHorizontal: 25,
-    height: 56,
-    backgroundColor: "white",
-  },
-  closeIcon: {
-    position: "absolute",
-    top: 10,
-    right: 10,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    width: "90%",
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  placeholder: {
-    fontSize: 15,
-    color: "#929292",
-    textAlign: "left",
-  },
-  valueStyle: {
-    fontSize: 15,
-    color: "black",
-    textAlign: "left",
-  },
-  topPlaceHolder: {
-    marginLeft: 4,
-  },
-});
-
-export const formatDate = (dateString: string) => {
-  const [year, month, day] = dateString.split("/");
-  const formattedDate = new Date(
-    parseInt(year, 10),
-    parseInt(month, 10) - 1,
-    parseInt(day, 10),
-  );
-  const formattedDay = String(formattedDate.getDate()).padStart(2, "0");
-  const formattedMonth = String(formattedDate.getMonth() + 1).padStart(2, "0");
-  const formattedYear = formattedDate.getFullYear();
-  return `${formattedDay}/${formattedMonth}/${formattedYear}`;
-};
 export default CustomDatePicker;

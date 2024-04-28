@@ -3,7 +3,7 @@ import { useFamily } from "@app/context/FamilyContext";
 import { useProfile } from "@app/context/ProfileContext";
 import { completed_task, profile, task } from "@prisma/client";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 const TaskItemComponent = ({ item }: { item: completed_task }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -25,7 +25,7 @@ const TaskItemComponent = ({ item }: { item: completed_task }) => {
   if (isLoading) return null;
 
   return (
-    <View style={styles.container}>
+    <View className="flex flex-row bg-[#f9f9f9] w-full items-center p-5 mb-3 rounded-3xl">
       {/*{item.type === "car" ? (*/}
       {/*  <CarIcon />*/}
       {/*) : item.type === "shopping" ? (*/}
@@ -33,69 +33,20 @@ const TaskItemComponent = ({ item }: { item: completed_task }) => {
       {/*) : (*/}
       {/*  <HouseHoldIcon />*/}
       {/*)}*/}
-      <View style={styles.detailsContainer}>
-        <Text style={styles.taskName}>{task.name}</Text>
-        <Text style={styles.name}>{profile.firstname}</Text>
+      <View className="flex-1">
+        <Text className="text-lg font-bold">{task.name}</Text>
+        <Text className="text-sm">{profile.firstname}</Text>
       </View>
-      <View style={styles.scoreContainer}>
-        <View style={styles.piece}>
+      <View className="flex flex-row items-end">
+        <View className="w-8 h-8 rounded-3xl mr-2">
           <PieceComponent />
         </View>
-        <View style={styles.scoreWrapper}>
-          <Text style={styles.score}>{task.points}</Text>
+        <View className="items-center justify-center h-8">
+          <Text className="text-lg font-bold">{task.points}</Text>
         </View>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    backgroundColor: "#f9f9f9",
-    width: "100%",
-    alignItems: "center",
-    padding: 20,
-    marginBottom: 10,
-    borderRadius: 20,
-  },
-  image: {
-    backgroundColor: "#212121",
-    opacity: 0.05,
-    width: 50,
-    height: 50,
-    borderRadius: 10,
-    marginRight: 10,
-  },
-  detailsContainer: {
-    flex: 1,
-  },
-  taskName: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  name: {
-    fontSize: 16,
-  },
-  scoreContainer: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-  },
-  score: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  scoreWrapper: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: 30,
-  },
-  piece: {
-    width: 30,
-    height: 30,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-});
 
 export default TaskItemComponent;

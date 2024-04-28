@@ -1,19 +1,22 @@
 import colors from "@app/theme/Theme";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 const AppButton = ({ title, onPressEvent }) => {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={onPressEvent} style={styles.button}>
+    <View className="w-full">
+      <TouchableOpacity
+        onPress={onPressEvent}
+        className="w-full h-14 overflow-hidden"
+      >
         <LinearGradient
           colors={[colors.primary, colors.gradientColor]}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 1 }}
-          style={styles.gradient}
+          className="w-full rounded-3xl justify-center items-center h-14"
         >
-          <Text style={styles.text}>{title}</Text>
+          <Text className="text-white text-xl">{title}</Text>
         </LinearGradient>
       </TouchableOpacity>
     </View>
@@ -21,25 +24,3 @@ const AppButton = ({ title, onPressEvent }) => {
 };
 
 export default AppButton;
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-  },
-  gradient: {
-    width: "100%",
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
-    height: 56,
-  },
-  button: {
-    width: "100%",
-    height: 56,
-    overflow: "hidden",
-  },
-  text: {
-    color: "white",
-    fontSize: 20,
-  },
-});

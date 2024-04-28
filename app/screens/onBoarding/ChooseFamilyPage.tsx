@@ -1,7 +1,7 @@
-import FamilyButton from "@app/components/root/family/FamilyButton";
+import FamilyButton from "@app/components/onBoarding/family/FamilyButton";
 import { OnBoarding } from "@app/navigation/routes";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ChooseFamilyPage = () => {
@@ -15,14 +15,14 @@ const ChooseFamilyPage = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="flex flex-1 justify-center px-5">
       <FamilyButton
         onPressEvent={handlePressCreateFamily}
         isJoinFamily={false}
         title="Créer une famille"
       />
       <View />
-      <View style={styles.divider} />
+      <View className="py-[5%]" />
       <FamilyButton
         onPressEvent={handlePressJoinFamily}
         isJoinFamily
@@ -31,16 +31,5 @@ const ChooseFamilyPage = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 20,
-  },
-  divider: {
-    paddingVertical: "5%",
-  },
-});
 
 export default ChooseFamilyPage;

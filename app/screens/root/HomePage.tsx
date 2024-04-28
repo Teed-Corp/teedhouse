@@ -1,7 +1,8 @@
+import HeaderIcon from "@app/components/common/Content/HeaderIcon";
+import PieceComponent from "@app/components/common/Content/PieceComponent";
+import ProfilePicture from "@app/components/common/Content/ProfilePicture";
 import Divider from "@app/components/common/Divider";
-import HomePageHeader from "@app/components/root/home/HomePageHeader";
 import HomePageMenuItem from "@app/components/root/home/HomePageMenuItem";
-import HomePageStatsHeader from "@app/components/root/home/HomePageStatsHeader";
 import TaskItemComponent from "@app/components/root/task/TaskItemComponent";
 import { useFamily } from "@app/context/FamilyContext";
 import { useProfile } from "@app/context/ProfileContext";
@@ -9,19 +10,29 @@ import { Root } from "@app/navigation/routes";
 import Theme from "@app/theme/Theme";
 import { completed_task, profile } from "@prisma/client";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import React, { useEffect, useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Icon } from "react-native-elements";
+import { ProgressBar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomePage = () => {
   const navigation: any = useNavigation();
   const { getProfile } = useProfile();
-  const { getCompletedTasks, getUserCompletedTasks } = useFamily();
+  const {
+    getCompletedTasks,
+    getUserCompletedTasks,
+    getUserCompletedTasksScore,
+  } = useFamily();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<profile>(null);
   const [myTasks, setMyTasks] = useState<completed_task[]>([]);
   const [otherTasks, setOtherTasks] = useState<completed_task[]>([]);
+  const [userScore, setUserScore] = useState(0);
+
+  const displayFamilyProgess = 0.5 * 100;
+  const displayPersonalProgress = 0.23 * 100;
 
   const handlePressMyTasks = () => {
     navigation.navigate(Root.MyTaskPage, {
@@ -37,6 +48,14 @@ const HomePage = () => {
     });
   };
 
+  const handlePressStats = () => {
+    navigation.navigate(Root.FamilyStatsPage);
+  };
+
+  const handlePressProfile = () => {
+    navigation.navigate(Root.AccountPage);
+  };
+
   useEffect(() => {
     const fetch = async () => {
       const profile = await getProfile();
@@ -47,6 +66,7 @@ const HomePage = () => {
           (task) => task.profileId !== profile.id,
         ),
       );
+      setUserScore(await getUserCompletedTasksScore());
       setIsLoading(false);
     };
 
@@ -56,11 +76,62 @@ const HomePage = () => {
   if (isLoading) return null;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <HomePageHeader user={profile} navigation={navigation} />
+    <SafeAreaView className="w-full h-full p-4">
+      <View className="w-full h-20 flex flex-row justify-between items-center mx-auto py-4">
+        <View className="flex-row items-center">
+          <TouchableOpacity onPress={handlePressProfile}>
+            <ProfilePicture
+              uri={`https://ui-avatars.com/api/?name=${profile.lastname + " " + profile.firstname}`}
+              imageStyle="h-12 w-12 rounded-full"
+            />
+          </TouchableOpacity>
+          <Divider width={16} />
+          <View className="flex flex-col h-full justify-between">
+            <Text className="text-lg">Bonjour</Text>
+            <Text className="text-xl font-bold">{profile.firstname}</Text>
+          </View>
+        </View>
+        <TouchableOpacity onPress={handlePressStats}>
+          <HeaderIcon icon="trophy" size={24} />
+        </TouchableOpacity>
+      </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Divider height={20} />
-        <HomePageStatsHeader familyProgess={0.5} personalProgress={0.23} />
+        <LinearGradient
+          className="w-full items-center justify-center rounded-lg p-5"
+          colors={[Theme.primary, Theme.gradientColor]}
+          start={{ x: 0, y: 0.5 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <View className="w-full flex flex-row justify-between items-center">
+            <Text className="text-white text-lg font-bold">
+              {displayFamilyProgess}% des tâches de la semaine ont été réalisées
+            </Text>
+          </View>
+          <Divider height={10} />
+          <View className="w-full flex flex-row justify-between items-center">
+            <Text className="text-white text-sm">
+              Vous avez effectué {displayPersonalProgress}% sur{" "}
+              {displayFamilyProgess}%
+            </Text>
+          </View>
+          <Divider height={8} />
+          <View className="w-full h-2">
+            <ProgressBar
+              className="h-full rounded-lg bg-gray-400"
+              progress={0.5}
+              visible
+              color="white"
+            />
+          </View>
+          <Divider height={10} />
+          <View className="w-full flex flex-row justify-center items-center rounded-lg bg-[#e8ede91a] p-2">
+            <Text className="text-white text-lg">Mon score : </Text>
+            <Text className="text-white text-xl font-bold">{userScore}</Text>
+            <Divider width={8} />
+            <PieceComponent />
+          </View>
+        </LinearGradient>
         <Divider height={24} />
         <HomePageMenuItem name="Mes tâches" onPress={handlePressMyTasks} />
         <Divider height={12} />
@@ -80,7 +151,7 @@ const HomePage = () => {
           })}
       </ScrollView>
       <TouchableOpacity
-        style={styles.fab}
+        className="absolute bottom-12 right-6 justify-center items-center bg-primary w-16 h-16 rounded-full shadow-lg"
         onPress={() => {
           console.log("Add task");
         }}
@@ -96,25 +167,5 @@ const HomePage = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-    paddingHorizontal: 20,
-  },
-  fab: {
-    position: "absolute",
-    bottom: 40,
-    right: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: Theme.primary,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    elevation: 5,
-  },
-});
 
 export default HomePage;

@@ -8,11 +8,11 @@ const ProfilePicture = ({
   iconSize,
 }: {
   uri: string;
-  imageStyle: any;
+  imageStyle: string;
   iconSize?: number;
 }) => {
   return uri && uri !== "" ? (
-    <Image style={imageStyle} source={{ uri }} />
+    <Image className={imageStyle} source={{ uri }} />
   ) : (
     <Icon name="user" type="font-awesome" color="black" size={iconSize ?? 40} />
   );

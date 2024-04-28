@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { Icon } from "react-native-elements";
 
 const HomePageMenuItem = ({
@@ -11,28 +11,12 @@ const HomePageMenuItem = ({
 }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={styles.container}>
-        <Text style={styles.label}>{name}</Text>
+      <View className="w-full p-4 bg-[#E6EAFF] rounded-xl flex flex-row justify-between items-center">
+        <Text className="text-lg font-bold">{name}</Text>
         <Icon name="chevron-right" type="font-awesome" size={20} />
       </View>
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    padding: 14,
-    backgroundColor: "#E6EAFF",
-    borderRadius: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  label: {
-    fontSize: 18,
-    fontWeight: "600",
-  },
-});
 
 export default HomePageMenuItem;

@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 
 const CustomIconButton = ({
@@ -11,7 +11,10 @@ const CustomIconButton = ({
   iconType?: string;
 }) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity
+      className="w-10 h-10 rounded-xl bg-white justify-center"
+      onPress={onPress}
+    >
       <Icon
         name={iconName}
         type={iconType ?? "font-awesome"}
@@ -21,15 +24,5 @@ const CustomIconButton = ({
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: 40,
-    height: 40,
-    borderRadius: 10,
-    backgroundColor: "white",
-    justifyContent: "center",
-  },
-});
 
 export default CustomIconButton;

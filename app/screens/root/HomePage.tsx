@@ -3,16 +3,21 @@ import HomePageHeader from "@app/components/root/home/HomePageHeader";
 import HomePageMenuItem from "@app/components/root/home/HomePageMenuItem";
 import HomePageStatsHeader from "@app/components/root/home/HomePageStatsHeader";
 import TaskItemComponent from "@app/components/root/task/TaskItemComponent";
+import { useProfile } from "@app/context/ProfileContext";
 import { Root } from "@app/navigation/routes";
 import Theme from "@app/theme/Theme";
+import { profile } from "@prisma/client";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomePage = () => {
   const navigation: any = useNavigation();
+  const { getProfile } = useProfile();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [profile, setProfile] = useState<profile>(null);
 
   const handlePressMyTasks = () => {
     navigation.navigate(Root.MyTaskPage, {
@@ -74,9 +79,20 @@ const HomePage = () => {
     },
   ];
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      setProfile(await getProfile());
+      setIsLoading(false);
+    };
+
+    fetchProfile().catch(console.error);
+  }, []);
+
+  if (isLoading) return null;
+
   return (
     <SafeAreaView style={styles.container}>
-      <HomePageHeader user={user} navigation={navigation} />
+      <HomePageHeader user={profile} navigation={navigation} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Divider height={20} />
         <HomePageStatsHeader familyProgess={0.5} personalProgress={0.23} />

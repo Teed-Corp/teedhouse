@@ -48,9 +48,7 @@ const AuthCard = ({
           password,
         }}
         validationSchema={validationSchema}
-        onSubmit={() => {
-          onConfirm();
-        }}
+        onSubmit={onConfirm}
       >
         {({
           values,

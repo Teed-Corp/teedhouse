@@ -14,8 +14,8 @@ const main = async () => {
       create or replace function public.handle_new_user()
           returns trigger as $$
       begin
-          insert into public.profile (id, full_name, "createdAt", "updatedAt")
-          values (new.id, new.raw_user_meta_data->>'full_name', now(), now());
+          insert into public.profile (id, lastname, firstname, birthdate, "createdAt", "updatedAt")
+          values (new.id, new.raw_user_meta_data->>'lastname', new.raw_user_meta_data->>'firstname', TO_TIMESTAMP(new.raw_user_meta_data->>'birthdate', 'YYYY-MM-DD'), now(), now());
           return new;
       end;
       $$ language plpgsql security definer;`;

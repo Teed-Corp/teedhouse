@@ -2,9 +2,16 @@ import HeaderIcon from "@app/components/common/Content/HeaderIcon";
 import ProfilePicture from "@app/components/common/Content/ProfilePicture";
 import Divider from "@app/components/common/Divider";
 import { Root } from "@app/navigation/routes";
+import { profile } from "@prisma/client";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const HomePageHeader = ({ user, navigation }) => {
+const HomePageHeader = ({
+  user,
+  navigation,
+}: {
+  user: profile;
+  navigation: any;
+}) => {
   const handlePressStats = () => {
     navigation.navigate(Root.FamilyStatsPage);
   };
@@ -17,12 +24,16 @@ const HomePageHeader = ({ user, navigation }) => {
     <View style={styles.container}>
       <View style={styles.leftPart}>
         <TouchableOpacity onPress={handlePressProfile}>
-          <ProfilePicture uri={user.profilePicture} imageStyle={styles.image} />
+          {/*<ProfilePicture uri={user.profilePicture} imageStyle={styles.image} />*/}
+          <ProfilePicture
+            uri={`https://ui-avatars.com/api/?name=${user.lastname + " " + user.firstname}`}
+            imageStyle={styles.image}
+          />
         </TouchableOpacity>
         <Divider width={16} />
         <View style={styles.nameContainer}>
           <Text style={styles.helloLabel}>Bonjour</Text>
-          <Text style={styles.nameLabel}>{user.name}</Text>
+          <Text style={styles.nameLabel}>{user.firstname}</Text>
         </View>
       </View>
       <TouchableOpacity onPress={handlePressStats}>

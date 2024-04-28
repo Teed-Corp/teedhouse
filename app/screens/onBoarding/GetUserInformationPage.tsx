@@ -6,6 +6,7 @@ import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
 import CustomDatePicker from "@app/components/common/Inputs/CustomDatePicker";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
+import { useProfile } from "@app/context/ProfileContext";
 import { OnBoarding } from "@app/navigation/routes";
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
@@ -21,11 +22,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 
 const GetUserInformationPage = () => {
+  const { createProfile } = useProfile();
   const [isLoading, setIsLoading] = useState(false);
+  const [lastname, setLastname] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Un nom est requis"),
-    surname: Yup.string().required("Un prénom est requis"),
+    lastname: Yup.string().required("Un nom est requis"),
+    firstname: Yup.string().required("Un prénom est requis"),
     dateOfBirth: Yup.string().required("Une date de naissance est requise"),
   });
 
@@ -33,6 +38,12 @@ const GetUserInformationPage = () => {
 
   const handlePushUserInformation = async () => {
     setIsLoading(true);
+    const parts = dateOfBirth.split("/");
+    await createProfile(
+      lastname,
+      firstname,
+      new Date(Number(parts[0]), Number(parts[1]), Number(parts[2])),
+    );
     navigation.replace(OnBoarding.ChooseFamilyPage);
     setIsLoading(false);
   };
@@ -42,8 +53,8 @@ const GetUserInformationPage = () => {
       <KeyboardAvoidingView behavior="height">
         <Formik
           initialValues={{
-            name: "",
-            surname: "",
+            lastname: "",
+            firstname: "",
             dateOfBirth: "",
           }}
           validationSchema={validationSchema}
@@ -64,31 +75,40 @@ const GetUserInformationPage = () => {
                 </Text>
                 <Divider height={20} />
                 <CustomTextField
-                  value={values.name}
-                  onChangeEvent={handleChange("name")}
+                  value={values.lastname}
+                  onChangeEvent={(value) => {
+                    handleChange("lastname")(value);
+                    setLastname(value);
+                  }}
                   placeHolderValue="Nom"
                   displayTopPlaceHolder
                   autoCapitalize="characters"
                 />
-                {errors.name && touched.name && (
-                  <ErrorText error={errors.name} />
+                {errors.lastname && touched.lastname && (
+                  <ErrorText error={errors.lastname} />
                 )}
                 <Divider height={24} />
                 <CustomTextField
-                  value={values.surname}
-                  onChangeEvent={handleChange("surname")}
+                  value={values.firstname}
+                  onChangeEvent={(value) => {
+                    handleChange("firstname")(value);
+                    setFirstname(value);
+                  }}
                   placeHolderValue="Prénom"
                   displayTopPlaceHolder
                   autoCapitalize="characters"
                 />
-                {errors.surname && touched.surname && (
-                  <ErrorText error={errors.surname} />
+                {errors.firstname && touched.firstname && (
+                  <ErrorText error={errors.firstname} />
                 )}
                 <Divider height={24} />
                 <CustomDatePicker
                   placeHolder="Date de naissance"
                   displayTopPlaceHolder
-                  handleChange={handleChange("dateOfBirth")}
+                  handleChange={(date) => {
+                    handleChange("dateOfBirth")(date);
+                    setDateOfBirth(date);
+                  }}
                 />
                 {errors.dateOfBirth && touched.dateOfBirth && (
                   <ErrorText error={errors.dateOfBirth} />

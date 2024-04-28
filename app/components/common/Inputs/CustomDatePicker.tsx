@@ -17,7 +17,7 @@ const CustomDatePicker = ({
   displayTopPlaceHolder = false,
   placeHolder,
 }: {
-  handleChange: any;
+  handleChange: (date: string) => void;
   displayTopPlaceHolder: boolean;
   placeHolder: string;
 }) => {

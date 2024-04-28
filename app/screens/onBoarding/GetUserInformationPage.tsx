@@ -8,6 +8,7 @@ import CustomDatePicker from "@app/components/common/Inputs/CustomDatePicker";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import { useProfile } from "@app/context/ProfileContext";
 import { OnBoarding } from "@app/navigation/routes";
+import { convertStringToDate } from "@app/utils/DateUtils";
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import React, { useState } from "react";
@@ -22,7 +23,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 
 const GetUserInformationPage = () => {
-  const { createProfile } = useProfile();
+  const { updateProfile } = useProfile();
   const [isLoading, setIsLoading] = useState(false);
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -38,12 +39,7 @@ const GetUserInformationPage = () => {
 
   const handlePushUserInformation = async () => {
     setIsLoading(true);
-    const parts = dateOfBirth.split("/");
-    await createProfile(
-      lastname,
-      firstname,
-      new Date(Number(parts[0]), Number(parts[1]), Number(parts[2])),
-    );
+    await updateProfile(lastname, firstname, convertStringToDate(dateOfBirth));
     navigation.replace(OnBoarding.ChooseFamilyPage);
     setIsLoading(false);
   };

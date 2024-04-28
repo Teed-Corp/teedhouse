@@ -4,7 +4,7 @@ import { profile } from "@prisma/client";
 import { createContext, ReactNode, useContext } from "react";
 
 type ProfileContextType = {
-  createProfile: (
+  updateProfile: (
     lastname: string,
     firstname: string,
     birthdate: Date,
@@ -17,7 +17,7 @@ const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const { getSession } = useAuth();
 
-  const createProfile = async (
+  const updateProfile = async (
     lastname: string,
     firstname: string,
     birthdate: Date,
@@ -53,13 +53,22 @@ const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
     if (error) throw error;
 
-    return data;
+    const profile: profile = {
+      id: data.id,
+      lastname: data.lastname,
+      firstname: data.firstname,
+      birthdate: new Date(data.birthdate),
+      createdAt: new Date(data.createdAt),
+      updatedAt: new Date(data.updatedAt),
+    };
+
+    return profile;
   };
 
   return (
     <ProfileContext.Provider
       value={{
-        createProfile,
+        updateProfile,
         getProfile,
       }}
     >

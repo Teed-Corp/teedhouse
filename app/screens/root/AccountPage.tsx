@@ -1,8 +1,10 @@
 import AccountCard from "@app/components/root/account/AccountCard";
 import ImagePickerPopUp from "@app/components/root/account/ImagePickerPopUp";
+import { useProfile } from "@app/context/ProfileContext";
 import Theme from "@app/theme/Theme";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { profile } from "@prisma/client";
+import { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -14,6 +16,9 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AccountPage() {
+  const { getProfile } = useProfile();
+  const [isLoading, setIsLoading] = useState(true);
+  const [profile, setProfile] = useState<profile>(null);
   const [image, setSelectedImage] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
 
@@ -21,13 +26,17 @@ export default function AccountPage() {
     setSelectedImage(image);
   };
 
-  const userTest = {
-    userSurname: "",
-    userName: "",
-    dof: "",
-    email: "",
-    stats: "1200",
-  };
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const profile = await getProfile();
+      setProfile(profile);
+      setIsLoading(false);
+    };
+
+    fetchProfile().catch(console.error);
+  }, []);
+
+  if (isLoading) return null;
 
   return (
     <SafeAreaView>
@@ -56,11 +65,11 @@ export default function AccountPage() {
             </TouchableOpacity>
           </View>
           <AccountCard
-            userSurname={userTest.userSurname}
-            userName={userTest.userName}
-            dof={userTest.dof}
-            email={userTest.email}
-            stats={userTest.stats}
+            firstname={profile.firstname}
+            lastname={profile.lastname}
+            birthdate={`${profile.birthdate.getFullYear()}/${profile.birthdate.getMonth() + 1}/${profile.birthdate.getDate()}`}
+            email="todefine@todefine.com"
+            stats="toremove?"
           />
         </View>
         <ImagePickerPopUp

@@ -16,12 +16,14 @@ const CustomDatePicker = ({
   handleChange,
   displayTopPlaceHolder = false,
   placeHolder,
+  defaultValue,
 }: {
   handleChange: (date: string) => void;
   displayTopPlaceHolder: boolean;
   placeHolder: string;
+  defaultValue?: string;
 }) => {
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(defaultValue || "");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const maximumDate = new Date();
 
@@ -84,8 +86,8 @@ const CustomDatePicker = ({
             </View>
           </TouchableWithoutFeedback>
         </Modal>
-        <Text style={date == "" ? styles.placeholder : styles.valueStyle}>
-          {date == "" ? placeHolder : formatDate(date)}
+        <Text style={date === "" ? styles.placeholder : styles.valueStyle}>
+          {date === "" ? placeHolder : formatDate(date)}
         </Text>
         <Icon
           name="calendar"
@@ -157,9 +159,9 @@ const styles = StyleSheet.create({
 export const formatDate = (dateString: string) => {
   const [year, month, day] = dateString.split("/");
   const formattedDate = new Date(
-    parseInt(year),
-    parseInt(month) - 1,
-    parseInt(day),
+    parseInt(year, 10),
+    parseInt(month, 10) - 1,
+    parseInt(day, 10),
   );
   const formattedDay = String(formattedDate.getDate()).padStart(2, "0");
   const formattedMonth = String(formattedDate.getMonth() + 1).padStart(2, "0");

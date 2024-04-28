@@ -32,6 +32,7 @@ type FamilyContextType = {
   getTaskById: (
     taskId: string,
   ) => Promise<{ data: task; error: PostgrestError }>;
+  getUserCompletedTasksScore: () => Promise<number>;
 };
 
 const FamilyContext = createContext<FamilyContextType | undefined>(undefined);
@@ -201,6 +202,22 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
     return { data: data as unknown as task, error };
   };
 
+  const getUserCompletedTasksScore = async () => {
+    const session = await getSession();
+
+    if (!session) return 0;
+
+    const userCompletedTasks = await getUserCompletedTasks();
+
+    let score = 0;
+    for (const userCompletedTask of userCompletedTasks.data) {
+      const task = await getTaskById(userCompletedTask.taskId);
+      score += task.data.points;
+    }
+
+    return score;
+  };
+
   return (
     <FamilyContext.Provider
       value={{
@@ -214,6 +231,7 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
         getCompletedTasks,
         getUserCompletedTasks,
         getTaskById,
+        getUserCompletedTasksScore,
       }}
     >
       {children}

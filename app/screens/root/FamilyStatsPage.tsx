@@ -22,7 +22,7 @@ const FamilyStatsPage = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Divider height={60} />
-      <FamilyStatsHeader progess={0.65} totalScore={200} />
+      <FamilyStatsHeader progess={0.65} totalScore={500} />
       <Divider height={24} />
       <FamilyStatsList users={data} />
     </SafeAreaView>

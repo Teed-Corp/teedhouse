@@ -39,9 +39,14 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      setProfile(await getProfile());
+      const profile = await getProfile();
+      setProfile(profile);
       setMyTasks((await getUserCompletedTasks()).data);
-      setOtherTasks((await getCompletedTasks()).data);
+      setOtherTasks(
+        (await getCompletedTasks()).data.filter(
+          (task) => task.profileId !== profile.id,
+        ),
+      );
       setIsLoading(false);
     };
 

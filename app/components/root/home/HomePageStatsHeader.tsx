@@ -1,14 +1,29 @@
 import PieceComponent from "@app/components/common/Content/PieceComponent";
 import Divider from "@app/components/common/Divider";
+import { useFamily } from "@app/context/FamilyContext";
 import Theme from "@app/theme/Theme";
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ProgressBar } from "react-native-paper";
 
 const HomePageStatsHeader = ({ familyProgess, personalProgress }) => {
+  const { getUserCompletedTasksScore } = useFamily();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [userScore, setUserScore] = useState(0);
+
   const displayFamilyProgess = familyProgess * 100;
   const displayPersonalProgress = personalProgress * 100;
+
+  useEffect(() => {
+    const fetch = async () => {
+      setUserScore(await getUserCompletedTasksScore());
+      setIsLoading(false);
+    };
+    fetch().catch(console.error);
+  }, []);
+
+  if (isLoading) return null;
 
   return (
     <LinearGradient
@@ -41,7 +56,7 @@ const HomePageStatsHeader = ({ familyProgess, personalProgress }) => {
       <Divider height={10} />
       <View style={styles.scoreContainer}>
         <Text style={styles.scoreText}>Mon score : </Text>
-        <Text style={styles.scoreNumber}>100</Text>
+        <Text style={styles.scoreNumber}>{userScore}</Text>
         <Divider width={8} />
         <PieceComponent />
       </View>

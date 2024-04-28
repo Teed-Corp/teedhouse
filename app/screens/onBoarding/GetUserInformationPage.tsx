@@ -54,7 +54,7 @@ const GetUserInformationPage = () => {
             <View className="w-full h-full px-5">
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                className="justify-center items-center flex-grow"
+                className="flex-grow"
               >
                 <HeaderIcon icon="user" />
                 <Divider height={24} />

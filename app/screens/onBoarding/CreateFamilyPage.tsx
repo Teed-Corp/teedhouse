@@ -121,7 +121,7 @@ const CreateFamilyPage = () => {
       <FlatList
         data={[0]}
         renderItem={renderItem}
-        className="flex flex-grow justify-center items-center mb-3"
+        className="flex flex-grow mb-3"
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>

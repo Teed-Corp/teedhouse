@@ -3,6 +3,7 @@ import { supabase } from "@app/libs/supabase/Supabase";
 import { completed_task, family, task } from "@prisma/client";
 import { PostgrestError } from "@supabase/supabase-js";
 import { uuid } from "@supabase/supabase-js/dist/main/lib/helpers";
+import * as Crypto from "expo-crypto";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 import defaultTask from "../../assets/defaultTasks.json";
@@ -49,7 +50,7 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
     while (!isUnique) {
       for (let i = 0; i < 6; i++) {
         code += characters.charAt(
-          Math.floor(Math.random() * characters.length),
+          Math.floor((Crypto.getRandomBytes(1)[0] / 255) * characters.length),
         );
       }
       isUnique =

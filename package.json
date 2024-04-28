@@ -22,6 +22,7 @@
     "@types/react": "~18.2.45",
     "@types/react-native-modern-datepicker": "^1.0.5",
     "expo": "~50.0.17",
+    "expo-crypto": "~12.8.1",
     "expo-image-picker": "~14.7.1",
     "expo-linear-gradient": "~12.7.2",
     "expo-status-bar": "~1.11.1",

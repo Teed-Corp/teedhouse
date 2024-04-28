@@ -1,7 +1,7 @@
 import { useAuth } from "@app/context/AuthContext";
 import { supabase } from "@app/libs/supabase/Supabase";
 import { profile } from "@prisma/client";
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useMemo } from "react";
 
 type ProfileContextType = {
   updateProfile: (
@@ -87,16 +87,17 @@ const ProfileProvider = ({ children }: { children: ReactNode }) => {
     return profile;
   };
 
+  const value = useMemo(
+    () => ({
+      updateProfile,
+      getProfile,
+      getProfileById,
+    }),
+    [updateProfile, getProfile, getProfileById],
+  );
+
   return (
-    <ProfileContext.Provider
-      value={{
-        updateProfile,
-        getProfile,
-        getProfileById,
-      }}
-    >
-      {children}
-    </ProfileContext.Provider>
+    <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
   );
 };
 

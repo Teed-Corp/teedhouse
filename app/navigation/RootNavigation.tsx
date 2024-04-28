@@ -15,10 +15,8 @@ const RootNavigation = () => {
       initialRouteName={Root.HomePage}
       screenOptions={{
         headerTransparent: true,
-        header: ({ navigation, route }) =>
-          navigation.canGoBack() ? (
-            <Header navigation={navigation} route={route} />
-          ) : null,
+        header: (props) =>
+          props.navigation.canGoBack() ? <Header {...props} /> : null,
       }}
     >
       <Stack.Screen name={Root.HomePage} component={HomePage} />
@@ -29,9 +27,7 @@ const RootNavigation = () => {
         name={Root.AccountPage}
         component={AccountPage}
         options={{
-          header: ({ navigation, route }) => (
-            <Header navigation={navigation} route={route} showSettingsButton />
-          ),
+          header: (props) => <Header {...props} showSettingsButton />,
         }}
       />
       <Stack.Screen name={Root.SettingsPage} component={SettingsPage} />

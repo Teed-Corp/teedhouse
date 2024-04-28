@@ -4,7 +4,7 @@ import { completed_task, family, task } from "@prisma/client";
 import { PostgrestError } from "@supabase/supabase-js";
 import { uuid } from "@supabase/supabase-js/dist/main/lib/helpers";
 import * as Crypto from "expo-crypto";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 
 import defaultTask from "../../assets/defaultTasks.json";
 
@@ -219,24 +219,37 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
     return score;
   };
 
+  const value = useMemo(
+    () => ({
+      initFamilyContext,
+      isJoinedFamily,
+      setIsJoinedFamily,
+      createFamily,
+      joinFamily,
+      getFamily,
+      getFamilyTasks,
+      getCompletedTasks,
+      getUserCompletedTasks,
+      getTaskById,
+      getUserCompletedTasksScore,
+    }),
+    [
+      initFamilyContext,
+      isJoinedFamily,
+      setIsJoinedFamily,
+      createFamily,
+      joinFamily,
+      getFamily,
+      getFamilyTasks,
+      getCompletedTasks,
+      getUserCompletedTasks,
+      getTaskById,
+      getUserCompletedTasksScore,
+    ],
+  );
+
   return (
-    <FamilyContext.Provider
-      value={{
-        initFamilyContext,
-        isJoinedFamily,
-        setIsJoinedFamily,
-        createFamily,
-        joinFamily,
-        getFamily,
-        getFamilyTasks,
-        getCompletedTasks,
-        getUserCompletedTasks,
-        getTaskById,
-        getUserCompletedTasksScore,
-      }}
-    >
-      {children}
-    </FamilyContext.Provider>
+    <FamilyContext.Provider value={value}>{children}</FamilyContext.Provider>
   );
 };
 

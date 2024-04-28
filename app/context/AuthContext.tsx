@@ -4,7 +4,7 @@ import {
   AuthTokenResponsePassword,
   Session,
 } from "@supabase/supabase-js";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 
 type AuthContextType = {
   initAuthContext: () => Promise<void>;
@@ -80,20 +80,26 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     return { data, error };
   };
 
-  return (
-    <AuthContext.Provider
-      value={{
-        initAuthContext,
-        getSession,
-        loginWithEmail,
-        logout,
-        registerWithEmail,
-        isAuthenticated,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      initAuthContext,
+      getSession,
+      loginWithEmail,
+      logout,
+      registerWithEmail,
+      isAuthenticated,
+    }),
+    [
+      initAuthContext,
+      getSession,
+      loginWithEmail,
+      logout,
+      registerWithEmail,
+      isAuthenticated,
+    ],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

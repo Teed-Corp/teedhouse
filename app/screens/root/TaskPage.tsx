@@ -1,11 +1,16 @@
 import Divider from "@app/components/common/Divider";
 import TaskItemComponent from "@app/components/root/task/TaskItemComponent";
+import { completed_task } from "@prisma/client";
 import { RouteProp } from "@react-navigation/native";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function TaskPage({ route }: { route: RouteProp<any> }) {
+export default function TaskPage({
+  route,
+}: {
+  route: Readonly<RouteProp<any>>;
+}) {
   const { title, taskList } = route.params;
 
   return (
@@ -34,8 +39,8 @@ export default function TaskPage({ route }: { route: RouteProp<any> }) {
             showsVerticalScrollIndicator={false}
             className="flex-grow pt-5 items-center"
           >
-            {taskList.map((item, index) => (
-              <TaskItemComponent key={index} item={item} />
+            {taskList.map((item: completed_task) => (
+              <TaskItemComponent key={item.id} item={item} />
             ))}
           </ScrollView>
         )}

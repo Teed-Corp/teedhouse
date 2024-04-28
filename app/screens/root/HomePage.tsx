@@ -135,20 +135,18 @@ const HomePage = () => {
         <Divider height={24} />
         <HomePageMenuItem name="Mes tâches" onPress={handlePressMyTasks} />
         <Divider height={12} />
-        {myTasks &&
-          myTasks.map((task) => {
-            return <TaskItemComponent key={task.id} item={task} />;
-          })}
+        {myTasks.map((task) => {
+          return <TaskItemComponent key={task.id} item={task} />;
+        })}
         <Divider height={24} />
         <HomePageMenuItem
           name="Autres tâches"
           onPress={handlePressOtherTasks}
         />
         <Divider height={12} />
-        {otherTasks &&
-          otherTasks.map((task) => {
-            return <TaskItemComponent key={task.id} item={task} />;
-          })}
+        {otherTasks.map((task) => {
+          return <TaskItemComponent key={task.id} item={task} />;
+        })}
       </ScrollView>
       <TouchableOpacity
         className="absolute bottom-12 right-6 justify-center items-center bg-primary w-16 h-16 rounded-full shadow-lg"

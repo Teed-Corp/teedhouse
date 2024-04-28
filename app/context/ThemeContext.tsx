@@ -1,5 +1,5 @@
 import appTheme from "@app/theme/Theme";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 
 type ThemeContextType = {
   theme: typeof appTheme;
@@ -11,10 +11,16 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(appTheme);
 
+  const value = useMemo(
+    () => ({
+      theme,
+      setTheme,
+    }),
+    [theme, setTheme],
+  );
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
 

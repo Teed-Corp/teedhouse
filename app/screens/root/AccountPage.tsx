@@ -26,11 +26,11 @@ export default function AccountPage({ navigation }) {
   const { getProfile, updateProfile } = useProfile();
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState<profile>(null);
-  const [image, setSelectedImage] = useState(null);
+  const [image, setImage] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
 
   const handleImageSelected = (image: any) => {
-    setSelectedImage(image);
+    setImage(image);
   };
 
   const handleSave = async (values: {
@@ -61,7 +61,7 @@ export default function AccountPage({ navigation }) {
       : await ImagePicker.launchCameraAsync(options);
 
     if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
+      setImage(result.assets[0].uri);
     }
   };
 

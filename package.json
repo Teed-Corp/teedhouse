@@ -18,7 +18,7 @@
     "@react-native-picker/picker": "^2.7.5",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
-    "@supabase/supabase-js": "^2.39.7",
+    "@supabase/supabase-js": "^2.42.7",
     "@types/react": "~18.2.45",
     "@types/react-native-modern-datepicker": "^1.0.5",
     "expo": "~50.0.17",

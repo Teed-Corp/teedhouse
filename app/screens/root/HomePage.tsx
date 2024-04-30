@@ -98,7 +98,7 @@ const HomePage = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Divider height={20} />
         <LinearGradient
-          className="w-full items-center justify-center rounded-lg p-5"
+          className="w-full items-center justify-center rounded-2xl p-5"
           colors={[Theme.primary, Theme.gradientColor]}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 1 }}

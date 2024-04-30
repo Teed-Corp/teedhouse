@@ -57,11 +57,7 @@ const CustomTextField = ({
       )}
       <View className="flex flex-row items-center border rounded-3xl pl-6 w-full h-12 bg-white">
         <TextInput
-          className={
-            "text-sm flex-1 h-14 " + isFocused
-              ? "border-gradient"
-              : "border-[#929292]"
-          }
+          className="text-sm flex-1 h-14"
           value={value}
           placeholder={placeHolderValue}
           placeholderTextColor="#929292"

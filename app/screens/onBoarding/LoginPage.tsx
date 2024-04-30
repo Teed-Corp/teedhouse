@@ -55,102 +55,103 @@ const LoginPage = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView>
-      <View className="w-full h-full justify-center">
-        <ScrollView showsVerticalScrollIndicator={false} className="flex-grow">
-          <KeyboardAvoidingView
-            behavior="height"
-            className="flex-1 justify-center items-center"
+    <SafeAreaView className="h-full">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
+        <KeyboardAvoidingView
+          behavior="height"
+          className="h-full justify-center items-center"
+        >
+          <Formik
+            initialValues={{
+              email,
+              password,
+            }}
+            validationSchema={validationSchema}
+            onSubmit={onConfirm}
           >
-            <Formik
-              initialValues={{
-                email,
-                password,
-              }}
-              validationSchema={validationSchema}
-              onSubmit={onConfirm}
-            >
-              {({
-                values,
-                resetForm,
-                touched,
-                handleChange,
-                handleSubmit,
-                errors,
-              }) => (
-                <>
-                  <View className="w-[80%] rounded-3xl border border-black py-4 px-5 mt-5 bg-white">
-                    <Text className="text-3xl font-bold mb-4 text-center">
-                      TeedHouse
-                    </Text>
-                    <Text className="text-xl mb-9 text-center">
-                      {isLogin ? "Connectez vous" : "Rejoignez nous"}
-                    </Text>
-                    <View className="mb-5">
-                      <CustomTextField
-                        value={values.email}
-                        placeHolderValue="Email"
-                        onChangeEvent={(value) => {
-                          handleChange("email")(value);
-                          setEmail(value);
-                        }}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                      />
-                      {errors.email && touched.email && (
-                        <ErrorText error={errors.email} />
-                      )}
-                    </View>
-                    <View className="mb-5">
-                      <CustomTextField
-                        value={values.password}
-                        placeHolderValue="Mot de passe"
-                        onChangeEvent={(value) => {
-                          handleChange("password")(value);
-                          setPassword(value);
-                        }}
-                        isPassword
-                        secureTextEntry
-                      />
-                      {errors.password && touched.password && (
-                        <ErrorText error={errors.password} />
-                      )}
-                    </View>
-                    {isLoading ? (
-                      <CustomLoader />
-                    ) : (
-                      <AppButton
-                        title={isLogin ? "Se Connecter" : "S'inscrire"}
-                        onPressEvent={handleSubmit}
-                      />
+            {({
+              values,
+              resetForm,
+              touched,
+              handleChange,
+              handleSubmit,
+              errors,
+            }) => (
+              <>
+                <View className="w-[80%] rounded-3xl border border-black py-4 px-5 mt-5 bg-white">
+                  <Text className="text-3xl font-bold mb-4 text-center">
+                    TeedHouse
+                  </Text>
+                  <Text className="text-xl mb-9 text-center">
+                    {isLogin ? "Connectez vous" : "Rejoignez nous"}
+                  </Text>
+                  <View className="mb-5">
+                    <CustomTextField
+                      value={values.email}
+                      placeHolderValue="Email"
+                      onChangeEvent={(value) => {
+                        handleChange("email")(value);
+                        setEmail(value);
+                      }}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                    />
+                    {errors.email && touched.email && (
+                      <ErrorText error={errors.email} />
                     )}
-                    {isLogin ? (
-                      <Text className="text-gradient my-5 text-center">
-                        Mot de passe oublié ?
-                      </Text>
-                    ) : null}
                   </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setIsLogin(!isLogin);
-                      resetForm();
-                    }}
-                  >
-                    <Text className="mb-2 mt-3 text-center">
-                      {isLogin
-                        ? "Vous n'avez pas de compte ?"
-                        : "Vous avez déjà un compte ?"}
+                  <View className="mb-5">
+                    <CustomTextField
+                      value={values.password}
+                      placeHolderValue="Mot de passe"
+                      onChangeEvent={(value) => {
+                        handleChange("password")(value);
+                        setPassword(value);
+                      }}
+                      isPassword
+                      secureTextEntry
+                    />
+                    {errors.password && touched.password && (
+                      <ErrorText error={errors.password} />
+                    )}
+                  </View>
+                  {isLoading ? (
+                    <CustomLoader />
+                  ) : (
+                    <AppButton
+                      title={isLogin ? "Se Connecter" : "S'inscrire"}
+                      onPressEvent={handleSubmit}
+                    />
+                  )}
+                  {isLogin ? (
+                    <Text className="text-gradient my-5 text-center">
+                      Mot de passe oublié ?
                     </Text>
-                    <Text className="text-gradient font-bold text-center mb-5">
-                      {isLogin ? "Rejoignez nous" : "Se connecter"}
-                    </Text>
-                  </TouchableOpacity>
-                </>
-              )}
-            </Formik>
-          </KeyboardAvoidingView>
-        </ScrollView>
-      </View>
+                  ) : null}
+                </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    setIsLogin(!isLogin);
+                    resetForm();
+                  }}
+                >
+                  <Text className="mb-2 mt-3 text-center">
+                    {isLogin
+                      ? "Vous n'avez pas de compte ?"
+                      : "Vous avez déjà un compte ?"}
+                  </Text>
+                  <Text className="text-gradient font-bold text-center mb-5">
+                    {isLogin ? "Rejoignez nous" : "Se connecter"}
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </Formik>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </SafeAreaView>
   );
 };

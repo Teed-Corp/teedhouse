@@ -39,7 +39,7 @@ const GetUserInformationPage = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView className="pt-5">
       <KeyboardAvoidingView behavior="height">
         <Formik
           initialValues={{
@@ -56,7 +56,9 @@ const GetUserInformationPage = () => {
                 showsVerticalScrollIndicator={false}
                 className="flex-grow"
               >
-                <HeaderIcon icon="user" />
+                <View className="items-center">
+                  <HeaderIcon icon="user" />
+                </View>
                 <Divider height={24} />
                 <HeaderTitle value="Votre compte" />
                 <Divider height={20} />

@@ -5,7 +5,7 @@ import { Icon } from "react-native-elements";
 
 const HeaderIcon = ({ icon, size }: { icon: string; size?: number }) => {
   return (
-    <View className="rounded-full bg-white justify-center p-3">
+    <View className="rounded-full bg-white justify-center p-3 h-15 w-15">
       <Icon
         name={icon}
         type="font-awesome"

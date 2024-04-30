@@ -1,9 +1,9 @@
-import ErrorText from "@app/components/Content/ErrorText";
-import Divider from "@app/components/Divider";
-import AppButton from "@app/components/Inputs/AppButton";
-import CustomDropdown from "@app/components/Inputs/CustomDropdown";
-import CustomTextField from "@app/components/Inputs/CustomTextField";
-import { Home } from "@app/navigation/routes";
+import ErrorText from "@app/components/common/Content/ErrorText";
+import Divider from "@app/components/common/Divider";
+import AppButton from "@app/components/common/Inputs/AppButton";
+import CustomDropdown from "@app/components/common/Inputs/CustomDropDown";
+import CustomTextField from "@app/components/common/Inputs/CustomTextField";
+import { Root } from "@app/navigation/routes";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -37,11 +37,11 @@ export default function AddTaskPage() {
       person !== null &&
       points !== null
     ) {
-      navigation.navigate(Home.InformationTaskPage, {
-        taskName: taskName,
-        taskType: taskType,
-        person: person,
-        points: points,
+      navigation.navigate(Root.InformationTaskPage, {
+        taskName,
+        taskType,
+        person,
+        points,
       });
     }
   };

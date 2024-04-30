@@ -151,7 +151,7 @@ const HomePage = () => {
       <TouchableOpacity
         className="absolute bottom-12 right-6 justify-center items-center bg-primary w-16 h-16 rounded-full shadow-lg"
         onPress={() => {
-          console.log("Add task");
+          navigation.navigate(Root.AddTaskPage);
         }}
       >
         <Icon

@@ -13,4 +13,6 @@ export enum Root {
   FamilyStatsPage = "Statistiques de la famille",
   HomePage = "HomePage",
   SettingsPage = "Paramètres",
+  AddTaskPage = "AddTaskPage",
+  InformationTaskPage = "InformationTaskPage",
 }

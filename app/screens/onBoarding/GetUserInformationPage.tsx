@@ -74,7 +74,6 @@ const GetUserInformationPage = () => {
                   }}
                   placeHolderValue="Nom"
                   displayTopPlaceHolder
-                  autoCapitalize="characters"
                 />
                 {errors.lastname && touched.lastname && (
                   <ErrorText error={errors.lastname} />
@@ -88,7 +87,6 @@ const GetUserInformationPage = () => {
                   }}
                   placeHolderValue="Prénom"
                   displayTopPlaceHolder
-                  autoCapitalize="characters"
                 />
                 {errors.firstname && touched.firstname && (
                   <ErrorText error={errors.firstname} />

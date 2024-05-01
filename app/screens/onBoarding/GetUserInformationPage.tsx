@@ -8,7 +8,7 @@ import CustomDatePicker from "@app/components/common/Inputs/CustomDatePicker";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import { useProfile } from "@app/context/ProfileContext";
 import { OnBoarding } from "@app/navigation/routes";
-import { convertDateToString, convertStringToDate } from "@app/utils/DateUtils";
+import { convertDateToString } from "@app/utils/DateUtils";
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import React, { useState } from "react";

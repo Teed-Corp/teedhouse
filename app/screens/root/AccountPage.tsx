@@ -1,4 +1,5 @@
 import ErrorText from "@app/components/common/Content/ErrorText";
+import ProfilePicture from "@app/components/common/Content/ProfilePicture";
 import CustomLoader from "@app/components/common/CustomLoader";
 import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
@@ -12,14 +13,7 @@ import { profile } from "@prisma/client";
 import * as ImagePicker from "expo-image-picker";
 import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import {
-  Image,
-  Modal,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 
@@ -39,7 +33,6 @@ export default function AccountPage({ navigation }) {
     firstname: string;
     birthdate: string;
     email: string;
-    stats: string;
   }) => {
     await updateProfile(
       values.lastname,
@@ -103,19 +96,23 @@ export default function AccountPage({ navigation }) {
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false} className="flex-grow">
         <View className="mt-5 p-3 justify-center items-center">
-          <Text className="text-2xl font-bold mb-4 text-center">
-            {" "}
-            Ton Profil
-          </Text>
+          <Divider height={40} />
           <View className="relative w-40 h-40 overflow-hidden">
-            <Image
-              className="w-full h-full rounded-full"
-              source={
-                image
-                  ? { uri: image }
-                  : require("../../../assets/defaultProfile.jpg")
-              }
-            />
+            {image ? (
+              <ProfilePicture
+                uri={image}
+                imageStyle="w-full h-full rounded-full"
+                iconSize={40}
+              />
+            ) : (
+              <View className="w-40 h-40 bg-gray-300 rounded-full flex justify-center items-center">
+                <ProfilePicture
+                  uri=""
+                  imageStyle="w-full h-full rounded-full"
+                  iconSize={80}
+                />
+              </View>
+            )}
             <TouchableOpacity
               className="absolute bottom-1 right-1 bg-primary w-10 h-10 rounded-full justify-center items-center"
               onPress={() => {
@@ -132,7 +129,6 @@ export default function AccountPage({ navigation }) {
                 lastname: profile.lastname,
                 birthdate: `${profile.birthdate.getFullYear()}/${profile.birthdate.getMonth() + 1}/${profile.birthdate.getDate()}`,
                 email: "todefine@todefine.com",
-                stats: "toremove?",
               }}
               validationSchema={validationSchema}
               onSubmit={handleSave}
@@ -178,18 +174,7 @@ export default function AccountPage({ navigation }) {
                   {errors.email && touched.email && (
                     <ErrorText error={errors.email as string} />
                   )}
-                  <Divider height={10} />
-                  <CustomTextField
-                    value={values.stats}
-                    onChangeEvent={handleChange("stats")}
-                    editable={false}
-                    placeHolderValue="Stats"
-                    displayTopPlaceHolder
-                  />
-                  {errors.stats && touched.stats && (
-                    <ErrorText error={errors.stats as string} />
-                  )}
-                  <Divider height={50} />
+                  <Divider height={80} />
                   <AppButton title="Enregistrer" onPressEvent={handleSubmit} />
                 </View>
               )}

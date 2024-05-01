@@ -14,4 +14,6 @@ export enum Root {
   HomePage = "HomePage",
   SettingsPage = "Paramètres",
   ChangePasswordPage = "PasswordPage",
+  AddTaskPage = "AddTaskPage",
+  InformationTaskPage = "InformationTaskPage",
 }

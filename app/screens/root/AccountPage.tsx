@@ -1,4 +1,5 @@
 import ErrorText from "@app/components/common/Content/ErrorText";
+import CustomLoader from "@app/components/common/CustomLoader";
 import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
 import CustomDatePicker from "@app/components/common/Inputs/CustomDatePicker";
@@ -91,7 +92,12 @@ export default function AccountPage({ navigation }) {
     fetchProfile().catch(console.error);
   }, [image]);
 
-  if (isLoading) return null;
+  if (isLoading)
+    return (
+      <View className="justify-center align-middle w-full h-full">
+        <CustomLoader />
+      </View>
+    );
 
   return (
     <SafeAreaView>

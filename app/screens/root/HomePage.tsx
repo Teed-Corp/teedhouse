@@ -1,6 +1,7 @@
 import HeaderIcon from "@app/components/common/Content/HeaderIcon";
 import PieceComponent from "@app/components/common/Content/PieceComponent";
 import ProfilePicture from "@app/components/common/Content/ProfilePicture";
+import CustomLoader from "@app/components/common/CustomLoader";
 import Divider from "@app/components/common/Divider";
 import HomePageMenuItem from "@app/components/root/home/HomePageMenuItem";
 import TaskItemComponent from "@app/components/root/task/TaskItemComponent";
@@ -73,7 +74,12 @@ const HomePage = () => {
     fetch().catch(console.error);
   }, []);
 
-  if (isLoading) return null;
+  if (isLoading)
+    return (
+      <View className="justify-center align-middle w-full h-full">
+        <CustomLoader />
+      </View>
+    );
 
   return (
     <SafeAreaView className="w-full h-full p-4">
@@ -98,7 +104,7 @@ const HomePage = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Divider height={20} />
         <LinearGradient
-          className="w-full items-center justify-center rounded-lg p-5"
+          className="w-full items-center justify-center rounded-2xl p-5"
           colors={[Theme.primary, Theme.gradientColor]}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 1 }}

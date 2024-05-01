@@ -13,6 +13,7 @@ export enum Root {
   FamilyStatsPage = "Statistiques de la famille",
   HomePage = "HomePage",
   SettingsPage = "Paramètres",
+  ChangePasswordPage = "PasswordPage",
   AddTaskPage = "AddTaskPage",
   InformationTaskPage = "InformationTaskPage",
 }

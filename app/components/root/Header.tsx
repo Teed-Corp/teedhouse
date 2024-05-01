@@ -20,7 +20,13 @@ const Header = ({
         iconName="chevron-left"
         iconType="font-awesome-5"
       />
-      <Text>{route.name}</Text>
+      <Text
+        className={`text-2xl font-bold pt-1 flex-1 text-center ${
+          showSettingsButton ? "" : "pr-10"
+        }`}
+      >
+        {route.name}
+      </Text>
       {showSettingsButton && (
         <CustomIconButton
           onPress={() => navigation.navigate(Root.SettingsPage)}

@@ -8,7 +8,14 @@ import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import { useFamily } from "@app/context/FamilyContext";
 import Theme from "@app/theme/Theme";
 import React, { useState } from "react";
-import { FlatList, KeyboardAvoidingView, Text, View } from "react-native";
+import {
+  FlatList,
+  KeyboardAvoidingView,
+  Modal,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -19,6 +26,7 @@ const CreateFamilyPage = () => {
   const [displayError, setDisplayError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [showPopup, setShowPopup] = useState(false); // State for showing the popup
 
   const data = [
     { label: "Maison", value: "Maison" },
@@ -30,9 +38,15 @@ const CreateFamilyPage = () => {
     setIsLoading(true);
     setDisplayError(true);
     if (familyName !== null && homeType !== null) {
-      const { error } = await createFamily(familyName, true);
-      if (error) alert(error);
+      setShowPopup(true);
     }
+    setIsLoading(false);
+  };
+
+  const handleCreateFamily = async (withDefaultTasks) => {
+    setIsLoading(true);
+    const { error } = await createFamily(familyName, withDefaultTasks);
+    if (error) alert(error);
     setIsLoading(false);
   };
 
@@ -117,13 +131,59 @@ const CreateFamilyPage = () => {
   );
 
   return (
-    <SafeAreaView className="h-full w-full px-5">
+    <SafeAreaView className="h-full w-full px-5 pt-20">
       <FlatList
         data={[0]}
         renderItem={renderItem}
         className="flex flex-grow mb-3"
         showsVerticalScrollIndicator={false}
       />
+      <Modal
+        animationType="fade"
+        transparent
+        visible={showPopup}
+        onRequestClose={() => setShowPopup(false)}
+      >
+        <TouchableOpacity
+          className="flex-1 bg-[#00000080] justify-center items-center"
+          activeOpacity={1}
+          onPress={() => setShowPopup(false)}
+        >
+          <View className="items-center justify-center bg-opacity-50 ">
+            <View className=" rounded-2xl items-center p-6">
+              <View className="w-80 h-full mx-8 justify-center items-center">
+                <View className="bg-white p-5 rounded-lg h-40 items-center">
+                  <Text className="text-lg">
+                    Voulez-vous ajouter des tâches par défaut à la famille ?
+                  </Text>
+                  <Divider height={20} />
+                  <View style={{ flexDirection: "row", width: "80%" }}>
+                    <TouchableOpacity
+                      className="bg-green-500 py-2 px-4 rounded-md"
+                      onPress={() => {
+                        setShowPopup(false);
+                        handleCreateFamily(true);
+                      }}
+                    >
+                      <Text className="text-lg text-white">Oui</Text>
+                    </TouchableOpacity>
+                    <Divider width={40} />
+                    <TouchableOpacity
+                      className="bg-red-500 py-2 px-4 rounded-md"
+                      onPress={() => {
+                        setShowPopup(false);
+                        handleCreateFamily(false);
+                      }}
+                    >
+                      <Text className="text-lg text-white">Non</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 };

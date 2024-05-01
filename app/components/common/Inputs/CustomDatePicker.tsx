@@ -1,16 +1,10 @@
 import Divider from "@app/components/common/Divider";
 import Theme from "@app/theme/Theme";
-import { formatDate } from "@app/utils/DateUtils";
+import { convertDateToString } from "@app/utils/DateUtils";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import {
-  Modal,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { Icon } from "react-native-elements";
-import DatePicker from "react-native-modern-datepicker";
 
 const CustomDatePicker = ({
   handleChange,
@@ -18,19 +12,23 @@ const CustomDatePicker = ({
   placeHolder,
   defaultValue,
 }: {
-  handleChange: (date: string) => void;
+  handleChange: (date: Date) => void;
   displayTopPlaceHolder: boolean;
   placeHolder: string;
-  defaultValue?: string;
+  defaultValue?: Date;
 }) => {
-  const [date, setDate] = useState(defaultValue || "");
+  const [date, setDate] = useState(defaultValue ?? null);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const maximumDate = new Date();
 
-  const handleDateChange = (selectedDate: string) => {
-    handleChange(selectedDate);
-    setDate(selectedDate);
+  const handleDateChange = ({ type }: any, selectedDate: Date) => {
     setShowDatePicker(false);
+    if (type === "set") {
+      setDate(selectedDate);
+      handleChange(selectedDate);
+    } else {
+      setShowDatePicker(false);
+    }
   };
 
   return (
@@ -47,51 +45,20 @@ const CustomDatePicker = ({
           setShowDatePicker(true);
         }}
       >
-        <Modal
-          animationType="slide"
-          transparent
-          visible={showDatePicker}
-          onRequestClose={() => {
-            setShowDatePicker(false);
-          }}
-        >
-          <TouchableWithoutFeedback onPress={() => setShowDatePicker(false)}>
-            <View className="flex-1 justify-center items-center">
-              <View className="m-5 bg-white rounded-3xl w-[90%] p-9 items-center shadow-[#00000040]">
-                <TouchableOpacity
-                  className="absolute top-3 right-3"
-                  onPress={() => setShowDatePicker(false)}
-                >
-                  <Icon
-                    name="close"
-                    type="ionicon"
-                    color={Theme.primary}
-                    size={30}
-                  />
-                </TouchableOpacity>
-                <DatePicker
-                  locale="fr"
-                  mode="calendar"
-                  onDateChange={handleDateChange}
-                  maximumDate={maximumDate.toISOString()}
-                  selected={date}
-                  options={{
-                    textDefaultColor: "black",
-                    textHeaderColor: Theme.primary,
-                    textSecondaryColor: Theme.primary,
-                    mainColor: Theme.primary,
-                  }}
-                />
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
+        {showDatePicker && (
+          <DateTimePicker
+            maximumDate={maximumDate}
+            mode="date"
+            value={date ?? new Date()}
+            display="spinner"
+            onChange={handleDateChange}
+          />
+        )}
         <Text
-          className={
-            "text-sm text-left " + date === "" ? "text-[#929292]" : "text-black"
-          }
+          style={{ color: date == null ? "#929292" : "black" }}
+          className="text-sm text-left"
         >
-          {date === "" ? placeHolder : formatDate(date)}
+          {!date ? placeHolder : convertDateToString(date)}
         </Text>
         <Icon
           name="calendar"

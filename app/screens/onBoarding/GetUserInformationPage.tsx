@@ -8,7 +8,7 @@ import CustomDatePicker from "@app/components/common/Inputs/CustomDatePicker";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import { useProfile } from "@app/context/ProfileContext";
 import { OnBoarding } from "@app/navigation/routes";
-import { convertStringToDate } from "@app/utils/DateUtils";
+import { convertDateToString, convertStringToDate } from "@app/utils/DateUtils";
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import React, { useState } from "react";
@@ -21,7 +21,7 @@ const GetUserInformationPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState(null);
 
   const validationSchema = Yup.object().shape({
     lastname: Yup.string().required("Un nom est requis"),
@@ -33,7 +33,7 @@ const GetUserInformationPage = () => {
 
   const handlePushUserInformation = async () => {
     setIsLoading(true);
-    await updateProfile(lastname, firstname, convertStringToDate(dateOfBirth));
+    await updateProfile(lastname, firstname, dateOfBirth);
     navigation.replace(OnBoarding.ChooseFamilyPage);
     setIsLoading(false);
   };
@@ -45,7 +45,7 @@ const GetUserInformationPage = () => {
           initialValues={{
             lastname: "",
             firstname: "",
-            dateOfBirth: "",
+            dateOfBirth: null,
           }}
           validationSchema={validationSchema}
           onSubmit={handlePushUserInformation}
@@ -95,13 +95,14 @@ const GetUserInformationPage = () => {
                 <CustomDatePicker
                   placeHolder="Date de naissance"
                   displayTopPlaceHolder
-                  handleChange={(date) => {
-                    handleChange("dateOfBirth")(date);
+                  handleChange={(date: Date) => {
+                    const dateString = convertDateToString(date);
+                    handleChange("dateOfBirth")(dateString);
                     setDateOfBirth(date);
                   }}
                 />
                 {errors.dateOfBirth && touched.dateOfBirth && (
-                  <ErrorText error={errors.dateOfBirth} />
+                  <ErrorText error={errors.dateOfBirth.toString()} />
                 )}
                 <Divider height={24} />
                 {isLoading ? (

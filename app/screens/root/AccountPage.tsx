@@ -7,7 +7,7 @@ import CustomDatePicker from "@app/components/common/Inputs/CustomDatePicker";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import PopUpButton from "@app/components/root/account/PopUpButton";
 import { useProfile } from "@app/context/ProfileContext";
-import { convertStringToDate } from "@app/utils/DateUtils";
+import { convertDateToString } from "@app/utils/DateUtils";
 import { Ionicons } from "@expo/vector-icons";
 import { profile } from "@prisma/client";
 import * as ImagePicker from "expo-image-picker";
@@ -23,6 +23,7 @@ export default function AccountPage({ navigation }) {
   const [profile, setProfile] = useState<profile>(null);
   const [image, setImage] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [dateOfBirth, setDateOfBirth] = useState(null);
 
   const handleImageSelected = (image: any) => {
     setImage(image);
@@ -37,7 +38,7 @@ export default function AccountPage({ navigation }) {
     await updateProfile(
       values.lastname,
       values.firstname,
-      convertStringToDate(values.birthdate),
+      dateOfBirth === null ? profile.birthdate : dateOfBirth,
     );
     navigation.goBack();
   };
@@ -127,7 +128,7 @@ export default function AccountPage({ navigation }) {
               initialValues={{
                 firstname: profile.firstname,
                 lastname: profile.lastname,
-                birthdate: `${profile.birthdate.getFullYear()}/${profile.birthdate.getMonth() + 1}/${profile.birthdate.getDate()}`,
+                birthdate: convertDateToString(profile.birthdate),
                 email: "todefine@todefine.com",
               }}
               validationSchema={validationSchema}
@@ -158,8 +159,11 @@ export default function AccountPage({ navigation }) {
                   <CustomDatePicker
                     placeHolder="Date de naissance"
                     displayTopPlaceHolder
-                    handleChange={handleChange("birthdate")}
-                    defaultValue={values.birthdate}
+                    handleChange={(date: Date) => {
+                      handleChange("birthdate")(convertDateToString(date));
+                      setDateOfBirth(date);
+                    }}
+                    defaultValue={profile.birthdate}
                   />
                   {errors.birthdate && touched.birthdate && (
                     <ErrorText error={errors.birthdate as string} />

@@ -7,7 +7,7 @@ const ErrorText = ({ error }: { error: string }) => {
   //       marginLeft: 4,
   //       width: "100%",
   // @ts-ignore
-  return <Text className="mt-1 ml-1 w-full">{error}</Text>;
+  return <Text className="mt-1 ml-1 w-full text-red-600">{error}</Text>;
 };
 
 export default ErrorText;

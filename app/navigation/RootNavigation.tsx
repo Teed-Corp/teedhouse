@@ -6,6 +6,7 @@ import HomePage from "@app/screens/root/HomePage";
 import SettingsPage from "@app/screens/root/SettingsPage";
 import TaskPage from "@app/screens/root/TaskPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ChangePasswordPage from "@app/screens/root/ChangePasswordPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,10 @@ const RootNavigation = () => {
         }}
       />
       <Stack.Screen name={Root.SettingsPage} component={SettingsPage} />
+      <Stack.Screen
+        name={Root.ChangePasswordPage}
+        component={ChangePasswordPage}
+      />
     </Stack.Navigator>
   );
 };

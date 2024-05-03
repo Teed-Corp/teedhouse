@@ -9,6 +9,7 @@ import InformationTaskPage from "@app/screens/root/InformationTaskPage";
 import SettingsPage from "@app/screens/root/SettingsPage";
 import TaskPage from "@app/screens/root/TaskPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import FamilyPage from "@app/screens/root/FamilyPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ const RootNavigation = () => {
         name={Root.InformationTaskPage}
         component={InformationTaskPage}
       />
+      <Stack.Screen name={Root.FamilyPage} component={FamilyPage} />
     </Stack.Navigator>
   );
 };

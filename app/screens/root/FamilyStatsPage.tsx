@@ -1,12 +1,11 @@
 import PieceComponent from "@app/components/common/Content/PieceComponent";
-import ProfilePicture from "@app/components/common/Content/ProfilePicture";
 import Divider from "@app/components/common/Divider";
 import Theme from "@app/theme/Theme";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { FlatList, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { ProgressBar } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
+import ProfileCard from "@app/components/common/Content/ProfileCard";
 
 const FamilyStatsPage = () => {
   const data = [
@@ -23,8 +22,7 @@ const FamilyStatsPage = () => {
   ];
 
   return (
-    <SafeAreaView className="w-full h-full px-5">
-      <Divider height={60} />
+    <View className="mx-5">
       <LinearGradient
         className="w-full h-36 items-center rounded-2xl p-5"
         colors={[Theme.primary, Theme.gradientColor]}
@@ -53,34 +51,13 @@ const FamilyStatsPage = () => {
         </View>
       </LinearGradient>
       <Divider height={24} />
-      <FlatList
-        data={data}
-        renderItem={({ item }) => (
-          <>
-            <View className="w-full px-5 flex flex-row justify-between bg-white p-3 rounded-xl">
-              <View className="flex flex-row items-center">
-                <View className="w-14 h-14 rounded-xl bg-[#2121211a] mr-3 justify-center">
-                  <ProfilePicture
-                    uri={item.profilePicture}
-                    imageStyle="w-full h-full rounded-xl"
-                    iconSize={30}
-                  />
-                </View>
-                <Text>{item.name}</Text>
-              </View>
-              <View className="flex flex-row justify-center items-center">
-                <PieceComponent />
-                <Text className="text-lg font-bold ml-2">{item.score}</Text>
-              </View>
-            </View>
-            <Divider height={12} />
-          </>
-        )}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(_item, index) => index.toString()}
-        className="w-full"
-      />
-    </SafeAreaView>
+      {data.map((member, index) => (
+        <React.Fragment key={member.name + index}>
+          <ProfileCard user={member} />
+          <Divider height={12} />
+        </React.Fragment>
+      ))}
+    </View>
   );
 };
 

@@ -49,12 +49,12 @@ const HomePage = () => {
     });
   };
 
-  const handlePressStats = () => {
-    navigation.navigate(Root.FamilyStatsPage);
-  };
-
   const handlePressProfile = () => {
     navigation.navigate(Root.AccountPage);
+  };
+
+  const handlePressFamily = () => {
+    navigation.navigate(Root.FamilyPage);
   };
 
   useEffect(() => {
@@ -97,8 +97,8 @@ const HomePage = () => {
             <Text className="text-xl font-bold">{profile.firstname}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={handlePressStats}>
-          <HeaderIcon icon="trophy" size={24} />
+        <TouchableOpacity onPress={handlePressFamily}>
+          <HeaderIcon icon="group" size={24} />
         </TouchableOpacity>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>

@@ -53,7 +53,7 @@ const FamilyStatsPage = () => {
       <Divider height={24} />
       {data.map((member, index) => (
         <React.Fragment key={member.name + index}>
-          <ProfileCard user={member} />
+          <ProfileCard user={member} displayScore />
           <Divider height={12} />
         </React.Fragment>
       ))}

@@ -6,7 +6,6 @@ import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import { useFamily } from "@app/context/FamilyContext";
-import Theme from "@app/theme/Theme";
 import React, { useState } from "react";
 import {
   FlatList,
@@ -16,8 +15,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
+import CustomDropdown from "@app/components/common/Inputs/CustomDropDown";
 
 const CreateFamilyPage = () => {
   const { createFamily } = useFamily();
@@ -25,7 +24,6 @@ const CreateFamilyPage = () => {
   const [familyName, setFamilyName] = useState(null);
   const [displayError, setDisplayError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false); // State for showing the popup
 
   const data = [
@@ -43,7 +41,7 @@ const CreateFamilyPage = () => {
     setIsLoading(false);
   };
 
-  const handleCreateFamily = async (withDefaultTasks) => {
+  const handleCreateFamily = async (withDefaultTasks: boolean) => {
     setIsLoading(true);
     const { error } = await createFamily(familyName, withDefaultTasks);
     if (error) alert(error);
@@ -74,47 +72,13 @@ const CreateFamilyPage = () => {
         )}
         <Divider height={24} />
         <View className="w-full z-10">
-          <Text className="ml-1">Type de logement</Text>
-          <Divider height={12} />
-
-          <DropDownPicker
-            items={data}
-            open={open}
-            setOpen={setOpen}
-            setValue={setHomeType}
+          <CustomDropdown
+            data={data}
+            onSelect={setHomeType}
             value={homeType}
-            placeholder="Type de logement"
-            placeholderStyle={{
-              fontSize: 15,
-              color: "#929292",
-              textAlign: "left",
-            }}
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              borderWidth: 0.5,
-              borderRadius: Theme.defaultRadius,
-              paddingLeft: 25,
-              width: "100%",
-              height: 56,
-              backgroundColor: "white",
-            }}
-            textStyle={{
-              fontSize: 15,
-              color: "black",
-              textAlign: "left",
-            }}
-            dropDownContainerStyle={{
-              borderWidth: 0.5,
-              borderRadius: Theme.defaultRadius,
-              borderColor: "#AAAAAA",
-              marginTop: 10,
-            }}
-            disableBorderRadius={false}
-            listItemContainerStyle={{
-              height: 50,
-            }}
-            scrollViewProps={{ scrollEnabled: true }}
+            displayTopPlaceHolder
+            zindex={2}
+            placeHolder="Type de logement"
           />
         </View>
         {homeType === null && displayError && (

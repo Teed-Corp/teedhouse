@@ -11,6 +11,7 @@ const TaskItemComponent = ({ item }: { item: completed_task }) => {
   const [profile, setProfile] = useState<profile>(null);
   const [task, setTask] = useState<task>(null);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isUser, setIsUser] = useState<boolean>(false);
   const { getProfileById } = useProfile();
   const { getTaskById } = useFamily();
 
@@ -27,6 +28,9 @@ const TaskItemComponent = ({ item }: { item: completed_task }) => {
   if (isLoading) return null;
 
   const toggleModal = () => {
+    //if (task.profileId === profile.id) {
+    //    setIsUser(true);
+    //}
     setIsModalVisible(!isModalVisible);
   };
 
@@ -102,15 +106,21 @@ const TaskItemComponent = ({ item }: { item: completed_task }) => {
                 >
                   <Text className="text-lg text-white">Supprimer</Text>
                 </TouchableOpacity>
-                <Divider width={100} />
-                <TouchableOpacity
-                  className="bg-green-500 py-2 px-4 rounded-md"
-                  onPress={() => {
-                    setIsModalVisible(false);
-                  }}
-                >
-                  <Text className="text-lg text-white">Terminer</Text>
-                </TouchableOpacity>
+                {isUser ? (
+                  <>
+                    <Divider width={100} />
+                    <TouchableOpacity
+                      className="bg-green-500 py-2 px-4 rounded-md"
+                      onPress={() => {
+                        //if (task.profileId === profile.id) {
+                        //}
+                        setIsModalVisible(false);
+                      }}
+                    >
+                      <Text className="text-lg text-white">Terminer</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : null}
               </View>
             </View>
           </View>

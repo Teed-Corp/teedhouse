@@ -3,7 +3,7 @@ import Theme from "@app/theme/Theme";
 import { convertDateToString } from "@app/utils/DateUtils";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Platform, Text, TouchableOpacity, View } from "react-native";
 import { Icon } from "react-native-elements";
 
 const CustomDatePicker = ({
@@ -18,17 +18,32 @@ const CustomDatePicker = ({
   defaultValue?: Date;
 }) => {
   const [date, setDate] = useState(defaultValue ?? null);
+  const [dateUpdated, setDateUpdated] = useState(date);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const maximumDate = new Date();
 
   const handleDateChange = ({ type }: any, selectedDate: Date) => {
-    setShowDatePicker(false);
     if (type === "set") {
       setDate(selectedDate);
-      handleChange(selectedDate);
+      if (Platform.OS === "android") {
+        setShowDatePicker(false);
+        setDateUpdated(selectedDate);
+        handleChange(selectedDate);
+      }
     } else {
       setShowDatePicker(false);
     }
+  };
+
+  const confirmIosDate = () => {
+    setDateUpdated(date);
+    handleChange(date);
+    setShowDatePicker(false);
+  };
+
+  const cancelIosDate = () => {
+    setDate(dateUpdated);
+    setShowDatePicker(false);
   };
 
   return (
@@ -42,18 +57,9 @@ const CustomDatePicker = ({
       <TouchableOpacity
         className="w-full flex flex-row justify-between items-center border rounded-3xl px-6 h-14 bg-white"
         onPress={() => {
-          setShowDatePicker(true);
+          setShowDatePicker(!showDatePicker);
         }}
       >
-        {showDatePicker && (
-          <DateTimePicker
-            maximumDate={maximumDate}
-            mode="date"
-            value={date ?? new Date()}
-            display="spinner"
-            onChange={handleDateChange}
-          />
-        )}
         <Text
           style={{ color: date == null ? "#929292" : "black" }}
           className="text-sm text-left"
@@ -67,6 +73,42 @@ const CustomDatePicker = ({
           size={24}
         />
       </TouchableOpacity>
+      <Divider height={5} />
+      {showDatePicker && (
+        <>
+          <DateTimePicker
+            maximumDate={maximumDate}
+            mode="date"
+            value={date ?? new Date()}
+            display="spinner"
+            onChange={handleDateChange}
+            style={{
+              width: "100%",
+              backgroundColor: "white",
+              borderRadius: 10,
+              overflow: "hidden",
+              flexDirection: "column",
+            }}
+          />
+          <Divider height={10} />
+          {Platform.OS === "ios" && showDatePicker && (
+            <View className="flex-row justify-around">
+              <TouchableOpacity
+                className="p-4 items-center justify-center bg-white rounded-2xl"
+                onPress={cancelIosDate}
+              >
+                <Text className="text-primary">Annuler</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                className="p-4 items-center justify-center bg-primary rounded-2xl"
+                onPress={confirmIosDate}
+              >
+                <Text className="text-white">Valider</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </>
+      )}
     </View>
   );
 };

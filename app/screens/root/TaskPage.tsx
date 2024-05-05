@@ -11,20 +11,12 @@ export default function TaskPage({
 }: {
   route: Readonly<RouteProp<any>>;
 }) {
-  const { title, taskList } = route.params;
+  const { taskList } = route.params;
 
   return (
     <SafeAreaView>
       <View className="h-full w-full pt-5 px-5">
-        <Divider height={35} />
-        <View style={{ alignItems: "center", paddingBottom: 20 }}>
-          <View
-            className="flex items-center justify-center bg-gradient from-blue-400 to-blue-500 rounded-full px-5 py-4"
-            style={{ width: title.length * 10 + 100 }}
-          >
-            <Text className="text-white text-2xl">{title}</Text>
-          </View>
-        </View>
+        <Divider height={100} />
         {taskList.length === 0 ? (
           //   center: {
           //     paddingTop: "75%",

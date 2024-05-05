@@ -36,8 +36,14 @@ const CustomDatePicker = ({
   };
 
   const confirmIosDate = () => {
-    setDateUpdated(date);
-    handleChange(date);
+    if (date == null) {
+      let newDate = new Date();
+      setDate(newDate);
+      handleChange(newDate);
+    } else {
+      setDateUpdated(date);
+      handleChange(date);
+    }
     setShowDatePicker(false);
   };
 

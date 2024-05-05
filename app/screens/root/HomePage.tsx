@@ -37,14 +37,12 @@ const HomePage = () => {
 
   const handlePressMyTasks = () => {
     navigation.navigate(Root.MyTaskPage, {
-      title: "Mes tâches",
       taskList: otherTasks,
     });
   };
 
   const handlePressOtherTasks = () => {
     navigation.navigate(Root.OtherTaskPage, {
-      title: "Autres tâches",
       taskList: otherTasks,
     });
   };

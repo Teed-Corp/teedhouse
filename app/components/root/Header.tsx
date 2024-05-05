@@ -8,10 +8,12 @@ const Header = ({
   route,
   navigation,
   showSettingsButton = false,
+  showTitle = true,
 }: {
   route?: RouteProp<ParamListBase, string>;
   navigation?: any;
   showSettingsButton?: boolean;
+  showTitle?: boolean;
 }) => {
   return (
     <SafeAreaView className="mx-5 mt-3 flex flex-row justify-between">
@@ -20,13 +22,15 @@ const Header = ({
         iconName="chevron-left"
         iconType="font-awesome-5"
       />
-      <Text
-        className={`text-2xl font-bold pt-1 flex-1 text-center ${
-          showSettingsButton ? "" : "pr-10"
-        }`}
-      >
-        {route.name}
-      </Text>
+      {showTitle && (
+        <Text
+          className={`text-2xl font-bold pt-1 flex-1 text-center ${
+            showSettingsButton ? "" : "pr-10"
+          }`}
+        >
+          {route.name}
+        </Text>
+      )}
       {showSettingsButton && (
         <CustomIconButton
           onPress={() => navigation.navigate(Root.SettingsPage)}

@@ -43,6 +43,7 @@ const JoinFamilyPage = () => {
                 showsVerticalScrollIndicator={false}
                 className="flex-grow"
               >
+                <Divider height={40} />
                 <View className="items-center">
                   <HeaderIcon icon="users" />
                 </View>

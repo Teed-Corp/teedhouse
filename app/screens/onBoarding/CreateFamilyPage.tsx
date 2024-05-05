@@ -4,6 +4,7 @@ import HeaderTitle from "@app/components/common/Content/HeaderTitle";
 import CustomLoader from "@app/components/common/CustomLoader";
 import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
+import CustomDropdown from "@app/components/common/Inputs/CustomDropDown";
 import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import { useFamily } from "@app/context/FamilyContext";
 import React, { useState } from "react";
@@ -16,7 +17,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomDropdown from "@app/components/common/Inputs/CustomDropDown";
 
 const CreateFamilyPage = () => {
   const { createFamily } = useFamily();
@@ -24,7 +24,7 @@ const CreateFamilyPage = () => {
   const [familyName, setFamilyName] = useState(null);
   const [displayError, setDisplayError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [showPopup, setShowPopup] = useState(false); // State for showing the popup
+  const [showPopup, setShowPopup] = useState(false);
 
   const data = [
     { label: "Maison", value: "Maison" },

@@ -1,10 +1,10 @@
+import Divider from "@app/components/common/Divider";
+import AppButton from "@app/components/common/Inputs/AppButton";
+import { OnBoarding } from "@app/navigation/routes";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, ScrollView, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Divider from "@app/components/common/Divider";
-import { useNavigation } from "@react-navigation/native";
-import { OnBoarding } from "@app/navigation/routes";
-import AppButton from "@app/components/common/Inputs/AppButton";
 
 const GetStartedPage = () => {
   const navigation: any = useNavigation();
@@ -25,7 +25,7 @@ const GetStartedPage = () => {
         </Text>
         <Divider height={40} />
         <Image
-          source={require("/Users/mathisperso/Desktop/TeedHouse/teedhouse/assets/onboarding-image.png")}
+          source={require("../../../assets/onboarding-image.png")}
           className="h-80 w-80"
         />
         <Divider height={40} />

@@ -2,6 +2,7 @@ import { useAuth } from "@app/context/AuthContext";
 import { useFamily } from "@app/context/FamilyContext";
 import OnBoardingNavigation from "@app/navigation/OnBoardingNavigation";
 import RootNavigation from "@app/navigation/RootNavigation";
+import SplashScreenPage from "@app/screens/root/SplashScreenPage";
 import Theme from "@app/theme/Theme";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { useEffect, useState } from "react";
@@ -25,8 +26,7 @@ const NavigationProvider = () => {
 
   if (isLoading) {
     // Loading context
-    // TODO: Add a loading screen (SplashScreen)
-    return null;
+    return <SplashScreenPage />;
   }
 
   return (

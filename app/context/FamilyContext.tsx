@@ -1,6 +1,6 @@
 import { useAuth } from "@app/context/AuthContext";
 import { supabase } from "@app/libs/supabase/Supabase";
-import { completed_task, family, task } from "@prisma/client";
+import { completed_task, family, profile, task } from "@prisma/client";
 import { PostgrestError } from "@supabase/supabase-js";
 import { uuid } from "@supabase/supabase-js/dist/main/lib/helpers";
 import * as Crypto from "expo-crypto";
@@ -18,6 +18,10 @@ type FamilyContextType = {
   ) => Promise<{ error: PostgrestError | string }>;
   joinFamily: (code: string) => Promise<{ error: PostgrestError | string }>;
   getFamily: () => Promise<{ data: family; error: PostgrestError | string }>;
+  getFamilyMembers: () => Promise<{
+    data: profile[];
+    error: PostgrestError | string;
+  }>;
   getFamilyTasks: () => Promise<{
     data: task[];
     error: PostgrestError | string;
@@ -70,7 +74,7 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
       .select("*")
       .eq("B", session.user.id);
 
-    setIsJoinedFamily(data.length > 0);
+    setIsJoinedFamily(data && data.length > 0);
   };
 
   const joinFamily = async (
@@ -219,6 +223,32 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
     return score;
   };
 
+  const getFamilyMembers = async () => {
+    const session = await getSession();
+    if (!session) return { data: null, error: "Session invalide" };
+
+    const familyId = await supabase
+      .from("_familyToprofile")
+      .select("*")
+      .eq("B", session.user.id)
+      .single();
+
+    const profileIds = await supabase
+      .from("_familyToprofile")
+      .select("*")
+      .eq("A", familyId.data.A);
+
+    const { data, error } = await supabase
+      .from("profile")
+      .select("*")
+      .in(
+        "id",
+        profileIds.data.map((profile) => profile.B),
+      );
+
+    return { data: data as unknown as profile[], error };
+  };
+
   const value = useMemo(
     () => ({
       initFamilyContext,
@@ -232,6 +262,7 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
       getUserCompletedTasks,
       getTaskById,
       getUserCompletedTasksScore,
+      getFamilyMembers,
     }),
     [
       initFamilyContext,
@@ -245,6 +276,7 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
       getUserCompletedTasks,
       getTaskById,
       getUserCompletedTasksScore,
+      getFamilyMembers,
     ],
   );
 

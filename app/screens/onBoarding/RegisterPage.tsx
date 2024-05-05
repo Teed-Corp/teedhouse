@@ -1,5 +1,5 @@
 import { useAuth } from "@app/context/AuthContext";
-import { OnBoarding, Root } from "@app/navigation/routes";
+import { OnBoarding } from "@app/navigation/routes";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import { KeyboardAvoidingView, ScrollView, Text } from "react-native";
@@ -10,11 +10,9 @@ import CustomTextField from "@app/components/common/Inputs/CustomTextField";
 import ErrorText from "@app/components/common/Content/ErrorText";
 import AppButton from "@app/components/common/Inputs/AppButton";
 import CustomLoader from "@app/components/common/CustomLoader";
-import { useFamily } from "@app/context/FamilyContext";
 
-const LoginPage = ({ navigation }) => {
-  const { loginWithEmail } = useAuth();
-  const { isJoinedFamily } = useFamily();
+const RegisterPage = ({ navigation }) => {
+  const { registerWithEmail } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const validationSchema = Yup.object().shape({
@@ -38,20 +36,15 @@ const LoginPage = ({ navigation }) => {
             validationSchema={validationSchema}
             onSubmit={async (values) => {
               setIsLoading(true);
-              const { error } = await loginWithEmail(
+              const { error } = await registerWithEmail(
                 values.email,
                 values.password,
               );
 
-              if (!error && !isJoinedFamily) {
+              if (!error) {
                 navigation.reset({
                   index: 0,
                   routes: [{ name: OnBoarding.GetUserInformationPage }],
-                });
-              } else if (!error && isJoinedFamily) {
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: Root.HomePage }],
                 });
               } else {
                 alert(error.message);
@@ -67,18 +60,20 @@ const LoginPage = ({ navigation }) => {
             {({ values, touched, handleChange, handleSubmit, errors }) => (
               <SafeAreaView className="w-full h-full px-5">
                 <Divider height={30} />
-                <Text className="text-3xl font-bold">Bonjour</Text>
+                <Text className="text-3xl font-bold">
+                  Créer un nouveau compte
+                </Text>
                 <Divider height={30} />
                 <Text className="text-xl">
-                  Accédez à l'application en vous connectant à votre compte
+                  Inscrivez vous et devenez le meilleur de votre en famille
                 </Text>
                 <Divider height={30} />
                 <CustomTextField
                   value={values.email}
-                  keyboardType="email-address"
                   onChangeEvent={handleChange("email")}
-                  autoCapitalize="none"
                   displayTopPlaceHolder
+                  autoCapitalize="none"
+                  keyboardType="email-address"
                   placeHolderValue="Email"
                 />
                 {errors.email && touched.email && (
@@ -100,7 +95,10 @@ const LoginPage = ({ navigation }) => {
                 {isLoading ? (
                   <CustomLoader />
                 ) : (
-                  <AppButton title="Se connecter" onPressEvent={handleSubmit} />
+                  <AppButton
+                    title="Créer un compte"
+                    onPressEvent={handleSubmit}
+                  />
                 )}
               </SafeAreaView>
             )}
@@ -111,4 +109,4 @@ const LoginPage = ({ navigation }) => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

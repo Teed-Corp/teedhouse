@@ -1,9 +1,11 @@
 export enum OnBoarding {
   LoginPage = "LoginPage",
+  RegisterPage = "RegisterPage",
   ChooseFamilyPage = "ChooseFamilyPage",
   JoinFamilyPage = "JoinFamilyPage",
   CreateFamilyPage = "CreateFamilyPage",
   GetUserInformationPage = "GetUserInformationPage",
+  GetStartedPage = "GetStartedPage",
 }
 
 export enum Root {

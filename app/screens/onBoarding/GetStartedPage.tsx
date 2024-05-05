@@ -18,7 +18,7 @@ const GetStartedPage = () => {
 
   return (
     <SafeAreaView className="h-full w-full flex px-5 items-center">
-      <ScrollView className="flex-grow">
+      <ScrollView className="flex-grow" showsVerticalScrollIndicator={false}>
         <Divider height={30} />
         <Text className="text-3xl text-primary font-bold text-center">
           TeedHouse
@@ -26,7 +26,7 @@ const GetStartedPage = () => {
         <Divider height={40} />
         <Image
           source={require("../../../assets/onboarding-image.png")}
-          style={{ width: "100%", height: "70%" }}
+          style={{ width: "100%", height: 250 }}
           resizeMode="contain"
         />
         <Divider height={40} />
@@ -39,11 +39,10 @@ const GetStartedPage = () => {
           votre famille
         </Text>
         <Divider height={30} />
-
         <AppButton title="Commencer" onPressEvent={handleGetStarted} />
         <Divider height={15} />
         <TouchableOpacity onPress={handleAlreadyAccount}>
-          <Text className="text-center text-primary">
+          <Text className="text-center text-primary p-2">
             Déjà un compte ? Se connecter
           </Text>
         </TouchableOpacity>

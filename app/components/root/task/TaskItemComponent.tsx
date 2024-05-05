@@ -93,7 +93,7 @@ const TaskItemComponent = ({ item }: { item: completed_task }) => {
                   Points à gagner: {task.points}
                 </Text>
                 <Text className="text-sm font-bold mb-4 text-center text-primary">
-                  Date de la tâche: {task.createdAt.toDateString()}
+                  Date de la tâche: {new Date(task.createdAt).toLocaleString()}
                 </Text>
               </View>
               <Divider height={10} />

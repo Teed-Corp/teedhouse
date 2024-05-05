@@ -26,7 +26,8 @@ const GetStartedPage = () => {
         <Divider height={40} />
         <Image
           source={require("../../../assets/onboarding-image.png")}
-          className="h-80 w-80"
+          style={{ width: "100%", height: "70%" }}
+          resizeMode="contain"
         />
         <Divider height={40} />
         <Text className="text-center text-xl font-bold">

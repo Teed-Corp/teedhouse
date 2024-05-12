@@ -43,6 +43,9 @@ type FamilyContextType = {
     userId: string,
   ) => Promise<{ error: PostgrestError | string }>;
   getFamilyCompletedTasksScore: () => Promise<number>;
+  deleteCompletedTask: (
+    taskId: string,
+  ) => Promise<{ error: PostgrestError | string }>;
 };
 
 const FamilyContext = createContext<FamilyContextType | undefined>(undefined);
@@ -281,6 +284,19 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
     return score;
   };
 
+  const deleteCompletedTask = async (taskId: string) => {
+    const session = await getSession();
+
+    if (!session) return { error: "Session invalide" };
+
+    const { error } = await supabase
+      .from("completed_task")
+      .delete()
+      .eq("id", taskId);
+
+    return { error };
+  };
+
   const value = useMemo(
     () => ({
       initFamilyContext,
@@ -297,6 +313,7 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
       getFamilyMembers,
       completeTask,
       getFamilyCompletedTasksScore,
+      deleteCompletedTask,
     }),
     [
       initFamilyContext,
@@ -313,6 +330,7 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
       getFamilyMembers,
       completeTask,
       getFamilyCompletedTasksScore,
+      deleteCompletedTask,
     ],
   );
 

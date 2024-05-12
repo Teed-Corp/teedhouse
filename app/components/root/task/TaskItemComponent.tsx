@@ -3,17 +3,19 @@ import Divider from "@app/components/common/Divider";
 import { useFamily } from "@app/context/FamilyContext";
 import { useProfile } from "@app/context/ProfileContext";
 import { completed_task, profile, task } from "@prisma/client";
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 
 const TaskItemComponent = ({ item }: { item: completed_task }) => {
+  const navigation: any = useNavigation();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<profile>(null);
   const [task, setTask] = useState<task>(null);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isUser, setIsUser] = useState<boolean>(false);
   const { getProfileById } = useProfile();
-  const { getTaskById } = useFamily();
+  const { getTaskById, deleteCompletedTask } = useFamily();
 
   useEffect(() => {
     const fetch = async () => {
@@ -100,7 +102,8 @@ const TaskItemComponent = ({ item }: { item: completed_task }) => {
               <View style={{ flexDirection: "row", width: "80%" }}>
                 <TouchableOpacity
                   className="bg-red-500 py-2 px-4 rounded-md"
-                  onPress={() => {
+                  onPress={async () => {
+                    await deleteCompletedTask(item.id);
                     setIsModalVisible(false);
                   }}
                 >

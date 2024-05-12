@@ -38,6 +38,10 @@ type FamilyContextType = {
     taskId: string,
   ) => Promise<{ data: task; error: PostgrestError }>;
   getUserCompletedTasksScore: () => Promise<number>;
+  completeTask: (
+    taskId: string,
+    userId: string,
+  ) => Promise<{ error: PostgrestError | string }>;
 };
 
 const FamilyContext = createContext<FamilyContextType | undefined>(undefined);
@@ -249,6 +253,21 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
     return { data: data as unknown as profile[], error };
   };
 
+  const completeTask = async (taskId: string, userId: string) => {
+    const session = await getSession();
+
+    if (!session) return { error: "Session invalide" };
+
+    const { error } = await supabase.from("completed_task").insert({
+      id: uuid(),
+      taskId,
+      profileId: userId,
+      completedAt: new Date().toISOString(),
+    });
+
+    return { error };
+  };
+
   const value = useMemo(
     () => ({
       initFamilyContext,
@@ -263,6 +282,7 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
       getTaskById,
       getUserCompletedTasksScore,
       getFamilyMembers,
+      completeTask,
     }),
     [
       initFamilyContext,
@@ -277,6 +297,7 @@ const FamilyProvider = ({ children }: { children: ReactNode }) => {
       getTaskById,
       getUserCompletedTasksScore,
       getFamilyMembers,
+      completeTask,
     ],
   );
 

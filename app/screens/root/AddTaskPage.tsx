@@ -1,66 +1,88 @@
 import ErrorText from "@app/components/common/Content/ErrorText";
+import CustomLoader from "@app/components/common/CustomLoader";
 import Divider from "@app/components/common/Divider";
 import AppButton from "@app/components/common/Inputs/AppButton";
 import CustomDropdown from "@app/components/common/Inputs/CustomDropDown";
+import { useFamily } from "@app/context/FamilyContext";
 import { Root } from "@app/navigation/routes";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AddTaskPage() {
-  const [taskType, setTaskType] = useState(null);
-  const [person, setPreson] = useState(null);
+  const { getFamilyTasks, getFamilyMembers, completeTask } = useFamily();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [tasks, setTasks] = useState([]);
+  const [members, setMembers] = useState([]);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedMembers, setSelectedMembers] = useState(null);
   const [displayError, setDisplayError] = useState(false);
 
   const navigation: any = useNavigation();
-  const data = [
-    { label: "Ménagère", value: "menage" },
-    { label: "Voiture", value: "car" },
-    { label: "Course", value: "shopping" },
-  ];
-
-  const familyData = [
-    { label: "Anthony", value: "Anthony" },
-    { label: "Mathis", value: "Mathis" },
-    { label: "Corentin", value: "Corentin" },
-  ];
 
   const onConfirm = async () => {
     setDisplayError(true);
-    if (taskType !== null && person !== null) {
-      navigation.navigate(Root.HomePage, {
-        taskType,
-        person,
-      });
+    if (selectedTask !== null && selectedMembers !== null) {
+      await completeTask(selectedTask, selectedMembers);
+      navigation.navigate(Root.HomePage);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setTasks(
+        (await getFamilyTasks()).data.map((value) => ({
+          label: value.name,
+          value: value.id,
+        })),
+      );
+      setMembers(
+        (await getFamilyMembers()).data.map((data) => ({
+          label: data.firstname,
+          value: data.id,
+        })),
+      );
+
+      setIsLoading(false);
+    };
+
+    fetchData().catch(console.error);
+  }, []);
+
+  if (isLoading)
+    return (
+      <View className="flex-1 items-center justify-center">
+        <CustomLoader />
+      </View>
+    );
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.cardShadow}>
         <View style={styles.card}>
           <CustomDropdown
-            data={data}
-            onSelect={setTaskType}
-            value={taskType}
+            data={tasks}
+            onSelect={setSelectedTask}
+            value={selectedTask}
             placeHolder="Tâche"
             displayTopPlaceHolder
             zindex={3}
           />
-          {taskType === null && displayError && (
+          {selectedTask === null && displayError && (
             <ErrorText error="Une tâche est requise" />
           )}
           <Divider height={20} />
           <CustomDropdown
-            data={familyData}
-            onSelect={setPreson}
-            value={person}
+            data={members}
+            onSelect={setSelectedMembers}
+            value={selectedMembers}
             placeHolder="Personne qui a effectué la tâche"
             displayTopPlaceHolder
             zindex={2}
           />
-          {person === null && displayError && (
+          {selectedMembers === null && displayError && (
             <ErrorText error="Une personne est requise pour la tâche" />
           )}
           <Divider height={20} />

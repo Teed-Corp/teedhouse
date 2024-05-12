@@ -37,7 +37,7 @@ const HomePage = () => {
 
   const handlePressMyTasks = () => {
     navigation.navigate(Root.MyTaskPage, {
-      taskList: otherTasks,
+      taskList: myTasks,
     });
   };
 

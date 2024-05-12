@@ -29,7 +29,11 @@ export default function TaskPage({
         ) : (
           <ScrollView
             showsVerticalScrollIndicator={false}
-            className="flex-grow pt-5 items-center"
+            className="flex-grow pt-5"
+            contentContainerStyle={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             {taskList.map((item: completed_task) => (
               <TaskItemComponent key={item.id} item={item} />

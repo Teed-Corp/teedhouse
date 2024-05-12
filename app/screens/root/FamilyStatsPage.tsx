@@ -1,25 +1,33 @@
 import PieceComponent from "@app/components/common/Content/PieceComponent";
+import CustomLoader from "@app/components/common/CustomLoader";
 import Divider from "@app/components/common/Divider";
+import TaskItemComponent from "@app/components/root/task/TaskItemComponent";
+import { useFamily } from "@app/context/FamilyContext";
 import Theme from "@app/theme/Theme";
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { ProgressBar } from "react-native-paper";
-import ProfileCard from "@app/components/common/Content/ProfileCard";
 
 const FamilyStatsPage = () => {
-  const data = [
-    { name: "John", score: 100, profilePicture: "https://picsum.photos/200" },
-    { name: "Jane", score: 50, profilePicture: null },
-    { name: "Doe", score: 50, profilePicture: "https://picsum.photos/200" },
-    { name: "Smith", score: 0, profilePicture: null },
-    { name: "Doe", score: 304, profilePicture: "https://picsum.photos/200" },
-    { name: "Smith", score: 34, profilePicture: null },
-    { name: "Doe", score: 22, profilePicture: "https://picsum.photos/200" },
-    { name: "Doe", score: 22, profilePicture: "https://picsum.photos/200" },
-    { name: "Doe", score: 22, profilePicture: "https://picsum.photos/200" },
-    { name: "Doe", score: 22, profilePicture: "https://picsum.photos/200" },
-  ];
+  const { getCompletedTasks, getFamilyCompletedTasksScore } = useFamily();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [familyScore, setFamilyScore] = useState(0);
+  const [completedTasks, setCompletedTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setCompletedTasks((await getCompletedTasks()).data);
+      setFamilyScore(await getFamilyCompletedTasksScore());
+
+      setIsLoading(false);
+    };
+
+    fetchData().catch(console.error);
+  }, []);
+
+  if (isLoading) return <CustomLoader />;
 
   return (
     <View className="mx-5">
@@ -45,18 +53,15 @@ const FamilyStatsPage = () => {
         <Divider height={16} />
         <View className="w-full flex flex-row justify-center items-center rounded-xl bg-[#e8ede91a] p-3">
           <Text className="text-white text-lg">Score total : </Text>
-          <Text className="text-white text-xl font-bold">500</Text>
+          <Text className="text-white text-xl font-bold">{familyScore}</Text>
           <Divider width={8} />
           <PieceComponent />
         </View>
       </LinearGradient>
       <Divider height={24} />
-      {data.map((member, index) => (
-        <React.Fragment key={member.name + index}>
-          <ProfileCard user={member} displayScore />
-          <Divider height={12} />
-        </React.Fragment>
-      ))}
+      {completedTasks.map((task) => {
+        return <TaskItemComponent key={task.id} item={task} />;
+      })}
     </View>
   );
 };

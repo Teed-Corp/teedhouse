@@ -70,7 +70,7 @@ const HomePage = () => {
     };
 
     fetch().catch(console.error);
-  }, []);
+  }, [myTasks]);
 
   if (isLoading)
     return (
